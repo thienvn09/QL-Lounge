@@ -2,7 +2,6 @@ CREATE DATABASE QL_NHAHANG
 GO
 USE QL_NHAHANG
 GO
-
 CREATE TABLE KhachHang(
 	MaKhachHang INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	HoTen NVARCHAR(100) NOT NULL,
@@ -49,7 +48,7 @@ CREATE TABLE SANPHAM(
 	Gia DECIMAL(10,2) NOT NULL,
 	ThueVAT AS(
 		CASE
-			WHEN MaDanhMuc = (SELECT MaDanhMuc FROM DanhMuc WHERE TenDanhMuc ='Đồ uống có cồn')
+			WHEN MaDanhMuc = (SELECT MaDanhMuc FROM DanhMucSanPham WHERE TenDanhMuc ='Đồ uống có cồn')
 			 Then 10.00
 			 ELSE 8.00
 			 END
