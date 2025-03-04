@@ -110,3 +110,21 @@ CREATE TABLE KhoHang(
 	FOREIGN KEY(MaSanPham) REFERENCES SanPham(MaSanPham),
 	FOREIGN KEY(NguoiThucHien) REFERENCES NhanVien(MaNV),
 );
+CREATE TABLE BaoCao(
+	MaBaoCao INT PRIMARY KEY IDENTITY(1,1),
+	LoaiBaoCao NVARCHAR(20) NOT NULL Check( LoaiBaoCao In('Hàng Ngày','Hàng Tháng','Hàng năm')),
+	NgayBaoCao DATE NOT NULL,
+	TongDoanhThu DECIMAL(15,2) NOT NULL,-- Tổng doanh thu
+	TongChiPhi DECIMAL(15,2) NOT Null,
+	LoiNhuan AS(TongDoanhThu - TongChiPhi),
+	SoHoaDon INT NOT NULL,
+	SoKhachHang INT NOT NULL,
+	SoSanPhamBanRa INT NOT NULL,
+	NguoiTao INT, 
+	GhiChu Nvarchar(MAX) Not NULL,
+	FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
+);
+--SELECT COUNT(*) AS SoLuongBang
+--FROM sys.objects
+--WHERE type = 'U'; -- 'U' là loại User Table
+
