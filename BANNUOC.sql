@@ -69,7 +69,6 @@ CREATE TABLE Voucher(
 	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang (MaKhachHang),
     FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
 );
-
 CREATE TABLE HoaDon(
 	MaHoaDon INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	MaKhachHang INT  NOT NULL, -- tham chiếu tới bảng khách hàng
@@ -100,15 +99,19 @@ CREATE TABLE ChiTietHoaDon(
 	FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham),
 );
 CREATE TABLE KhoHang(
-	MaKhoHang INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
-	MaSanPham INT,-- tham chiếu tới bảng sản phẩm
-	LoaiThayDoi NVARCHAR(30) NOT NULL Check(LoaiThayDoi IN('Nhập kho' , 'Xuất kho')),
-	SoLuong INT NOT Null,
-	NgayThayDoi DATETIME NOT NULL DEFAULT GETDATE(),
-	NguoiThucHien INT, -- tham chiếu tới bảng nhân viên
-	GhiChu NVARCHAR(200),
-	FOREIGN KEY(MaSanPham) REFERENCES SanPham(MaSanPham),
-	FOREIGN KEY(NguoiThucHien) REFERENCES NhanVien(MaNV),
+	MaKhoHang INT PRIMARY KEY IDENTITY(1,1),
+    MaSanPham INT, -- Tham chiếu đến bảng SanPham
+    SoLuongTon INT NOT NULL DEFAULT 0, -- Số lượng tồn kho
+    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+);
+CREATE TABLE PhieuNhapKho(
+	MaPhieuNhap INT PRIMARY KEY IDENTITY(1,1),
+	NgayNhap Date Not NULL,
+	MaNV INT NOT NULL, --tham chiếu tới bảng nhân viên
+	TongTienNhap DECIMAL(15,2) NOT NULL,
+	GhiChu NVARCHAR(MAX),
+	FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
+
 );
 CREATE TABLE BaoCao(
 	MaBaoCao INT PRIMARY KEY IDENTITY(1,1),
