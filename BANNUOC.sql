@@ -66,8 +66,8 @@ CREATE TABLE Voucher(
 	GiaTri DECIMAL(10,2) NOT NULL,
 	NgayHetHan DATE,
 	TrangThai NVARCHAR(20) NOT NULL CHECK(TrangThai IN('Đã sử dụng' , 'Chưa sử dụng')),
-	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang),
-	FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang (MaKhachHang),
+    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
 );
 
 CREATE TABLE HoaDon(
