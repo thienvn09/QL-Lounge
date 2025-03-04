@@ -52,6 +52,13 @@ CREATE TABLE SANPHAM(
 	FOREIGN KEY (MaDanhMuc) REFERENCES DanhMucSanPham(MaDanhMuc),
 	FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap),
 );
+CREATE TABLE Ban(
+	MaBan INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	SoBan NVARCHAR(40) NOT NULL,
+	SoChoNgoi INT NOT NULL,
+	KhuVuc NVARCHAR(20) NOT NULL CHECK( KhuVuc In('Nhà Hàng','Quầy Bar')),
+	TrangThai NVARCHAR(20) NOT NULL CHECK( TrangThai IN('Trống','Đang sử dụng')),
+);
 CREATE TABLE HoaDon(
 	MaHoaDon INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	MaKhachHang INT  NOT NULL, -- tham chiếu tới bảng khách hàng
@@ -59,5 +66,13 @@ CREATE TABLE HoaDon(
 	MaBan INT, -- tham chiếu tới bảng bàn
 	NgayDat DATETIME NOT NULL DEFAULT GETDATE(),
 	TongTien DECIMAL(10, 2), -- Tổng tiền trước thuế và giảm giá
-	TiemGiamGia DECIMAL(10,2) DEFAULT 0.00,
-	TongThue DECIMAL (10,2), -- Tổng tiền thuế
+	TienGiamGia DECIMAL(10,2) DEFAULT 0.00,
+	TongThueVAT DECIMAL (10,2), -- Tổng tiền thuế
+	ThanhToan AS (TongTien + TongThueVAT - TienGiamGia),
+	TrangThai NVARCHAR(20) DEFAULT 'Chưa thanh toán' CHECK (TrangThai IN ('Chưa thanh toán', 'Đã thanh toán')),
+	NguoiTao INT,
+	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang),
+    FOREIGN KEY (MaNhanVien) REFERENCES NhanVien(MaNV),
+    FOREIGN KEY (MaBan) REFERENCES Ban(MaBan),
+    FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
+);
