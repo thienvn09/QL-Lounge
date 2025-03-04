@@ -87,3 +87,15 @@ CREATE TABLE HoaDon(
     FOREIGN KEY (MaBan) REFERENCES Ban(MaBan),
     FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
 );
+CREATE TABLE ChiTietHoaDon(
+	MaChiTietHoaDon INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	MaHoaDon INT, -- tham chiếu tới bảng hóa đơn
+	MaSanPham INT, -- tham chiếu tới bảng sản phẩm
+	SoLuong INT NOT NULL,
+	Gia DECIMAL(10,2) NOT NULL, -- giá của sản phẩm 
+	ThueVAT DECIMAL(5,2) NOT NULL , -- lấy từ danh mục sản phẩm 
+	ThanhTien AS(Gia *SoLuong),
+	TienThue AS (Gia * SoLuong * ThueVAT /100), --tiền thuế (thành tiền * thuế vat /100)
+	FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon),
+	FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham),
+);
