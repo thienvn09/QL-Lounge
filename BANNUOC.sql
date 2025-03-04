@@ -99,3 +99,14 @@ CREATE TABLE ChiTietHoaDon(
 	FOREIGN KEY (MaHoaDon) REFERENCES HoaDon(MaHoaDon),
 	FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham),
 );
+CREATE TABLE KhoHang(
+	MaKhoHang INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	MaSanPham INT,-- tham chiếu tới bảng sản phẩm
+	LoaiThayDoi NVARCHAR(30) NOT NULL Check(LoaiThayDoi IN('Nhập kho' , 'Xuất kho')),
+	SoLuong INT NOT Null,
+	NgayThayDoi DATETIME NOT NULL DEFAULT GETDATE(),
+	NguoiThucHien INT, -- tham chiếu tới bảng nhân viên
+	GhiChu NVARCHAR(200),
+	FOREIGN KEY(MaSanPham) REFERENCES SanPham(MaSanPham),
+	FOREIGN KEY(NguoiThucHien) REFERENCES NhanVien(MaNV),
+);
