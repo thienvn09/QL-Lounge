@@ -113,6 +113,31 @@ CREATE TABLE PhieuNhapKho(
 	FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV),
 
 );
+CREATE TABLE ChiTietPhieuNhapKho(
+	MaChiTietPhieuNhap INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	MaPhieuNhap INT not null, -- tham chiếu tới bang phiếu nhập
+	MaSanPham INT not null,
+	SoLuong INT Not Null, -- số lượng nhập
+	DonGia DECIMAL(10, 2) NOT NULL, -- Đơn giá nhập
+	ThanhTien AS (SoLuong * DonGia), -- Thành tiền tự động tính
+    FOREIGN KEY (MaPhieuNhap) REFERENCES PhieuNhapKho(MaPhieuNhap),
+    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+);
+CREATE TABLE PhieuXuatKho (
+    MaPhieuXuat INT PRIMARY KEY IDENTITY(1,1),
+    NgayXuat DATE NOT NULL DEFAULT GETDATE(), -- Ngày xuất kho
+    MaNhanVien INT, -- Người thực hiện xuất kho (tham chiếu đến bảng NhanVien)
+    GhiChu NVARCHAR(MAX),
+    FOREIGN KEY (MaNhanVien) REFERENCES NhanVien(MaNV)
+);
+CREATE TABLE ChiTietPhieuXuat (
+    MaChiTietXuat INT PRIMARY KEY IDENTITY(1,1),
+    MaPhieuXuat INT, -- Tham chiếu đến bảng PhieuXuatKho
+    MaSanPham INT, -- Tham chiếu đến bảng SanPham
+    SoLuong INT NOT NULL, -- Số lượng xuất
+    FOREIGN KEY (MaPhieuXuat) REFERENCES PhieuXuatKho(MaPhieuXuat),
+    FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+);
 CREATE TABLE BaoCao(
 	MaBaoCao INT PRIMARY KEY IDENTITY(1,1),
 	LoaiBaoCao NVARCHAR(20) NOT NULL Check( LoaiBaoCao In('Hàng Ngày','Hàng Tháng','Hàng năm')),
