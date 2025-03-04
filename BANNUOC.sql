@@ -59,6 +59,17 @@ CREATE TABLE Ban(
 	KhuVuc NVARCHAR(20) NOT NULL CHECK( KhuVuc In('Nhà Hàng','Quầy Bar')),
 	TrangThai NVARCHAR(20) NOT NULL CHECK( TrangThai IN('Trống','Đang sử dụng')),
 );
+CREATE TABLE Voucher(
+	MaVoucher INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	MaKhachHang INT, -- tham chiếu tới bảng khách hàng
+	MaSanPham INT, -- tham chiếu tới bảng sản phẩm
+	GiaTri DECIMAL(10,2) NOT NULL,
+	NgayHetHan DATE,
+	TrangThai NVARCHAR(20) NOT NULL CHECK(TrangThai IN('Đã sử dụng' , 'Chưa sử dụng')),
+	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang),
+	FOREIGN KEY (MaSanPham) REFERENCES SanPham(MaSanPham)
+);
+
 CREATE TABLE HoaDon(
 	MaHoaDon INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	MaKhachHang INT  NOT NULL, -- tham chiếu tới bảng khách hàng
