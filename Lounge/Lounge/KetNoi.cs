@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,23 +10,116 @@ namespace Lounge
 {
     internal class KetNoi
     {
-        string sql ="LAPTOP-HCQ7FVIS\SQLEXPRESS;Initial Catalog=QLNhaHang;Integrated Security=True";
-        public SqlConnection conn = null;
-        public void MoKetNoi()
+        static string ketnoi = "Data Source=DESKTOP-1A2B3C4;Initial Catalog=QuanLyBanHang;Integrated Security=True";
+        public SqlConnection GetConnect()
         {
-            conn = new SqlConnection(sql);
-            if (conn.State == ConnectionState.Closed)
+            SqlConnection conn = new SqlConnection(ketnoi);
+            conn.Open();
+            return conn;
+        }
+        public string GetConnectionString()
+        {
+            return ketnoi;
+        }
+
+        public int ExecuteNonQuery(string query, List<SqlParameter> parameters = null)
+        {
+            int data = 0;
+
+            // Sử dụng 'using' để tự động đóng kết nối
+            using (SqlConnection conn = new SqlConnection(ketnoi))
             {
                 conn.Open();
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    if (parameters != null)
+                    {
+                        cmd.Parameters.AddRange(parameters.ToArray()); // Thêm tham số vào câu lệnh
+                    }
+                    data = cmd.ExecuteNonQuery();  // Thực thi câu lệnh
+                }
             }
+            return data;
         }
-        public void DongKetNoi()
+        // thong tin tai khoan
+        public DataTable DangNhap()
         {
-            if (conn.State == ConnectionState.Open)
+            DataTable tb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ketnoi))
             {
-                conn.Close();
+                conn.Open();
+                string query = "select * from DangNhap";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
             }
+            return tb;
         }
-        
+        // thong tin khach hang
+        public DataTable KhachHang()
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection conn = new SqlConnection(ketnoi))
+            {
+                conn.Open();
+                string query = "select * from KhachHang";
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+            }
+            return tb;
+        }
+        // thong tin nhan vien
+        public DataTable NhanVien()
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection con = new SqlConnection(ketnoi))
+            {
+                con.Open();
+                string query = "select * from NhanVien";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+            }
+            return tb;
+        }
+        // thong tin san pham
+        public DataTable SanPham()
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection con = new SqlConnection(ketnoi))
+            {
+                con.Open();
+                string query = "select * from SanPham";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+            }
+            return tb;
+        }
+        // thong tin bàn
+        public DataTable Ban()
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection con = new SqlConnection(ketnoi))
+            {
+                con.Open();
+                string query = "select * from Ban";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+            }
+            return tb;
+        }
     }
 }

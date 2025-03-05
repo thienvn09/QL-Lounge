@@ -7,7 +7,19 @@
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -18,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,20 +42,67 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "packages.config",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\packages.config",
+              "RelativeDocumentMoniker": "Lounge\\packages.config",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\packages.config",
+              "RelativeToolTip": "Lounge\\packages.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-03-05T03:06:39.569Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.config",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\App.config",
+              "RelativeDocumentMoniker": "Lounge\\App.config",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\App.config",
+              "RelativeToolTip": "Lounge\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-03-05T03:06:37.131Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Form1.cs",
+              "RelativeDocumentMoniker": "Lounge\\Form1.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Form1.cs",
+              "RelativeToolTip": "Lounge\\Form1.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAewBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T03:06:00.561Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f4fc5ff1-28ef-4b04-ad02-6b298310ccc7}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "KetNoi.cs",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
               "RelativeDocumentMoniker": "Lounge\\KetNoi.cs",
               "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
               "RelativeToolTip": "Lounge\\KetNoi.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAHUAAAA6AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T17:16:51.47Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Form1.cs",
               "RelativeDocumentMoniker": "Lounge\\Form1.cs",
@@ -52,10 +111,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T17:14:47.345Z",
               "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
             }
           ]
         },

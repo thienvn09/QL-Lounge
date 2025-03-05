@@ -3,7 +3,11 @@
   "WorkspaceRootPath": "D:\\QL-Lounge\\Lounge\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -25,8 +29,25 @@
               "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{f4fc5ff1-28ef-4b04-ad02-6b298310ccc7}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "KetNoi.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
+              "RelativeDocumentMoniker": "Lounge\\KetNoi.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
+              "RelativeToolTip": "Lounge\\KetNoi.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T17:16:51.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Design]",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Form1.cs",
               "RelativeDocumentMoniker": "Lounge\\Form1.cs",
