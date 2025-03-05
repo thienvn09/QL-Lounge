@@ -93,3 +93,4 @@ D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.csproj.CoreCompileInputs.cache
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.csproj.Up2Date
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.exe
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.pdb
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.DangNhap.resources

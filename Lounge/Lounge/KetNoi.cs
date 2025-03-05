@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Lounge
 {
-    internal class KetNoi
+    public class KetNoi
     {
-        static string ketnoi = "Data Source=DESKTOP-1A2B3C4;Initial Catalog=QuanLyBanHang;Integrated Security=True";
+        static string ketnoi = "Data Source=LAPTOP-HCQ7FVIS\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Security=True";
         public SqlConnection GetConnect()
         {
             SqlConnection conn = new SqlConnection(ketnoi);
@@ -120,6 +120,11 @@ namespace Lounge
                 }
             }
             return tb;
+        }
+        // thong tin hoa don
+        public DataTable HoaDon()
+        {
+            DataTable 
         }
     }
 }
