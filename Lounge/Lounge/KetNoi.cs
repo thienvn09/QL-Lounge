@@ -89,6 +89,22 @@ namespace Lounge
             }
             return tb;
         }
+        // danh muc san pham
+        public DataTable DanhMucSanPham()
+        {
+            DataTable tb = new DataTable();
+            using (SqlConnection con = new SqlConnection(ketnoi))
+            {
+                con.Open();
+                string query = "select * from DanhMucSanPham";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+            }
+            return tb;
+        }
         // thong tin san pham
         public DataTable SanPham()
         {
@@ -124,7 +140,19 @@ namespace Lounge
         // thong tin hoa don
         public DataTable HoaDon()
         {
-            DataTable 
+            DataTable tb = new DataTable();
+            using (SqlConnection con = new SqlConnection(ketnoi))
+            {
+                con.Open();
+                string query = "select * from HoaDon";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    adapter.Fill(tb);
+                }
+
+            }
+            return tb;
         }
     }
 }

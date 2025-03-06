@@ -10,18 +10,11 @@ using System.Windows.Forms;
 
 namespace Lounge
 {
-    public partial class TrangChu : Form
+    public partial class Test : Form
     {
-        public KetNoi KetNoi = new KetNoi();
-        public TrangChu()
+        public Test()
         {
             InitializeComponent();
-        }
-       
-        private void TrangChu_Load(object sender, EventArgs e)
-        {
-            KetNoi.GetConnect();
-
         }
     }
 }

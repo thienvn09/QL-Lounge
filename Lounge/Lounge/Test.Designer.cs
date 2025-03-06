@@ -1,6 +1,6 @@
 ﻿namespace Lounge
 {
-    partial class TrangChu
+    partial class Test
     {
         /// <summary>
         /// Required designer variable.
@@ -28,31 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.SuspendLayout();
-            // 
-            // panel1
-            // 
-            this.panel1.Location = new System.Drawing.Point(1, 1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(296, 47);
-            this.panel1.TabIndex = 1;
-            // 
-            // TrangChu
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1244, 599);
-            this.Controls.Add(this.panel1);
-            this.Name = "TrangChu";
-            this.Text = "TrangChu";
-            this.Load += new System.EventHandler(this.TrangChu_Load);
-            this.ResumeLayout(false);
-
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Text = "Test";
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel panel1;
     }
 }
