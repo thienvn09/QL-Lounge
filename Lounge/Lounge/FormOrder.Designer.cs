@@ -1,6 +1,6 @@
 ﻿namespace Lounge
 {
-    partial class TrangChu
+    partial class FormOrder
     {
         /// <summary>
         /// Required designer variable.
@@ -28,33 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnBan = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // btnBan
-            // 
-            this.btnBan.Location = new System.Drawing.Point(82, 114);
-            this.btnBan.Name = "btnBan";
-            this.btnBan.Size = new System.Drawing.Size(149, 60);
-            this.btnBan.TabIndex = 0;
-            this.btnBan.Text = "btnBan";
-            this.btnBan.UseVisualStyleBackColor = true;
-            // 
-            // TrangChu
+            // FormOrder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1244, 599);
-            this.Controls.Add(this.btnBan);
-            this.Name = "TrangChu";
-            this.Text = "TrangChu";
-            this.Load += new System.EventHandler(this.TrangChu_Load);
+            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Name = "FormOrder";
+            this.Text = "FormOrder";
+            this.Load += new System.EventHandler(this.FormOrder_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnBan;
     }
 }
