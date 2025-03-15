@@ -1,0 +1,139 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\QL-Lounge\\DoAnNho\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|d:\\ql-lounge\\doannho\\doannho\\pl\\loginformpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|solutionrelative:doannho\\pl\\loginformpl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|d:\\ql-lounge\\doannho\\doannho\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|solutionrelative:doannho\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|d:\\ql-lounge\\doannho\\doannho\\dal\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|solutionrelative:doannho\\dal\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|DoAnNho||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|d:\\ql-lounge\\doannho\\doannho\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|solutionrelative:doannho\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52619F10-9869-48FE-87F5-6966A74E9846}|DoAnNho\\DoAnNho.csproj|d:\\ql-lounge\\doannho\\doannho\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|5e9a8ac2-4f34-4521-858f-4c248ba31532"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LoginFormPL.cs [Design]",
+              "DocumentMoniker": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\PL\\LoginFormPL.cs",
+              "RelativeDocumentMoniker": "DoAnNho\\PL\\LoginFormPL.cs",
+              "ToolTip": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\PL\\LoginFormPL.cs [Design]",
+              "RelativeToolTip": "DoAnNho\\PL\\LoginFormPL.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T08:17:33.658Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Database.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\DAL\\Database.cs",
+              "RelativeDocumentMoniker": "DoAnNho\\DAL\\Database.cs",
+              "ToolTip": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\DAL\\Database.cs",
+              "RelativeToolTip": "DoAnNho\\DAL\\Database.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T07:52:23.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DoAnNho",
+              "DocumentMoniker": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\DoAnNho.csproj",
+              "RelativeDocumentMoniker": "DoAnNho\\DoAnNho.csproj",
+              "ToolTip": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\DoAnNho.csproj",
+              "RelativeToolTip": "DoAnNho\\DoAnNho.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-03-15T06:22:42.648Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.config",
+              "DocumentMoniker": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\App.config",
+              "RelativeDocumentMoniker": "DoAnNho\\App.config",
+              "ToolTip": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\App.config",
+              "RelativeToolTip": "DoAnNho\\App.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-03-15T06:22:38.969Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\Program.cs",
+              "RelativeDocumentMoniker": "DoAnNho\\Program.cs",
+              "ToolTip": "D:\\QL-Lounge\\DoAnNho\\DoAnNho\\Program.cs",
+              "RelativeToolTip": "DoAnNho\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-15T06:22:29.52Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 203,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:3:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
