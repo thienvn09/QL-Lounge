@@ -26,5 +26,9 @@ namespace Lounge.DAL
             TrangThai = trangthai;
             GhiChu = ghichu;
         }
+        public void XemSoBan(int maban)
+        {
+
+        }
     }
 }

@@ -3,40 +3,51 @@
   "WorkspaceRootPath": "D:\\QL-Lounge\\Lounge\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.xss||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xss||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.xsc||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xsc||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\dal\\bandal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\dal\\bandal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\dal\\bandal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\dal\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\dal\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Lounge||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\ql.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xsd||{07AC752B-D2B0-4DCD-AD9C-237BF561A30A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\ql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\ql.xss||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xss||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\ql.xsc||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.xsc||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\ql.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ql.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\formorder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -47,16 +58,12 @@
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\dangnhap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\trangchu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\ketnoi.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -67,8 +74,7 @@
       "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|D:\\QL-Lounge\\Lounge\\lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|solutionrelative:lounge\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{7EA3F52D-013E-48D7-B945-0291F0D47635}|Lounge\\Lounge.csproj|d:\\ql-lounge\\lounge\\lounge\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|a54ad834-9219-4aa6-b589-607af21c3e26"
     }
   ],
   "DocumentGroupContainers": [
@@ -78,11 +84,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 11,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 13,
               "Title": "DangNhap.cs",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\DangNhap.cs",
               "RelativeDocumentMoniker": "Lounge\\DangNhap.cs",
@@ -91,12 +97,11 @@
               "ViewState": "AgIAAEsAAAAAAAAAAADwv1wAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T03:42:45.555Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 12,
               "Title": "DangNhap.cs [Design]",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\DangNhap.cs",
               "RelativeDocumentMoniker": "Lounge\\DangNhap.cs",
@@ -104,110 +109,32 @@
               "RelativeToolTip": "Lounge\\DangNhap.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-05T03:42:20.386Z",
-              "IsPinned": true,
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "QL.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.cs",
-              "RelativeDocumentMoniker": "Lounge\\QL.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.cs",
-              "RelativeToolTip": "Lounge\\QL.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:23:41.799Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "QL.xss",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xss",
-              "RelativeDocumentMoniker": "Lounge\\QL.xss",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xss",
-              "RelativeToolTip": "Lounge\\QL.xss",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOhSURBVDhPnZTdaxxVGMZ/MzvZbDZfXVKyVUzTaBqltg0JbbYQMYg3gkWxBVv0QvBSpCr\u002BA96JCkIpQgVpMfZCG0VMWhttQzGmJm2sbXORhJoYTNp8p8nOzuzO7JwPL3aT3YTSCx94OHA478Nznvec1\u002BjuH9daa82joEFIgZACrTYflVKgpGTy7ujwRx\u002B\u002B3WZ094/r5sa4rigvyVVuQAMqt2qFRoAWubXonNaSvoFRvviya3jgYmfCVEpRUW4RqwxvYQmxSotYZYjSUoPB8RBX7lj03rT4aSjE\u002BYEQZ3o97s3NoP0pHqyuAWBKKUHLvBtZRLHBQAhuTUhuTpgMT5QyMBamb8Tih989pqZn0f4S66GZUkq0zgnoLcwJBphmQFUk4MnHIzTtrOCpJyqoj0coIQUiDUpsRGBKUXDycAaYRpa66kVe3BtwvD3EG8\u002BZHDmo2Jb\u002BFdKT\u002BRvlYEkp\u002BepnByxByDTxAkUmgOSaw8sJg8rgDp98dpbDx99DN9YhhCIbKIJAopXA0NlNnbeEENy95xMpjxKNRrBdRcpTTM8ELE0O0FQ1Qnv7PgwUvVf/IJ3x8LIKJ53FcVJoFdokaAopiJpJGncoDjRFaWksY39DhEpzgaW5v4lGLU6cOMbuhjIymWmWl0dx7DEQExxsjhGvCYMuZGhJIagNz9NWX83\u002BPXFsV7NiK0b7b/DC0ad56/UDgKAjEaYj0VyUbS637PxtpqaTBYdSSpLJFI7rk/ElKU/heBKpyBd5gF/E7GZqf4tDKZFa0HO5nwtX\u002BgmEJhto7s/Ncu7cEPP/3OLd99\u002BkZ\u002BgxUmmDQMh84xS27fBqYwhUUZcBEq3bybiruGk3v23Q\u002BmwD9rJF2l7k5MkfcWLvYJbW4AkD25UkM5LpGUUiptHFDgE6DtUSr4nnf8s6BLCXa9dG\u002BPjTCxx6xaG\u002BbgeYpaw6gpVkloV/F0G4bHwTwCwUb8kmz/b23XR99wH7dvk8/0zAa20mRxMmh1sk1ZmrGP4sGKGHCQaPpFSCbKBIexIno3AzEqXJNaToynnBdegiFqC0wvd9urov8/nprzl99hu\u002B/f48tp0EI0RJOEy0LOcyLyiRvo10lwp0FpGpRYS9gOHOs6tqgu3WX2zjOrXWderL/\u002BSlVped8ZzCeozGqc5LumXPqo7q\u002B2iv8EBRElR\u002B6qj8iFMBqNx00utPRUt\u002BGzE502MPjw12J4xTnZf0xV/6WHmwWhD7H3DWlm6MDXYn/gOQmDCXD4f5nAAAAABJRU5ErkJggg==",
-              "WhenOpened": "2025-03-07T18:23:29.234Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "QL.xsc",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsc",
-              "RelativeDocumentMoniker": "Lounge\\QL.xsc",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsc",
-              "RelativeToolTip": "Lounge\\QL.xsc",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001612|",
-              "WhenOpened": "2025-03-07T18:23:28.227Z",
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "QL.Designer.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.Designer.cs",
-              "RelativeDocumentMoniker": "Lounge\\QL.Designer.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.Designer.cs",
-              "RelativeToolTip": "Lounge\\QL.Designer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:23:26.935Z",
+              "Title": "Lounge",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Lounge.csproj",
+              "RelativeDocumentMoniker": "Lounge\\Lounge.csproj",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Lounge.csproj",
+              "RelativeToolTip": "Lounge\\Lounge.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-03-08T05:27:56.423Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "QL.xsd",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsd",
-              "RelativeDocumentMoniker": "Lounge\\QL.xsd",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsd",
-              "RelativeToolTip": "Lounge\\QL.xsd",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
-              "WhenOpened": "2025-03-07T18:22:53.507Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BanDAL.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\BanDAL.cs",
-              "RelativeDocumentMoniker": "Lounge\\DAL\\BanDAL.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\BanDAL.cs",
-              "RelativeToolTip": "Lounge\\DAL\\BanDAL.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAADwvxsAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "KetNoi.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\KetNoi.cs",
+              "RelativeDocumentMoniker": "Lounge\\DAL\\KetNoi.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\KetNoi.cs",
+              "RelativeToolTip": "Lounge\\DAL\\KetNoi.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAgwBQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:22:06.898Z",
+              "WhenOpened": "2025-03-08T05:26:30.022Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "FormOrder.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
-              "RelativeDocumentMoniker": "Lounge\\FormOrder.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
-              "RelativeToolTip": "Lounge\\FormOrder.cs",
-              "ViewState": "AgIAAAQAAAAAAAAAAADwvw0AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:01:35.643Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "FormOrder.cs [Design]",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
-              "RelativeDocumentMoniker": "Lounge\\FormOrder.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs [Design]",
-              "RelativeToolTip": "Lounge\\FormOrder.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-07T18:01:34.013Z",
-              "EditorCaption": " [Design]"
             },
             {
               "$type": "Bookmark",
@@ -223,31 +150,83 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "TrangChu.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\TrangChu.cs",
-              "RelativeDocumentMoniker": "Lounge\\TrangChu.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\TrangChu.cs",
-              "RelativeToolTip": "Lounge\\TrangChu.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAYwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T07:34:53.795Z",
+              "DocumentIndex": 5,
+              "Title": "QL.xsd",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsd",
+              "RelativeDocumentMoniker": "Lounge\\QL.xsd",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsd",
+              "RelativeToolTip": "Lounge\\QL.xsd",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003579|",
+              "WhenOpened": "2025-03-07T18:22:53.507Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "Test.cs [Design]",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Test.cs",
-              "RelativeDocumentMoniker": "Lounge\\Test.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Test.cs [Design]",
-              "RelativeToolTip": "Lounge\\Test.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T07:30:49.197Z"
+              "DocumentIndex": 7,
+              "Title": "QL.xss",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xss",
+              "RelativeDocumentMoniker": "Lounge\\QL.xss",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xss",
+              "RelativeToolTip": "Lounge\\QL.xss",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAQAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAOhSURBVDhPnZTdaxxVGMZ/MzvZbDZfXVKyVUzTaBqltg0JbbYQMYg3gkWxBVv0QvBSpCr\u002BA96JCkIpQgVpMfZCG0VMWhttQzGmJm2sbXORhJoYTNp8p8nOzuzO7JwPL3aT3YTSCx94OHA478Nznvec1\u002BjuH9daa82joEFIgZACrTYflVKgpGTy7ujwRx\u002B\u002B3WZ094/r5sa4rigvyVVuQAMqt2qFRoAWubXonNaSvoFRvviya3jgYmfCVEpRUW4RqwxvYQmxSotYZYjSUoPB8RBX7lj03rT4aSjE\u002BYEQZ3o97s3NoP0pHqyuAWBKKUHLvBtZRLHBQAhuTUhuTpgMT5QyMBamb8Tih989pqZn0f4S66GZUkq0zgnoLcwJBphmQFUk4MnHIzTtrOCpJyqoj0coIQUiDUpsRGBKUXDycAaYRpa66kVe3BtwvD3EG8\u002BZHDmo2Jb\u002BFdKT\u002BRvlYEkp\u002BepnByxByDTxAkUmgOSaw8sJg8rgDp98dpbDx99DN9YhhCIbKIJAopXA0NlNnbeEENy95xMpjxKNRrBdRcpTTM8ELE0O0FQ1Qnv7PgwUvVf/IJ3x8LIKJ53FcVJoFdokaAopiJpJGncoDjRFaWksY39DhEpzgaW5v4lGLU6cOMbuhjIymWmWl0dx7DEQExxsjhGvCYMuZGhJIagNz9NWX83\u002BPXFsV7NiK0b7b/DC0ad56/UDgKAjEaYj0VyUbS637PxtpqaTBYdSSpLJFI7rk/ElKU/heBKpyBd5gF/E7GZqf4tDKZFa0HO5nwtX\u002BgmEJhto7s/Ncu7cEPP/3OLd99\u002BkZ\u002BgxUmmDQMh84xS27fBqYwhUUZcBEq3bybiruGk3v23Q\u002BmwD9rJF2l7k5MkfcWLvYJbW4AkD25UkM5LpGUUiptHFDgE6DtUSr4nnf8s6BLCXa9dG\u002BPjTCxx6xaG\u002BbgeYpaw6gpVkloV/F0G4bHwTwCwUb8kmz/b23XR99wH7dvk8/0zAa20mRxMmh1sk1ZmrGP4sGKGHCQaPpFSCbKBIexIno3AzEqXJNaToynnBdegiFqC0wvd9urov8/nprzl99hu\u002B/f48tp0EI0RJOEy0LOcyLyiRvo10lwp0FpGpRYS9gOHOs6tqgu3WX2zjOrXWderL/\u002BSlVped8ZzCeozGqc5LumXPqo7q\u002B2iv8EBRElR\u002B6qj8iFMBqNx00utPRUt\u002BGzE502MPjw12J4xTnZf0xV/6WHmwWhD7H3DWlm6MDXYn/gOQmDCXD4f5nAAAAABJRU5ErkJggg==",
+              "WhenOpened": "2025-03-07T18:23:29.234Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
+              "Title": "QL.xsc",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsc",
+              "RelativeDocumentMoniker": "Lounge\\QL.xsc",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.xsc",
+              "RelativeToolTip": "Lounge\\QL.xsc",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001612|",
+              "WhenOpened": "2025-03-07T18:23:28.227Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "QL.Designer.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.Designer.cs",
+              "RelativeDocumentMoniker": "Lounge\\QL.Designer.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.Designer.cs",
+              "RelativeToolTip": "Lounge\\QL.Designer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T18:23:26.935Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BanDAL.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\BanDAL.cs",
+              "RelativeDocumentMoniker": "Lounge\\DAL\\BanDAL.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\DAL\\BanDAL.cs",
+              "RelativeToolTip": "Lounge\\DAL\\BanDAL.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAA6wB8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T18:22:06.898Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FormOrder.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
+              "RelativeDocumentMoniker": "Lounge\\FormOrder.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
+              "RelativeToolTip": "Lounge\\FormOrder.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAADwvw0AAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T18:01:35.643Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "TrangChu.cs [Design]",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\TrangChu.cs",
               "RelativeDocumentMoniker": "Lounge\\TrangChu.cs",
@@ -259,19 +238,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Program.cs",
-              "RelativeDocumentMoniker": "Lounge\\Program.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Program.cs",
-              "RelativeToolTip": "Lounge\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAoAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-05T03:46:11.929Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 2,
               "Title": "App.config",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\App.config",
               "RelativeDocumentMoniker": "Lounge\\App.config",
@@ -284,19 +251,71 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "KetNoi.cs",
-              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
-              "RelativeDocumentMoniker": "Lounge\\KetNoi.cs",
-              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\KetNoi.cs",
-              "RelativeToolTip": "Lounge\\KetNoi.cs",
-              "ViewState": "AgIAAFEAAAAAAAAAAAAwwG0AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "QL.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.cs",
+              "RelativeDocumentMoniker": "Lounge\\QL.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\QL.cs",
+              "RelativeToolTip": "Lounge\\QL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T17:16:51.47Z"
+              "WhenOpened": "2025-03-07T18:23:41.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FormOrder.cs [Design]",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs",
+              "RelativeDocumentMoniker": "Lounge\\FormOrder.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\FormOrder.cs [Design]",
+              "RelativeToolTip": "Lounge\\FormOrder.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-07T18:01:34.013Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "TrangChu.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\TrangChu.cs",
+              "RelativeDocumentMoniker": "Lounge\\TrangChu.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\TrangChu.cs",
+              "RelativeToolTip": "Lounge\\TrangChu.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAYwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T07:34:53.795Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 15,
+              "Title": "Test.cs [Design]",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Test.cs",
+              "RelativeDocumentMoniker": "Lounge\\Test.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Test.cs [Design]",
+              "RelativeToolTip": "Lounge\\Test.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T07:30:49.197Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\Program.cs",
+              "RelativeDocumentMoniker": "Lounge\\Program.cs",
+              "ToolTip": "D:\\QL-Lounge\\Lounge\\Lounge\\Program.cs",
+              "RelativeToolTip": "Lounge\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-05T03:46:11.929Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
               "Title": "packages.config",
               "DocumentMoniker": "D:\\QL-Lounge\\Lounge\\Lounge\\packages.config",
               "RelativeDocumentMoniker": "Lounge\\packages.config",

@@ -1,0 +1,3 @@
+ALTER TABLE Payments
+ADD TransactionId NVARCHAR(50) NULL,
+    Status NVARCHAR(50) NULL;

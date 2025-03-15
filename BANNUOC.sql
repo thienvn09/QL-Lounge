@@ -152,6 +152,8 @@ CREATE TABLE BaoCao(
 	GhiChu Nvarchar(MAX) Not NULL,
 	FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
 );
+
+
 --SELECT COUNT(*) AS SoLuongBang
 --FROM sys.objects
 --WHERE type = 'U'; -- 'U' là loại User Table
