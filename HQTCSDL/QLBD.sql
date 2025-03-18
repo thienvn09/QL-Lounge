@@ -347,6 +347,23 @@ FROM CAULACBO as CLB
 where  qg.TENQG != N'Việt Nam' 
 GROUP BY CLB.MACLB , CLB.TENCLB , s.TENSAN, s.DiaChi 
 Having COUNT(*) > 2
+-- câu 4
+/*Cho biết tên tỉnh, số lượng cầu thủ đang thi đấu ở vị trí tiền đạo trong các câu lạc 
+bộ thuộc địa bàn tỉnh đó quản lý.  */
+SELECT T.TENTINH , COUNT(*) as SoLuongTienDao
+FROM TINH as T
+	join CAULACBO as clb on clb.MATINH = T.MATINH
+	join CAUTHU	  as C   on  C.MACLB = clb.MACLB
+where C.VITRI like N'Tiền đạo' 
+GROUP by t.TENTINH ,C.MACT
+/*. Cho biết tên câu lạc bộ, tên tỉnh mà CLB đang đóng nằm ở vị trí cao nhất của bảng 
+xếp hạng vòng 3, năm 2009.  */
+Select clb.TENCLB,T.TENTINH
+FROM CAULACBO as clb
+	join TINH as T on T.MATINH = clb.MATINH
+	join BANGXH as B on B.MACLB =clb.MACLB
+where B.HANG = '1' and B.VONG = '3' and B.NAM ='2009'
+GROUP by clb.TENCLB , T.TENTINH
 
 
 
