@@ -328,7 +328,25 @@ FROM CAUTHU as c
 	join CAULACBO as clb on clb.MACLB = c.MACLB
 group by clb.TENCLB
 -- cau 2
-
+--  Thống kê số lượng cầu thủ nước ngoài (có quốc tịch khác Việt Nam) của mỗi câu lạc bộ
+Select clb.MACLB,clb.TENCLB, COUNT( c.MACT) as SoLuongNuocNgoai
+FROM CAUTHU as c
+	join QuocGia as qg on qg.MAQG = c.MAQG
+	join CAULACBO as clb on clb.MACLB = c.MACLB
+where qg.TENQG != N'Việt Nam'
+GROUP BY clb.MACLB, clb.TENCLB
+-- cau 3
+--Cho biết mã câu lạc bộ, tên câu lạc bộ, tên sân vận động, địa chỉ và số lượng cầu 
+--thủ nước ngoài (có quốc tịch khác Việt Nam) tương ứng của các câu lạc bộ có nhiều 
+--hơn 2 cầu thủ nước ngoài. 
+SELECT CLB.MACLB,CLB.TENCLB, S.TENSAN, S.Diachi ,COUNT(*) as SoLuongCauthu
+FROM CAULACBO as CLB 
+	join SANVD as S on S.MASAN = CLB.MASAN
+	join CAUTHU as C on C.MACLB = CLB.MACLB
+	join Quocgia as qg on qg.MAQG = C.MAQG
+where  qg.TENQG != N'Việt Nam' 
+GROUP BY CLB.MACLB , CLB.TENCLB , s.TENSAN, s.DiaChi 
+Having COUNT(*) > 2
 
 
 
