@@ -6,21 +6,22 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 using System.Windows.Forms;
 
 namespace Lounge
 {
     public partial class TrangChu : Form
     {
-        public KetNoi KetNoi = new KetNoi();
-        public TrangChu()
+
+        private Timer timer;
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
+            this.Close();
         }
-       
+
         private void TrangChu_Load(object sender, EventArgs e)
         {
-            KetNoi.GetConnect();
 
         }
     }

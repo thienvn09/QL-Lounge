@@ -94,3 +94,5 @@ D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.csproj.Up2Date
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.exe
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.pdb
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.DangNhap.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormOrder.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.TrangChu.resources

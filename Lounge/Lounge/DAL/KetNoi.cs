@@ -10,7 +10,7 @@ namespace Lounge
 {
     public class KetNoi
     {
-        static string ketnoi = "Data Source=LAPTOP-HCQ7FVIS\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Security=True";
+        static string ketnoi = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Security=True";
         public SqlConnection GetConnect()
         {
             SqlConnection conn = new SqlConnection(ketnoi);
@@ -153,6 +153,11 @@ namespace Lounge
 
             }
             return tb;
+        }
+
+        internal DataTable ExecuteQuery(string query, List<SqlParameter> parameters)
+        {
+            throw new NotImplementedException();
         }
     }
 }
