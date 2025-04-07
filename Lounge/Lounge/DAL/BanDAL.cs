@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lounge.Model;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,45 +11,28 @@ namespace Lounge.DAL
 {
     public class BanDAL
     {
-        public int MaBan { get; set; }
-        public string TenBan { get; set; }
-        public string TrangThai { get; set; }
-        public string GhiChu { get; set; }
-        public BanDAL()
+
+        private KetNoi KetNoi = new KetNoi();
+        public List<Ban> GetAllBan()
         {
-            MaBan = 0;
-            TenBan = "";
-            TrangThai = "";
-            GhiChu = "";
-        }
-        public BanDAL(int maban, string tenban, string trangthai, string ghichu)
-        {
-            MaBan = maban;
-            TenBan = tenban;
-            TrangThai = trangthai;
-            GhiChu = ghichu;
-        }
-        public void XemSoBan()
-        {
-            KetNoi kn = new KetNoi();
+            List<Ban> dsban = new List<Ban>();
             string query = "select * from Ban";
-            List<SqlParameter> parameters = new List<SqlParameter>();
-            DataTable dt = kn.ExecuteQuery(query, parameters);
-            if (dt.Rows.Count > 0)
+            SqlCommand cmd = new SqlCommand(query, KetNoi.GetConnect());
+            SqlDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
             {
-                foreach (DataRow row in dt.Rows)
-                {
-                    Console.WriteLine("Mã bàn: " + row["MaBan"]);
-                    Console.WriteLine("Tên bàn: " + row["TenBan"]);
-                    Console.WriteLine("Trạng thái: " + row["TrangThai"]);
-                    Console.WriteLine("Ghi chú: " + row["GhiChu"]);
-                }
+                Ban ban = new Ban();
+                ban.MaBan = reader.GetInt32(0);
+                ban.SoBan = reader.GetString(1);
+                ban.SoChoNgoi = reader.GetInt32(2);
+                ban.KhuVuc = reader.GetString(3);
+                ban.TrangThai = reader.GetString(4);
+                dsban.Add(ban);
             }
-            else
-            {
-                Console.WriteLine("Không có dữ liệu trong bảng Ban.");
-            }
+            KetNoi.GetConnect().Close();
+            return dsban;
         }
 
     }
+   
 }

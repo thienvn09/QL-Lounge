@@ -26,8 +26,8 @@ namespace Lounge.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-HCQ7FVIS\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Secu" +
-            "rity=True;Encrypt=True;TrustServerCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=LAPTOP-HCQ7FVIS\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Sec" +
+            "urity=True;Encrypt=True;TrustServerCertificate=True")]
         public string QL_NHAHANGConnectionString {
             get {
                 return ((string)(this["QL_NHAHANGConnectionString"]));

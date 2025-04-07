@@ -1,6 +1,6 @@
-CREATE DATABASE QL_NHAHANG
+CREATE DATABASE QL_NHAHANG1
 GO
-USE QL_NHAHANG
+USE QL_NHAHANG1
 GO
 CREATE TABLE KhachHang(
 	MaKhachHang INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -13,7 +13,7 @@ CREATE TABLE KhachHang(
 CREATE TABLE NhanVien(
 	MaNV INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	HoTen NVARCHAR(100) NOT NULL,
-	ChucVu NVARCHAR(20) NOT NULL CHECK (ChucVu IN ('Nhân viên', 'Quản lý')), /* CÓ THỂ LÀ QUẢN LÝ , nhân viên */
+	ChucVu NVARCHAR(20) NOT NULL CHECK (ChucVu IN (N'Nhân viên', N'Quản lý')), /* CÓ THỂ LÀ QUẢN LÝ , nhân viên */
 	SDT_NV VARCHAR(15) NOT NULL UNIQUE,
 	Email_NV NVARCHAR(100) UNIQUE,
 	NgayTao  DATETIME DEFAULT GETDATE(),
@@ -25,13 +25,13 @@ CREATE TABLE DangNhap(
 	MatKhau VARCHAR(50) NOT NULL,
 	MaNV INT not null,
 	NgayTao DATETIME DEFAULT GETDATE(),
-	TrangThai NVARCHAR(20) NOT NULL CHECK(TrangThai IN('Hoạt động','Khóa')),
+	TrangThai NVARCHAR(20) NOT NULL CHECK(TrangThai IN(N'Hoạt động',N'Khóa')),
 	FOREIGN KEY (MaNV) REFERENCES NhanVien(MaNV) ON DELETE CASCADE
 );
 CREATE TABLE DanhMucSanPham (
     MaDanhMuc INT PRIMARY KEY IDENTITY(1,1),
     TenDanhMuc NVARCHAR(100) NOT NULL,
-    Loai NVARCHAR(20) NOT NULL CHECK (Loai IN ('Đồ uống', 'Món ăn')), -- Loại sản phẩm
+    Loai NVARCHAR(20) NOT NULL CHECK (Loai IN (N'Đồ uống', N'Món ăn')), -- Loại sản phẩm
     ThueVAT DECIMAL(5, 2) NOT NULL CHECK (ThueVAT IN (8.00, 10.00)), -- Thuế VAT (8% hoặc 10%)
     MoTa NVARCHAR(MAX)
 );
@@ -56,8 +56,8 @@ CREATE TABLE Ban(
 	MaBan INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	SoBan NVARCHAR(40) NOT NULL,
 	SoChoNgoi INT NOT NULL,
-	KhuVuc NVARCHAR(20) NOT NULL CHECK( KhuVuc In('Nhà Hàng','Quầy Bar')),
-	TrangThai NVARCHAR(20) NOT NULL CHECK( TrangThai IN('Trống','Đang sử dụng')),
+	KhuVuc NVARCHAR(20) NOT NULL CHECK( KhuVuc In(N'Nhà Hàng',N'Quầy Bar')),
+	TrangThai NVARCHAR(20) NOT NULL CHECK( TrangThai IN(N'Trống',N'Đang sử dụng')),
 );
 CREATE TABLE Voucher(
 	MaVoucher INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
@@ -79,7 +79,7 @@ CREATE TABLE HoaDon(
 	TienGiamGia DECIMAL(10,2) DEFAULT 0.00,
 	TongThueVAT DECIMAL (10,2), -- Tổng tiền thuế
 	ThanhToan AS (TongTien + TongThueVAT - TienGiamGia),
-	TrangThai NVARCHAR(20) DEFAULT 'Chưa thanh toán' CHECK (TrangThai IN ('Chưa thanh toán', 'Đã thanh toán')),
+	TrangThai NVARCHAR(20) DEFAULT 'Chưa thanh toán' CHECK (TrangThai IN (N'Chưa thanh toán', N'Đã thanh toán')),
 	NguoiTao INT,
 	FOREIGN KEY (MaKhachHang) REFERENCES KhachHang(MaKhachHang),
     FOREIGN KEY (MaNhanVien) REFERENCES NhanVien(MaNV),
@@ -140,7 +140,7 @@ CREATE TABLE ChiTietPhieuXuat (
 );
 CREATE TABLE BaoCao(
 	MaBaoCao INT PRIMARY KEY IDENTITY(1,1),
-	LoaiBaoCao NVARCHAR(20) NOT NULL Check( LoaiBaoCao In('Hàng Ngày','Hàng Tháng','Hàng năm')),
+	LoaiBaoCao NVARCHAR(20) NOT NULL Check( LoaiBaoCao In(N'Hàng Ngày',N'Hàng Tháng',N'Hàng năm')),
 	NgayBaoCao DATE NOT NULL,
 	TongDoanhThu DECIMAL(15,2) NOT NULL,-- Tổng doanh thu
 	TongChiPhi DECIMAL(15,2) NOT Null,
@@ -152,8 +152,40 @@ CREATE TABLE BaoCao(
 	GhiChu Nvarchar(MAX) Not NULL,
 	FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
 );
+CREATE VIEW vw_ChiTietBan AS
+SELECT 
+    b.MaBan,
+    b.SoBan,
+    b.KhuVuc,
+    b.TrangThai,
+    hd.MaHoaDon,
+    sp.TenSanPham,
+    cthd.SoLuong,
+    cthd.Gia,
+    cthd.ThueVAT,
+    (cthd.Gia * cthd.SoLuong) AS ThanhTien,
+    (cthd.Gia * cthd.SoLuong * cthd.ThueVAT / 100) AS TienThue,
+    (cthd.Gia * cthd.SoLuong * (1 + cthd.ThueVAT / 100)) AS TongTienMon
+FROM Ban b
+LEFT JOIN HoaDon hd ON b.MaBan = hd.MaBan AND hd.TrangThai = N'Chưa thanh toán'
+LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
+LEFT JOIN SanPham sp ON sp.MaSanPham = cthd.MaSanPham
 
-Use QL_NHAHANG 
+Select *
+FRom Ban
+
+INSERT INTO BAN(SoBan, SoChoNgoi, KhuVuc, TrangThai) VALUES
+(N'Bàn 1', 4, N'Nhà Hàng', N'Trống'),
+(N'Bàn 2', 4, N'Nhà Hàng', N'Trống'),
+(N'Bàn 3', 4, N'Nhà Hàng', N'Trống'),
+(N'Bàn 4', 4, N'Nhà Hàng', N'Trống'),
+(N'Bàn 5', 4, N'Quầy Bar', N'Trống'),
+(N'Bàn 6', 4, N'Quầy Bar', N'Trống'),
+(N'Bàn 7', 4, N'Quầy Bar', N'Trống'),
+(N'Bàn 8', 4, N'Quầy Bar', N'Trống'),
+(N'Bàn 9', 4, N'Quầy Bar', N'Trống'),
+(N'Bàn 10', 4, N'Quầy Bar', N'Trống');
+Use QL_NHAHANG1
 go
 SELECT COUNT(*) AS SoLuongBang
 FROM sys.objects

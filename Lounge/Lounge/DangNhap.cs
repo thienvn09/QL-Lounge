@@ -38,7 +38,6 @@ namespace Lounge
             {
                 MessageBox.Show("Lỗi kết nối: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            SqlConnection cc = KetNoi.GetConnect();
         }
         private void DangNhap_Load(object sender, EventArgs e)
         {
@@ -54,12 +53,13 @@ namespace Lounge
                 {
                     MessageBox.Show("Vui lòng nhập đầy đủ thông tin!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                else if(txtTaiKhoan.Text == "Thien" && txtMatKhau.Text == "1")
+                else if (txtTaiKhoan.Text == "Thien" && txtMatKhau.Text == "1")
                 {
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                     TrangChu TC = new TrangChu();
                     TC.ShowDialog();
+                    this.Show();
                 }
                 else
                 {
@@ -73,6 +73,7 @@ namespace Lounge
                             this.Hide();
                             TrangChu TC = new TrangChu();
                             TC.ShowDialog();
+                            this.Show();
                             break;
                         }
                     }

@@ -10,7 +10,7 @@ namespace Lounge
 {
     public class KetNoi
     {
-        static string ketnoi = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Security=True";
+        static string ketnoi = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True";
         public SqlConnection GetConnect()
         {
             SqlConnection conn = new SqlConnection(ketnoi);
