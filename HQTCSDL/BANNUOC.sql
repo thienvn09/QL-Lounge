@@ -6,7 +6,7 @@ CREATE TABLE KhachHang(
 	MaKhachHang INT PRIMARY KEY IDENTITY(1,1) NOT NULL,
 	HoTen NVARCHAR(100) NOT NULL,
 	SDT_KH NVARCHAR(15) UNIQUE NOT NULL,
-	LoaiKH NVARCHAR(20) NOT NULL, /* CÓ THỂ LÀ KHÁCH VÃN LAI , KHÁCH KHÁCH SẠN, KHÁCH VIP */
+	LoaiKH NVARCHAR(20) NOT NULL, /* CÓ THỂ LÀ KHÁCH VÃN LAI , KHÁCH VIP */
 	NgaySuDung DATETIME NOT NULL,
 	TiLeGiamGia DECIMAL(5,2) DEFAULT 0.00,
 );
@@ -170,24 +170,4 @@ FROM Ban b
 LEFT JOIN HoaDon hd ON b.MaBan = hd.MaBan AND hd.TrangThai = N'Chưa thanh toán'
 LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
 LEFT JOIN SanPham sp ON sp.MaSanPham = cthd.MaSanPham
-
-Select *
-FRom Ban
-
-INSERT INTO BAN(SoBan, SoChoNgoi, KhuVuc, TrangThai) VALUES
-(N'Bàn 1', 4, N'Nhà Hàng', N'Trống'),
-(N'Bàn 2', 4, N'Nhà Hàng', N'Trống'),
-(N'Bàn 3', 4, N'Nhà Hàng', N'Trống'),
-(N'Bàn 4', 4, N'Nhà Hàng', N'Trống'),
-(N'Bàn 5', 4, N'Quầy Bar', N'Trống'),
-(N'Bàn 6', 4, N'Quầy Bar', N'Trống'),
-(N'Bàn 7', 4, N'Quầy Bar', N'Trống'),
-(N'Bàn 8', 4, N'Quầy Bar', N'Trống'),
-(N'Bàn 9', 4, N'Quầy Bar', N'Trống'),
-(N'Bàn 10', 4, N'Quầy Bar', N'Trống');
-Use QL_NHAHANG1
-go
-SELECT COUNT(*) AS SoLuongBang
-FROM sys.objects
-WHERE type = 'U'; -- 'U' là loại User Table
 

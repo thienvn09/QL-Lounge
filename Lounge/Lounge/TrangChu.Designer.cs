@@ -1,4 +1,6 @@
-﻿namespace Lounge
+﻿using System.Drawing;
+
+namespace Lounge
 {
     partial class TrangChu
     {
@@ -28,30 +30,56 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.pneTitle = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.btnTim1 = new System.Windows.Forms.Button();
             this.BAR = new System.Windows.Forms.Label();
             this.lblUser = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.plnBan = new System.Windows.Forms.FlowLayoutPanel();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.pnlCha = new System.Windows.Forms.Panel();
+            this.plnBan = new System.Windows.Forms.Panel();
+            this.pneTitle.SuspendLayout();
+            this.pnlCha.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // pneTitle
             // 
-            this.panel1.Controls.Add(this.BAR);
-            this.panel1.Controls.Add(this.lblUser);
-            this.panel1.Controls.Add(this.lblTime);
-            this.panel1.Controls.Add(this.btnInfo);
-            this.panel1.Controls.Add(this.btnExit);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1138, 71);
-            this.panel1.TabIndex = 1;
+            this.pneTitle.Controls.Add(this.label1);
+            this.pneTitle.Controls.Add(this.btnTim1);
+            this.pneTitle.Controls.Add(this.BAR);
+            this.pneTitle.Controls.Add(this.lblUser);
+            this.pneTitle.Controls.Add(this.lblTime);
+            this.pneTitle.Controls.Add(this.btnInfo);
+            this.pneTitle.Controls.Add(this.btnExit);
+            this.pneTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pneTitle.Location = new System.Drawing.Point(0, 0);
+            this.pneTitle.Name = "pneTitle";
+            this.pneTitle.Size = new System.Drawing.Size(1460, 57);
+            this.pneTitle.TabIndex = 1;
+            this.pneTitle.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(201, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(128, 36);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Tìm bàn";
+            // 
+            // btnTim1
+            // 
+            this.btnTim1.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTim1.Location = new System.Drawing.Point(162, 18);
+            this.btnTim1.Name = "btnTim1";
+            this.btnTim1.Size = new System.Drawing.Size(43, 36);
+            this.btnTim1.TabIndex = 6;
+            this.btnTim1.Text = "🔍";
+            this.btnTim1.UseVisualStyleBackColor = true;
+            this.btnTim1.Click += new System.EventHandler(this.btnTim1_Click);
             // 
             // BAR
             // 
@@ -99,39 +127,36 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // panel2
+            // pnlCha
             // 
-            this.panel2.Controls.Add(this.plnBan);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 71);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1138, 502);
-            this.panel2.TabIndex = 2;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
+            this.pnlCha.Controls.Add(this.plnBan);
+            this.pnlCha.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlCha.Location = new System.Drawing.Point(0, 57);
+            this.pnlCha.Name = "pnlCha";
+            this.pnlCha.Size = new System.Drawing.Size(1460, 696);
+            this.pnlCha.TabIndex = 2;
             // 
             // plnBan
             // 
-            this.plnBan.AutoScroll = true;
             this.plnBan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plnBan.Location = new System.Drawing.Point(0, 0);
             this.plnBan.Name = "plnBan";
-            this.plnBan.Size = new System.Drawing.Size(1138, 502);
+            this.plnBan.Size = new System.Drawing.Size(1460, 696);
             this.plnBan.TabIndex = 0;
-            this.plnBan.Paint += new System.Windows.Forms.PaintEventHandler(this.plnBan_Paint);
             // 
             // TrangChu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1138, 573);
-            this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel1);
+            this.ClientSize = new System.Drawing.Size(1460, 753);
+            this.Controls.Add(this.pnlCha);
+            this.Controls.Add(this.pneTitle);
             this.Name = "TrangChu";
             this.Text = "TrangChu";
             this.Load += new System.EventHandler(this.TrangChu_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
+            this.pneTitle.ResumeLayout(false);
+            this.pneTitle.PerformLayout();
+            this.pnlCha.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -141,9 +166,11 @@
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pneTitle;
         public System.Windows.Forms.Label BAR;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.FlowLayoutPanel plnBan;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnTim1;
+        private System.Windows.Forms.Panel pnlCha;
+        private System.Windows.Forms.Panel plnBan;
     }
 }

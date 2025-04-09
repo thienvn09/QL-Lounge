@@ -20,6 +20,7 @@ namespace Lounge
         public TrangChu()
         {
             InitializeComponent();
+
             LoadBan();
         }
 
@@ -34,7 +35,7 @@ namespace Lounge
 
         private void TrangChu_Load(object sender, EventArgs e)
         {
-
+          
         }
 
         private void panel2_Paint(object sender, PaintEventArgs e)
@@ -62,24 +63,96 @@ namespace Lounge
                 btn.Tag = ban.MaBan;
 
                 btn.Location = new Point(x, y);
+
+                // Gắn đúng sự kiện click
+                btn.Click += Ban_Click;
+
                 plnBan.Controls.Add(btn);
 
-                x += 130; // khoảng cách giữa các button ngang
+                x += 130;
                 count++;
-                if (count % 4 == 0) // mỗi dòng 4 bàn
+                if (count % 4 == 0)
                 {
                     x = 10;
                     y += 90;
                 }
-                btn.Click += (s, e) =>
-                {
-                    int maBan = (int)((Button)s).Tag;
-                    MessageBox.Show($"Bấm vào bàn có mã: {maBan}");
-                };
-
             }
         }
 
+        private void Ban_Click(object sender, EventArgs e)
+        {
+           /* Button btn = sender as Button;
+            if (btn != null && btn.Tag != null)
+            {
+                int maBan = (int)btn.Tag;
+
+                ChiTietBanDAL chiTietBanDAL = new ChiTietBanDAL();
+                var chiTiet = chiTietBanDAL.GetChiTietBans(maBan);
+
+                pnlChiTietBan.Controls.Clear(); // Xóa nội dung cũ
+                pnlChiTietBan.Visible = true;
+
+                Label lblTitle = new Label();
+                lblTitle.Text = "Chi tiết bàn số " + btn.Text.Split('\n')[0];
+                lblTitle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
+                lblTitle.Dock = DockStyle.Top;
+                lblTitle.Height = 30;
+                pnlChiTietBan.Controls.Add(lblTitle);
+
+                // DataGridView
+                DataGridView dgv = new DataGridView();
+                dgv.Dock = DockStyle.Fill;
+                dgv.DataSource = chiTiet;
+                pnlChiTietBan.Controls.Add(dgv);
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy thông tin bàn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }*/
+        }
+
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        
+
+        private void btnTim1_Click(object sender, EventArgs e)
+        {
+            frmThemBan frm = new frmThemBan();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                Ban newBan = frm.banmoi;
+
+                var daTonTai = banDAL.GetBanBySoBan(newBan.SoBan);
+               if(daTonTai != null)
+                {
+                    MessageBox.Show("Bàn đã tồn tại trong hệ thống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                if (banDAL.AddNewBan(newBan))
+                {
+                    MessageBox.Show("Thêm bàn thành công!");
+                    LoadBan();
+                }
+                else
+                {
+                    MessageBox.Show("Thêm bàn thất bại!");
+                }
+            }
+         }
+        private void MoFormChiTietBan(int maBan)
+        {
+            FormChiTietBan form = new FormChiTietBan(maBan);
+            form.ShowDialog();
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
 
         private void plnBan_Paint(object sender, PaintEventArgs e)
         {

@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -35,10 +35,10 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\DebugTemp\</OutputPath>
+    <OutputPath>bin\DebugTemp\tam\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>5</WarningLevel>
     <FileAlignment>8192</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -191,11 +191,23 @@
     <Compile Include="DangNhap.Designer.cs">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormChiTietBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChiTietBan.Designer.cs">
+      <DependentUpon>FormChiTietBan.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormOrder.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormOrder.Designer.cs">
       <DependentUpon>FormOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmThemBan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmThemBan.Designer.cs">
+      <DependentUpon>frmThemBan.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Ban.cs" />
     <Compile Include="Model\ChiTietBan.cs" />
@@ -209,12 +221,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Test.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Test.Designer.cs">
-      <DependentUpon>Test.cs</DependentUpon>
-    </Compile>
     <Compile Include="TrangChu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,8 +230,14 @@
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormChiTietBan.resx">
+      <DependentUpon>FormChiTietBan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormOrder.resx">
       <DependentUpon>FormOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmThemBan.resx">
+      <DependentUpon>frmThemBan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

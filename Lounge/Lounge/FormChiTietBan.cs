@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace Lounge
 {
-    public partial class Test : Form
+    public partial class FormChiTietBan : Form
     {
-        public Test()
+        public FormChiTietBan(int maBan)
         {
             InitializeComponent();
+        }
+
+        private void FormChiTietBan_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

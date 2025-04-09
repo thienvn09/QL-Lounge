@@ -157,7 +157,24 @@ namespace Lounge
 
         internal DataTable ExecuteQuery(string query, List<SqlParameter> parameters)
         {
-            throw new NotImplementedException();
+            DataTable dataTable = new DataTable();
+            string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True"; // Replace with your actual connection string
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    if (parameters != null)
+                    {
+                        command.Parameters.AddRange(parameters.ToArray());
+                    }
+
+                    SqlDataAdapter adapter = new SqlDataAdapter(command);
+                    adapter.Fill(dataTable);
+                }
+            }
+
+            return dataTable;
         }
     }
 }

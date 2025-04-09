@@ -11,37 +11,37 @@ namespace Lounge.DAL
     public class ChiTietBanDAL
     {
         private KetNoi KetNoi = new KetNoi();
-        ChiTietBan ChiTietBan = new ChiTietBan();
+       
         // Phương thức để lấy danh sách chi tiết bàn từ cơ sở dữ liệu
-        public List<ChiTietBan> GetChiTietBanList()
+      
+        public List<ChiTietBan> GetChiTietBans(int maBan)
         {
-            List<ChiTietBan> chiTietBanList = new List<ChiTietBan>();
-            string query = "SELECT * FROM ChiTietBan"; // Câu lệnh SQL để lấy dữ liệu
-            using (SqlConnection conn = new SqlConnection(KetNoi.GetConnectionString()))
+            List<ChiTietBan> dsChiTietBan = new List<ChiTietBan>();
+            using(SqlConnection conn = KetNoi.GetConnect())
             {
-                conn.Open();
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                string query = "SELECT * FROM vw_ChiTietBan WHERE MaBan = @maBan";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@MaBan", maBan);
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
                 {
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    ChiTietBan chiTietBan = new ChiTietBan
                     {
-                        ChiTietBan chiTietBan = new ChiTietBan
-                        {
-                            MaBan = reader.GetInt32(0),
-                            SoBan = reader.GetString(1),
-                            KhuVuc = reader.GetString(2),
-                            TrangThai = reader.GetString(3),
-                            MaHoaDon = reader.IsDBNull(4) ? (int?)null : reader.GetInt32(4),
-                            TenSanPham = reader.GetString(5),
-                            SoLuong = reader.GetInt32(6),
-                            Gia = reader.GetDecimal(7),
-                            ThueVAT = reader.GetDecimal(8)
-                        };
-                        chiTietBanList.Add(chiTietBan);
-                    }
+                        MaBan = reader.IsDBNull(0) ? 0 : reader.GetInt32(0),
+                        SoBan = reader.IsDBNull(1) ? "" : reader.GetString(1),
+                        KhuVuc = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                        TrangThai = reader.IsDBNull(3) ? "" : reader.GetString(3),
+                        MaHoaDon = reader.IsDBNull(4) ? (int?)null : reader.GetInt32(4),
+                        TenSanPham = reader.IsDBNull(5) ? "" : reader.GetString(5),
+                        SoLuong = reader.IsDBNull(6) ? 0 : reader.GetInt32(6),
+                        Gia = reader.IsDBNull(7) ? 0 : reader.GetDecimal(7),
+                        ThueVAT = reader.IsDBNull(8) ? 0 : reader.GetDecimal(8),
+                    };
+                    dsChiTietBan.Add(chiTietBan);
                 }
+                conn.Close();
+                return dsChiTietBan;
             }
-            return chiTietBanList;
         }
     }
 }
