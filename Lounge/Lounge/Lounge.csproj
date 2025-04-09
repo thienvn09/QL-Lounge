@@ -35,7 +35,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\DebugTemp\tam\</OutputPath>
+    <OutputPath>bin\DebugTemp\tam1\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>5</WarningLevel>
@@ -184,7 +184,9 @@
   <ItemGroup>
     <Compile Include="DAL\BanDAL.cs" />
     <Compile Include="DAL\ChiTietBanDAL.cs" />
+    <Compile Include="DAL\DanhMucSPDAL.cs" />
     <Compile Include="DAL\KetNoi.cs" />
+    <Compile Include="DAL\SanPhamDAL.cs" />
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -211,6 +213,9 @@
     </Compile>
     <Compile Include="Model\Ban.cs" />
     <Compile Include="Model\ChiTietBan.cs" />
+    <Compile Include="Model\DanhMucSanPham.cs" />
+    <Compile Include="Model\NhaCungCap.cs" />
+    <Compile Include="Model\SANPHAM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QL.cs">

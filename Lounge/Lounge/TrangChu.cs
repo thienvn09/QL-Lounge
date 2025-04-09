@@ -16,14 +16,22 @@ namespace Lounge
     public partial class TrangChu : Form
     {
         private Ban ban = new Ban();
+        private DanhMucSanPham danhMucSanPham = new DanhMucSanPham();
+        public DanhMucSPDAL DanhMucSPDAL = new DanhMucSPDAL();
         BanDAL banDAL = new BanDAL();
+        public SanPhamDAL sanPhamDAL = new SanPhamDAL();
+        public SANPHAM SP = new SANPHAM();
+        
         public TrangChu()
         {
             InitializeComponent();
-
+            this.WindowState = FormWindowState.Maximized;
+            plnDanhMuc.Visible = false; // Ẩn panel danh mục lúc đầu
+            plnBan.Visible = true;      // Hiện panel bàn lúc đầu
             LoadBan();
+         
         }
-
+       
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -37,16 +45,71 @@ namespace Lounge
         {
           
         }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
+        private void LoadSP()
         {
-
+            List<SANPHAM> sp = sanPhamDAL.GetAllSanPham();
+            int x = 10, y = 10;
+            int count = 0;
+            foreach (var sanPham in sp)
+            {
+                Button btn = new Button();
+                btn.Width = 120;
+                btn.Height = 80;
+                btn.Text = $"{sanPham.TenSanPham}\n{sanPham.Gia} VND";
+                btn.BackColor = Color.RoyalBlue;
+                btn.ForeColor = Color.Orange;
+                btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                btn.TextAlign = ContentAlignment.MiddleCenter;
+                btn.Tag = sanPham.MaSanPham;
+                btn.Location = new Point(x, y);
+                // Gắn đúng sự kiện click
+                btn.Click += DanhMuc_Click;
+                plnBan.Controls.Add(btn);
+                x += 130;
+                count++;
+                if (count % 4 == 0)
+                {
+                    x = 10;
+                    y += 90;
+                }
+            }
+        }
+        private void LoadDanhMuc()
+        {
+            plnBan.Visible = true;
+            plnDanhMuc.Controls.Clear();
+            List<DanhMucSanPham> dmsp = DanhMucSPDAL.GetAllDanhMucSP();
+            int x = 10, y = 10;
+            int count = 0;
+            foreach (var danhMucSanPham in dmsp)
+            {
+                Button btn = new Button();
+                btn.Width = 120;
+                btn.Height = 80;
+                btn.Text = danhMucSanPham.TenDanhMuc;
+                btn.BackColor = Color.RoyalBlue;
+                btn.ForeColor = Color.Orange;
+                btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
+                btn.TextAlign = ContentAlignment.MiddleCenter;
+                btn.Tag = danhMucSanPham.Loai;
+                btn.Location = new Point(x, y);
+                // Gắn đúng sự kiện click
+                btn.Click += DanhMuc_Click;
+                plnBan.Controls.Add(btn);
+                x += 130;
+                count++;
+                if (count % 4 == 0)
+                {
+                    x = 10;
+                    y += 90;
+                }
+            }
         }
         private void LoadBan()
         {
+            plnDanhMuc.Visible = true;
             plnBan.Controls.Clear();
             List<Ban> dsban = banDAL.GetAllBan();
-
             int x = 10, y = 10;
             int count = 0;
 
@@ -76,48 +139,46 @@ namespace Lounge
                     x = 10;
                     y += 90;
                 }
+                
             }
+            
         }
 
         private void Ban_Click(object sender, EventArgs e)
         {
-           /* Button btn = sender as Button;
-            if (btn != null && btn.Tag != null)
+            plnBan.Visible = false;
+            plnBan.Controls.Clear();
+            plnDanhMuc.Visible = true;
+            LoadDanhMuc();
+
+            int maBan = (int)(sender as Button).Tag;
+            ban = banDAL.getbanByid(maBan);
+
+            MessageBox.Show($"Bạn đã chọn bàn số: {ban.SoBan}");
+        }
+
+        private void DanhMuc_Click(object sender, EventArgs e)
+        {
+            if (sender is Button button && button.Tag != null)
             {
-                int maBan = (int)btn.Tag;
+                string loai = button.Tag.ToString();
+                MessageBox.Show($"Bạn đã chọn danh mục có loại: {loai}");
 
-                ChiTietBanDAL chiTietBanDAL = new ChiTietBanDAL();
-                var chiTiet = chiTietBanDAL.GetChiTietBans(maBan);
-
-                pnlChiTietBan.Controls.Clear(); // Xóa nội dung cũ
-                pnlChiTietBan.Visible = true;
-
-                Label lblTitle = new Label();
-                lblTitle.Text = "Chi tiết bàn số " + btn.Text.Split('\n')[0];
-                lblTitle.Font = new Font("Segoe UI", 12, FontStyle.Bold);
-                lblTitle.Dock = DockStyle.Top;
-                lblTitle.Height = 30;
-                pnlChiTietBan.Controls.Add(lblTitle);
-
-                // DataGridView
-                DataGridView dgv = new DataGridView();
-                dgv.Dock = DockStyle.Fill;
-                dgv.DataSource = chiTiet;
-                pnlChiTietBan.Controls.Add(dgv);
+                plnDanhMuc.Visible = false;
+                plnBan.Visible = true;
+                LoadSP(); // Nếu LoadSP cần theo loại, truyền loai vào
             }
             else
             {
-                MessageBox.Show("Không tìm thấy thông tin bàn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }*/
+                MessageBox.Show("Có lỗi xảy ra: Button hoặc Tag không hợp lệ.");
+            }
         }
 
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
 
-        
+
+
 
         private void btnTim1_Click(object sender, EventArgs e)
         {
@@ -143,18 +204,15 @@ namespace Lounge
                 }
             }
          }
-        private void MoFormChiTietBan(int maBan)
-        {
-            FormChiTietBan form = new FormChiTietBan(maBan);
-            form.ShowDialog();
-        }
+        
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
+
+        private void plnDanhMuc_Paint(object sender, PaintEventArgs e)
         {
 
         }
 
-        private void plnBan_Paint(object sender, PaintEventArgs e)
+        private void pnlSanPham_Paint(object sender, PaintEventArgs e)
         {
 
         }

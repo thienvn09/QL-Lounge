@@ -33,6 +33,28 @@ namespace Lounge.DAL
             KetNoi.GetConnect().Close();
             return dsban;
         }
+        public Ban getbanByid(int maban)
+        {
+            string query = "SELECT * FROM Ban WHERE MaBan = @MaBan";
+            List<SqlParameter> parameters = new List<SqlParameter>
+            {
+                new SqlParameter("@MaBan", maban)
+            };
+            DataTable dt = KetNoi.ExecuteQuery(query, parameters);
+            if (dt.Rows.Count > 0)
+            {
+                DataRow row = dt.Rows[0];
+                return new Ban
+                {
+                    MaBan = Convert.ToInt32(row["MaBan"]),
+                    SoBan = row["SoBan"].ToString(),
+                    SoChoNgoi = Convert.ToInt32(row["SoChoNgoi"]),
+                    KhuVuc = row["KhuVuc"].ToString(),
+                    TrangThai = row["TrangThai"].ToString()
+                };
+            }
+            return null;
+        }
         public Ban GetBanBySoBan(string soBan)
         {
             string query = "SELECT * FROM Ban WHERE SoBan = @SoBan";
