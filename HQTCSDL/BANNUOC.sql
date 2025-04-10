@@ -170,4 +170,5 @@ FROM Ban b
 LEFT JOIN HoaDon hd ON b.MaBan = hd.MaBan AND hd.TrangThai = N'Chưa thanh toán'
 LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
 LEFT JOIN SanPham sp ON sp.MaSanPham = cthd.MaSanPham
-
+use QL_NHAHANG1
+SELECT * FROM SANPHAM

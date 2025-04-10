@@ -12,35 +12,35 @@ namespace Lounge.DAL
     public class SanPhamDAL
     {
         private KetNoi KetNoi = new KetNoi();
-        public List<SANPHAM> GetSanPhamTheoLoai(string loai)
+        public List<SANPHAM> GetSanPhamTheoDanhMuc(int maDanhMuc)
         {
             List<SANPHAM> ds = new List<SANPHAM>();
-
-            string query = "SELECT * FROM SANPHAM WHERE Loai = @Loai";
+            KetNoi.GetConnect();
+            string query = "SELECT * FROM SANPHAM WHERE MaDanhMuc = @MaDanhMuc";
 
             using (SqlConnection conn = KetNoi.GetConnect())
             {
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Loai", loai);
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddWithValue("@MaDanhMuc", maDanhMuc);
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    SANPHAM sp = new SANPHAM()
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
                     {
-                        MaSanPham = Convert.ToInt32(reader["MaSanPham"]),
-                        TenSanPham = reader["TenSanPham"].ToString(),
-                        Gia = Convert.ToDecimal(reader["Gia"])
-                        // Thêm các cột khác nếu có
-                    };
-                    ds.Add(sp);
-                }
-                conn.Close();
+                        SANPHAM sp = new SANPHAM()
+                        {
+                            MaSanPham = Convert.ToInt32(reader["MaSanPham"]),
+                            TenSanPham = reader["TenSanPham"].ToString(),
+                            Gia = Convert.ToDecimal(reader["Gia"]),
+                            MaDanhMuc = Convert.ToInt32(reader["MaDanhMuc"]),
+                        };
+                        ds.Add(sp);
+                    }
+               
             }
 
             return ds;
         }
+
 
     }
 }

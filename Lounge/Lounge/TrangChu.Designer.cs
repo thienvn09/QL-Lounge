@@ -40,12 +40,8 @@ namespace Lounge
             this.btnExit = new System.Windows.Forms.Button();
             this.pnlCha = new System.Windows.Forms.Panel();
             this.plnBan = new System.Windows.Forms.Panel();
-            this.plnDanhMuc = new System.Windows.Forms.Panel();
-            this.pnlSanPham = new System.Windows.Forms.Panel();
             this.pneTitle.SuspendLayout();
             this.pnlCha.SuspendLayout();
-            this.plnBan.SuspendLayout();
-            this.plnDanhMuc.SuspendLayout();
             this.SuspendLayout();
             // 
             // pneTitle
@@ -143,31 +139,11 @@ namespace Lounge
             // plnBan
             // 
             this.plnBan.BackColor = System.Drawing.Color.White;
-            this.plnBan.Controls.Add(this.plnDanhMuc);
             this.plnBan.Dock = System.Windows.Forms.DockStyle.Left;
             this.plnBan.Location = new System.Drawing.Point(0, 0);
             this.plnBan.Name = "plnBan";
             this.plnBan.Size = new System.Drawing.Size(762, 696);
             this.plnBan.TabIndex = 0;
-            // 
-            // plnDanhMuc
-            // 
-            this.plnDanhMuc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.plnDanhMuc.Controls.Add(this.pnlSanPham);
-            this.plnDanhMuc.Location = new System.Drawing.Point(6, 0);
-            this.plnDanhMuc.Name = "plnDanhMuc";
-            this.plnDanhMuc.Size = new System.Drawing.Size(756, 708);
-            this.plnDanhMuc.TabIndex = 1;
-            this.plnDanhMuc.Paint += new System.Windows.Forms.PaintEventHandler(this.plnDanhMuc_Paint);
-            // 
-            // pnlSanPham
-            // 
-            this.pnlSanPham.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlSanPham.Location = new System.Drawing.Point(0, 608);
-            this.pnlSanPham.Name = "pnlSanPham";
-            this.pnlSanPham.Size = new System.Drawing.Size(756, 100);
-            this.pnlSanPham.TabIndex = 1;
-            this.pnlSanPham.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlSanPham_Paint);
             // 
             // TrangChu
             // 
@@ -182,8 +158,6 @@ namespace Lounge
             this.pneTitle.ResumeLayout(false);
             this.pneTitle.PerformLayout();
             this.pnlCha.ResumeLayout(false);
-            this.plnBan.ResumeLayout(false);
-            this.plnDanhMuc.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -199,7 +173,5 @@ namespace Lounge
         private System.Windows.Forms.Button btnTim1;
         private System.Windows.Forms.Panel pnlCha;
         private System.Windows.Forms.Panel plnBan;
-        private System.Windows.Forms.Panel plnDanhMuc;
-        private System.Windows.Forms.Panel pnlSanPham;
     }
 }

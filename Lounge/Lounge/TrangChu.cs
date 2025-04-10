@@ -26,7 +26,7 @@ namespace Lounge
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            plnDanhMuc.Visible = false; // Ẩn panel danh mục lúc đầu
+         /*   plnDanhMuc.Visible = false;*/ // Ẩn panel danh mục lúc đầu
             plnBan.Visible = true;      // Hiện panel bàn lúc đầu
             LoadBan();
          
@@ -45,26 +45,29 @@ namespace Lounge
         {
           
         }
-        private void LoadSP()
+        private void LoadSPTheoDanhMuc(int maDanhMuc)
         {
-            List<SANPHAM> sp = sanPhamDAL.GetAllSanPham();
+            List<SANPHAM> dsSanPham = sanPhamDAL.GetSanPhamTheoDanhMuc(maDanhMuc);
+            plnBan.Controls.Clear();
+
             int x = 10, y = 10;
             int count = 0;
-            foreach (var sanPham in sp)
+
+            foreach (var sp in dsSanPham)
             {
                 Button btn = new Button();
                 btn.Width = 120;
                 btn.Height = 80;
-                btn.Text = $"{sanPham.TenSanPham}\n{sanPham.Gia} VND";
+                btn.Text = $"{sp.TenSanPham}\n{sp.Gia} VND";
                 btn.BackColor = Color.RoyalBlue;
                 btn.ForeColor = Color.Orange;
                 btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                 btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Tag = sanPham.MaSanPham;
+                btn.Tag = sp.MaSanPham;
+
                 btn.Location = new Point(x, y);
-                // Gắn đúng sự kiện click
-                btn.Click += DanhMuc_Click;
                 plnBan.Controls.Add(btn);
+
                 x += 130;
                 count++;
                 if (count % 4 == 0)
@@ -74,10 +77,11 @@ namespace Lounge
                 }
             }
         }
+
         private void LoadDanhMuc()
         {
             plnBan.Visible = true;
-            plnDanhMuc.Controls.Clear();
+            plnBan.Controls.Clear();
             List<DanhMucSanPham> dmsp = DanhMucSPDAL.GetAllDanhMucSP();
             int x = 10, y = 10;
             int count = 0;
@@ -91,7 +95,7 @@ namespace Lounge
                 btn.ForeColor = Color.Orange;
                 btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
                 btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Tag = danhMucSanPham.Loai;
+                btn.Tag = danhMucSanPham.MaDanhMuc;
                 btn.Location = new Point(x, y);
                 // Gắn đúng sự kiện click
                 btn.Click += DanhMuc_Click;
@@ -107,7 +111,6 @@ namespace Lounge
         }
         private void LoadBan()
         {
-            plnDanhMuc.Visible = true;
             plnBan.Controls.Clear();
             List<Ban> dsban = banDAL.GetAllBan();
             int x = 10, y = 10;
@@ -148,7 +151,7 @@ namespace Lounge
         {
             plnBan.Visible = false;
             plnBan.Controls.Clear();
-            plnDanhMuc.Visible = true;
+           
             LoadDanhMuc();
 
             int maBan = (int)(sender as Button).Tag;
@@ -161,25 +164,19 @@ namespace Lounge
         {
             if (sender is Button button && button.Tag != null)
             {
-                string loai = button.Tag.ToString();
-                MessageBox.Show($"Bạn đã chọn danh mục có loại: {loai}");
+                int maDanhMuc = Convert.ToInt32(button.Tag);
+                MessageBox.Show($"Bạn đã chọn danh mục có mã: {maDanhMuc}");
 
-                plnDanhMuc.Visible = false;
+      
                 plnBan.Visible = true;
-                LoadSP(); // Nếu LoadSP cần theo loại, truyền loai vào
+
+                LoadSPTheoDanhMuc(maDanhMuc);
             }
             else
             {
                 MessageBox.Show("Có lỗi xảy ra: Button hoặc Tag không hợp lệ.");
             }
         }
-
-
-
-
-
-
-
         private void btnTim1_Click(object sender, EventArgs e)
         {
             frmThemBan frm = new frmThemBan();
