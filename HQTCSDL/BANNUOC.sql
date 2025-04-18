@@ -152,23 +152,3 @@ CREATE TABLE BaoCao(
 	GhiChu Nvarchar(MAX) Not NULL,
 	FOREIGN KEY (NguoiTao) REFERENCES NhanVien(MaNV),
 );
-CREATE VIEW vw_ChiTietBan AS
-SELECT 
-    b.MaBan,
-    b.SoBan,
-    b.KhuVuc,
-    b.TrangThai,
-    hd.MaHoaDon,
-    sp.TenSanPham,
-    cthd.SoLuong,
-    cthd.Gia,
-    cthd.ThueVAT,
-    (cthd.Gia * cthd.SoLuong) AS ThanhTien,
-    (cthd.Gia * cthd.SoLuong * cthd.ThueVAT / 100) AS TienThue,
-    (cthd.Gia * cthd.SoLuong * (1 + cthd.ThueVAT / 100)) AS TongTienMon
-FROM Ban b
-LEFT JOIN HoaDon hd ON b.MaBan = hd.MaBan AND hd.TrangThai = N'Chưa thanh toán'
-LEFT JOIN ChiTietHoaDon cthd ON hd.MaHoaDon = cthd.MaHoaDon
-LEFT JOIN SanPham sp ON sp.MaSanPham = cthd.MaSanPham
-use QL_NHAHANG1
-SELECT * FROM SANPHAM

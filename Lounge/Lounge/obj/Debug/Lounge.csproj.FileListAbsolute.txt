@@ -361,3 +361,4 @@ D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\ru\Microsoft.Data.SqlClient.resour
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\tr\Microsoft.Data.SqlClient.resources.dll
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\zh-Hans\Microsoft.Data.SqlClient.resources.dll
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\zh-Hant\Microsoft.Data.SqlClient.resources.dll
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.ChonQuyen.resources

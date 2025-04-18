@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lounge.DAL;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +15,7 @@ namespace Lounge
     public partial class DangNhap : Form
     {
         public KetNoi KetNoi = new KetNoi();
+        public DangNhapDAL DangNhapDAL = new DangNhapDAL();
         public DangNhap()
         {
             InitializeComponent();
@@ -22,15 +24,12 @@ namespace Lounge
         {
             try
             {
-                using (SqlConnection conn = KetNoi.GetConnect())
+                using (SqlConnection conn = KetNoi.GetConnect()) // dùng hàm mới GetConnection()
                 {
-                    if (conn.State == System.Data.ConnectionState.Open)
+                    conn.Open(); // mở trong using thì tự đóng
+                    if (conn.State == ConnectionState.Open)
                     {
                         MessageBox.Show("Kết nối cơ sở dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Không thể kết nối đến cơ sở dữ liệu!", "Lỗi kết nối", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -39,10 +38,11 @@ namespace Lounge
                 MessageBox.Show("Lỗi kết nối: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void DangNhap_Load(object sender, EventArgs e)
         {
             Checkconnection();
-            DataTable tb = KetNoi.DangNhap();
+          
         }
 
         private void btnDangNhap_Click(object sender, EventArgs e)
@@ -57,29 +57,28 @@ namespace Lounge
                 {
                     MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
-                    TrangChu TC = new TrangChu();
+                    ChonQuyen TC = new ChonQuyen();
                     TC.ShowDialog();
                     this.Show();
                 }
                 else
                 {
-                    DataTable tb = KetNoi.DangNhap();
-                    int i = 0;
-                    for (i = 0; i < tb.Rows.Count; i++)
+                    string tenDN = txtTaiKhoan.Text.Trim();
+                    string matKhau = txtMatKhau.Text.Trim();
+
+                    bool ketQua = DangNhapDAL.KiemTraDangNhap(tenDN, matKhau);
+
+                    if (ketQua)
                     {
-                        if (txtTaiKhoan.Text == tb.Rows[i][0].ToString() && txtMatKhau.Text == tb.Rows[i][1].ToString())
-                        {
-                            MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            this.Hide();
-                            TrangChu TC = new TrangChu();
-                            TC.ShowDialog();
-                            this.Show();
-                            break;
-                        }
+                        MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Mở form chính
+                        this.Hide();
+                        TrangChu formTrangChu = new TrangChu();
+                        formTrangChu.Show();
                     }
-                    if (i == tb.Rows.Count)
+                    else
                     {
-                        MessageBox.Show("Tài khoản hoặc mật khẩu không đúng!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Sai tên đăng nhập hoặc mật khẩu!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }

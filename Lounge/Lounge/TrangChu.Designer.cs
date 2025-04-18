@@ -40,8 +40,10 @@ namespace Lounge
             this.btnExit = new System.Windows.Forms.Button();
             this.pnlCha = new System.Windows.Forms.Panel();
             this.plnBan = new System.Windows.Forms.Panel();
+            this.SanPham = new System.Windows.Forms.Panel();
             this.pneTitle.SuspendLayout();
             this.pnlCha.SuspendLayout();
+            this.plnBan.SuspendLayout();
             this.SuspendLayout();
             // 
             // pneTitle
@@ -139,11 +141,21 @@ namespace Lounge
             // plnBan
             // 
             this.plnBan.BackColor = System.Drawing.Color.White;
+            this.plnBan.Controls.Add(this.SanPham);
             this.plnBan.Dock = System.Windows.Forms.DockStyle.Left;
             this.plnBan.Location = new System.Drawing.Point(0, 0);
             this.plnBan.Name = "plnBan";
-            this.plnBan.Size = new System.Drawing.Size(762, 696);
+            this.plnBan.Size = new System.Drawing.Size(759, 696);
             this.plnBan.TabIndex = 0;
+            // 
+            // SanPham
+            // 
+            this.SanPham.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.SanPham.Location = new System.Drawing.Point(0, 478);
+            this.SanPham.Name = "SanPham";
+            this.SanPham.Size = new System.Drawing.Size(756, 237);
+            this.SanPham.TabIndex = 0;
+            this.SanPham.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // TrangChu
             // 
@@ -158,6 +170,7 @@ namespace Lounge
             this.pneTitle.ResumeLayout(false);
             this.pneTitle.PerformLayout();
             this.pnlCha.ResumeLayout(false);
+            this.plnBan.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -173,5 +186,6 @@ namespace Lounge
         private System.Windows.Forms.Button btnTim1;
         private System.Windows.Forms.Panel pnlCha;
         private System.Windows.Forms.Panel plnBan;
+        private System.Windows.Forms.Panel SanPham;
     }
 }

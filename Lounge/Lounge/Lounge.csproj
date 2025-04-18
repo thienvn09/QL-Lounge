@@ -182,10 +182,18 @@
     <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChonQuyen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChonQuyen.Designer.cs">
+      <DependentUpon>ChonQuyen.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\BanDAL.cs" />
     <Compile Include="DAL\ChiTietBanDAL.cs" />
+    <Compile Include="DAL\DangNhapDAL.cs" />
     <Compile Include="DAL\DanhMucSPDAL.cs" />
     <Compile Include="DAL\KetNoi.cs" />
+    <Compile Include="DAL\NhanVienDAL.cs" />
     <Compile Include="DAL\SanPhamDAL.cs" />
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
@@ -205,6 +213,12 @@
     <Compile Include="FormOrder.Designer.cs">
       <DependentUpon>FormOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormQL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormQL.Designer.cs">
+      <DependentUpon>FormQL.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmThemBan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -215,23 +229,19 @@
     <Compile Include="Model\ChiTietBan.cs" />
     <Compile Include="Model\DanhMucSanPham.cs" />
     <Compile Include="Model\NhaCungCap.cs" />
+    <Compile Include="Model\NhanVien.cs" />
     <Compile Include="Model\SANPHAM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QL.cs">
-      <DependentUpon>QL.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="QL.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>QL.xsd</DependentUpon>
-    </Compile>
     <Compile Include="TrangChu.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TrangChu.Designer.cs">
       <DependentUpon>TrangChu.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ChonQuyen.resx">
+      <DependentUpon>ChonQuyen.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </EmbeddedResource>
@@ -266,17 +276,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="QL.xsc">
-      <DependentUpon>QL.xsd</DependentUpon>
-    </None>
-    <None Include="QL.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>QL.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="QL.xss">
-      <DependentUpon>QL.xsd</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -146,7 +146,6 @@ namespace Lounge
             }
             
         }
-
         private void Ban_Click(object sender, EventArgs e)
         {
             plnBan.Visible = false;
@@ -201,17 +200,10 @@ namespace Lounge
                 }
             }
          }
-        
-
-
-        private void plnDanhMuc_Paint(object sender, PaintEventArgs e)
+     
+        private void panel1_Paint(object sender, PaintEventArgs e)
         {
-
-        }
-
-        private void pnlSanPham_Paint(object sender, PaintEventArgs e)
-        {
-
+            LoadBan();
         }
     }
 }

@@ -2,179 +2,63 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lounge
 {
     public class KetNoi
     {
-        static string ketnoi = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True";
+        // Chuỗi kết nối
+        private static readonly string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True";
+
+        // Trả về kết nối, KHÔNG mở sẵn
         public SqlConnection GetConnect()
         {
-            SqlConnection conn = new SqlConnection(ketnoi);
-            conn.Open();
-            return conn;
-        }
-        public string GetConnectionString()
-        {
-            return ketnoi;
+            return new SqlConnection(connectionString);
         }
 
+        // Thực thi lệnh INSERT, UPDATE, DELETE
         public int ExecuteNonQuery(string query, List<SqlParameter> parameters = null)
         {
-            int data = 0;
+            int result = 0;
 
-            // Sử dụng 'using' để tự động đóng kết nối
-            using (SqlConnection conn = new SqlConnection(ketnoi))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     if (parameters != null)
-                    {
-                        cmd.Parameters.AddRange(parameters.ToArray()); // Thêm tham số vào câu lệnh
-                    }
-                    data = cmd.ExecuteNonQuery();  // Thực thi câu lệnh
+                        cmd.Parameters.AddRange(parameters.ToArray());
+
+                    result = cmd.ExecuteNonQuery();
                 }
             }
-            return data;
+
+            return result;
         }
-        // thong tin tai khoan
-        public DataTable DangNhap()
+
+        // Thực thi truy vấn SELECT → trả về DataTable
+        public DataTable ExecuteQuery(string query, List<SqlParameter> parameters = null)
         {
-            DataTable tb = new DataTable();
-            using (SqlConnection conn = new SqlConnection(ketnoi))
+            DataTable dt = new DataTable();
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                string query = "select * from DangNhap";
                 using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // thong tin khach hang
-        public DataTable KhachHang()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection conn = new SqlConnection(ketnoi))
-            {
-                conn.Open();
-                string query = "select * from KhachHang";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // thong tin nhan vien
-        public DataTable NhanVien()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection con = new SqlConnection(ketnoi))
-            {
-                con.Open();
-                string query = "select * from NhanVien";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // danh muc san pham
-        public DataTable DanhMucSanPham()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection con = new SqlConnection(ketnoi))
-            {
-                con.Open();
-                string query = "select * from DanhMucSanPham";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // thong tin san pham
-        public DataTable SanPham()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection con = new SqlConnection(ketnoi))
-            {
-                con.Open();
-                string query = "select * from SanPham";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // thong tin bàn
-        public DataTable Ban()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection con = new SqlConnection(ketnoi))
-            {
-                con.Open();
-                string query = "select * from Ban";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-            }
-            return tb;
-        }
-        // thong tin hoa don
-        public DataTable HoaDon()
-        {
-            DataTable tb = new DataTable();
-            using (SqlConnection con = new SqlConnection(ketnoi))
-            {
-                con.Open();
-                string query = "select * from HoaDon";
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-                    adapter.Fill(tb);
-                }
-
-            }
-            return tb;
-        }
-
-        internal DataTable ExecuteQuery(string query, List<SqlParameter> parameters)
-        {
-            DataTable dataTable = new DataTable();
-            string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True"; // Replace with your actual connection string
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     if (parameters != null)
-                    {
-                        command.Parameters.AddRange(parameters.ToArray());
-                    }
+                        cmd.Parameters.AddRange(parameters.ToArray());
 
-                    SqlDataAdapter adapter = new SqlDataAdapter(command);
-                    adapter.Fill(dataTable);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
                 }
             }
 
-            return dataTable;
+            return dt;
         }
+
+        // Ví dụ cụ thể: Lấy toàn bộ dữ liệu từ bảng DangNhap
     }
 }
