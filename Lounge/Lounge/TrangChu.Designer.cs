@@ -95,7 +95,7 @@ namespace Lounge
             // lblUser
             // 
             this.lblUser.AutoSize = true;
-            this.lblUser.Location = new System.Drawing.Point(448, 25);
+            this.lblUser.Location = new System.Drawing.Point(458, 32);
             this.lblUser.Name = "lblUser";
             this.lblUser.Size = new System.Drawing.Size(164, 16);
             this.lblUser.TabIndex = 2;

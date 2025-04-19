@@ -71,10 +71,10 @@ namespace Lounge
                     if (ketQua)
                     {
                         MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        // Mở form chính
+                        ChonQuyen chonQuyen = new ChonQuyen();
+                        chonQuyen.Show();
                         this.Hide();
-                        TrangChu formTrangChu = new TrangChu();
-                        formTrangChu.Show();
+
                     }
                     else
                     {

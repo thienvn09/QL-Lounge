@@ -22,21 +22,20 @@ namespace Lounge
 
         private void btnBH_Click(object sender, EventArgs e)
         {
-            nhanVienDAL.CheckChucVuTonTai("Nhân viên");
-            if (nhanVienDAL.CheckChucVuTonTai("Nhân Viên"))
-            {
-                Form from = new TrangChu();
+                TrangChu from = new TrangChu();
                 from.Show();
-            }
-
         }
 
         private void BtnQT_Click(object sender, EventArgs e)
         {
             if (nhanVienDAL.CheckChucVuTonTai("Quản lý"))
             {
-                Form form = new FormQL();
+                FormQL form = new FormQL();
                 form.Show();
+            }
+            else
+            {
+                MessageBox.Show("Bạn không có quyền truy cập vào chức năng này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
     }

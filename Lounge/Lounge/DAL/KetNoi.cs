@@ -7,16 +7,47 @@ namespace Lounge
 {
     public class KetNoi
     {
-        // Chuỗi kết nối
+        // Chuỗi kết nối đến SQL Server
         private static readonly string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG1;Integrated Security=True";
 
-        // Trả về kết nối, KHÔNG mở sẵn
+        /// <summary>
+        /// Trả về đối tượng SqlConnection chưa mở
+        /// </summary>
         public SqlConnection GetConnect()
         {
             return new SqlConnection(connectionString);
         }
 
-        // Thực thi lệnh INSERT, UPDATE, DELETE
+        /// <summary>
+        /// Trả về đối tượng SqlConnection đã được mở sẵn
+        /// </summary>
+        public SqlConnection GetOpenConnect()
+        {
+            SqlConnection conn = new SqlConnection(connectionString);
+            if (conn.State == System.Data.ConnectionState.Closed)
+            {
+                conn.Open(); // Quan trọng!
+            }
+            return conn;
+        }
+
+        /// <summary>
+        /// Đóng kết nối nếu đang mở
+        /// </summary>
+        public void CloseConnect(SqlConnection conn)
+        {
+            if (conn != null && conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+            }
+        }
+
+        /// <summary>
+        /// Thực thi câu lệnh INSERT, UPDATE, DELETE
+        /// </summary>
+        /// <param name="query">Câu lệnh SQL</param>
+        /// <param name="parameters">Danh sách tham số (nếu có)</param>
+        /// <returns>Số dòng bị ảnh hưởng</returns>
         public int ExecuteNonQuery(string query, List<SqlParameter> parameters = null)
         {
             int result = 0;
@@ -26,7 +57,7 @@ namespace Lounge
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    if (parameters != null)
+                    if (parameters != null && parameters.Count > 0)
                         cmd.Parameters.AddRange(parameters.ToArray());
 
                     result = cmd.ExecuteNonQuery();
@@ -36,7 +67,12 @@ namespace Lounge
             return result;
         }
 
-        // Thực thi truy vấn SELECT → trả về DataTable
+        /// <summary>
+        /// Thực thi câu lệnh SELECT và trả về dữ liệu dưới dạng DataTable
+        /// </summary>
+        /// <param name="query">Câu lệnh SELECT</param>
+        /// <param name="parameters">Danh sách tham số (nếu có)</param>
+        /// <returns>DataTable chứa dữ liệu kết quả</returns>
         public DataTable ExecuteQuery(string query, List<SqlParameter> parameters = null)
         {
             DataTable dt = new DataTable();
@@ -46,7 +82,7 @@ namespace Lounge
                 conn.Open();
                 using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
-                    if (parameters != null)
+                    if (parameters != null && parameters.Count > 0)
                         cmd.Parameters.AddRange(parameters.ToArray());
 
                     using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
@@ -59,6 +95,13 @@ namespace Lounge
             return dt;
         }
 
-        // Ví dụ cụ thể: Lấy toàn bộ dữ liệu từ bảng DangNhap
+        /// <summary>
+        /// Ví dụ: Lấy toàn bộ dữ liệu từ bảng DangNhap
+        /// </summary>
+        public DataTable GetAllDangNhap()
+        {
+            string query = "SELECT * FROM DangNhap";
+            return ExecuteQuery(query);
+        }
     }
 }
