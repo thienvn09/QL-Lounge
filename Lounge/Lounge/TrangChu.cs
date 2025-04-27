@@ -1,37 +1,399 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lounge.DAL;
-
 using System.Windows.Forms;
+using Lounge.DAL;
 using Lounge.Model;
 
 namespace Lounge
 {
     public partial class TrangChu : Form
     {
-        private Ban ban = new Ban();
-        private DanhMucSanPham danhMucSanPham = new DanhMucSanPham();
-        public DanhMucSPDAL DanhMucSPDAL = new DanhMucSPDAL();
-        BanDAL banDAL = new BanDAL();
-        public SanPhamDAL sanPhamDAL = new SanPhamDAL();
-        public SANPHAM SP = new SANPHAM();
-        
+        private BanDAL banDAL = new BanDAL();
+        private DanhMucSPDAL danhMucDAL = new DanhMucSPDAL();
+        private SanPhamDAL sanPhamDAL = new SanPhamDAL();
+        private Timer timer = new Timer();
+        private Ban currentBan = null;
+        private DanhMucSanPham currentDanhMuc = null;
+        private List<SANPHAM> selectedSanPhams = new List<SANPHAM>();
+
         public TrangChu()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-         /*   plnDanhMuc.Visible = false;*/ // Ẩn panel danh mục lúc đầu
-            plnBan.Visible = true;      // Hiện panel bàn lúc đầu
+            ConfigurePanels();
             LoadBan();
-         
+            SetupTimer();
         }
-       
+
+        private void ConfigurePanels()
+        {
+            plnBan.AutoScroll = true;
+            plnBan.Dock = DockStyle.Fill;
+            plnBan.BackColor = Color.FromArgb(200, 220, 240);
+
+            plnDanhMuc.AutoScroll = true;
+            plnDanhMuc.BackColor = Color.FromArgb(200, 220, 240);
+            plnDanhMuc.Padding = new Padding(10); // Thêm padding cho panel danh mục
+
+            plnSanPham.AutoScroll = true;
+            plnSanPham.BackColor = Color.FromArgb(200, 220, 240);
+            plnSanPham.Padding = new Padding(10); // Thêm padding cho panel sản phẩm
+
+            plnHoaDon.BackColor = Color.FromArgb(200, 220, 240);
+            plnHoaDon.Padding = new Padding(10); // Thêm padding cho panel hóa đơn
+
+            plnBan.Visible = true;
+            plnDanhMuc.Visible = false;
+            plnSanPham.Visible = false;
+            plnHoaDon.Visible = false;
+        }
+
+        private void SetupTimer()
+        {
+            timer.Interval = 1000;
+            timer.Tick += (s, e) => lblTime.Text = DateTime.Now.ToString("HH:mm:ss dd/MM/yyyy");
+            timer.Start();
+        }
+
+        private void TrangChu_Load(object sender, EventArgs e)
+        {
+            lblUser.Text = "Admin | Operator | Tư Anh";
+            lblTable.Text = "Table: N/A";
+            lblCover.Text = "Cover: 0";
+            lblWholeCheck.Text = "Whole Check: 0.00";
+        }
+
+        private void LoadBan()
+        {
+            plnBan.Controls.Clear();
+            plnDanhMuc.Controls.Clear();
+            plnSanPham.Controls.Clear();
+            plnHoaDon.Controls.Clear();
+
+            plnBan.Visible = true;
+            plnMain.Visible = false;
+            plnBottom.Visible = false;
+
+            try
+            {
+                List<Ban> dsBan = banDAL.GetAllBan();
+                if (dsBan == null || dsBan.Count == 0)
+                {
+                    MessageBox.Show("Không có bàn nào trong cơ sở dữ liệu! Vui lòng kiểm tra bảng Ban.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                DisplayButtonsBan(dsBan);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DisplayButtonsBan(List<Ban> dsBan)
+        {
+            FlowLayoutPanel flowPanel = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Fill,
+                AutoScroll = true,
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = true,
+                Padding = new Padding(10)
+            };
+            plnBan.Controls.Add(flowPanel);
+
+            int buttonWidth = 200, buttonHeight = 120, margin = 10;
+            int buttonsPerRow = 5;
+            int count = 0;
+
+            foreach (var ban in dsBan)
+            {
+                Button btn = new Button
+                {
+                    Text = $"{ban.SoBan}\n👤 {ban.SoChoNgoi}\n{ban.TrangThai}",
+                    Size = new Size(buttonWidth, buttonHeight),
+                    Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Margin = new Padding(margin / 2),
+                    BackColor = ban.TrangThai == "Trống" ? Color.FromArgb(102, 204, 102) : Color.FromArgb(255, 77, 77),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Tag = ban
+                };
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Click += BtnBan_Click;
+                flowPanel.Controls.Add(btn);
+
+                count++;
+                if (count % buttonsPerRow == 0)
+                {
+                    flowPanel.SetFlowBreak(btn, true);
+                }
+            }
+
+            if (flowPanel.Controls.Count == 0)
+            {
+                MessageBox.Show("Không có nút bàn nào được hiển thị!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadDanhMuc()
+        {
+            plnDanhMuc.Controls.Clear();
+            plnSanPham.Controls.Clear();
+            plnHoaDon.Controls.Clear();
+
+            plnBan.Visible = false;
+            plnMain.Visible = true;
+            plnDanhMuc.Visible = true;
+            plnSanPham.Visible = true;
+            plnHoaDon.Visible = true;
+            plnBottom.Visible = true;
+
+            lblTable.Text = $"Table: {currentBan?.SoBan ?? "N/A"}";
+            lblCover.Text = $"Cover: {currentBan?.SoChoNgoi ?? 0}";
+            lblWholeCheck.Text = "Whole Check: 0.00";
+
+            try
+            {
+                List<DanhMucSanPham> dsDanhMuc = danhMucDAL.GetAllDanhMucSP();
+                if (dsDanhMuc == null || dsDanhMuc.Count == 0)
+                {
+                    MessageBox.Show("Không có danh mục sản phẩm nào!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                DisplayButtonsDanhMuc(dsDanhMuc);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh mục: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadSanPhamTheoDanhMuc(int idDanhMuc)
+        {
+            plnSanPham.Controls.Clear();
+
+            try
+            {
+                List<SANPHAM> dsSanPham = sanPhamDAL.GetSanPhamById(idDanhMuc);
+                if (dsSanPham == null || dsSanPham.Count == 0)
+                {
+                    MessageBox.Show("Không có sản phẩm nào trong danh mục này!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+                DisplayButtonsSanPham(dsSanPham);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải sản phẩm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void DisplayButtonsDanhMuc(List<DanhMucSanPham> dsDanhMuc)
+        {
+            var groupedDanhMuc = new Dictionary<string, List<DanhMucSanPham>>
+            {
+                { "FOOD", new List<DanhMucSanPham>() },
+                { "ALCOHOLIC", new List<DanhMucSanPham>() },
+                { "FUNCTION", new List<DanhMucSanPham>() }
+            };
+
+            foreach (var dm in dsDanhMuc)
+            {
+                if (dm.TenDanhMuc.Contains("Phở") || dm.TenDanhMuc.Contains("Soup"))
+                    groupedDanhMuc["FOOD"].Add(dm);
+                else if (dm.TenDanhMuc.Contains("Cocktail"))
+                    groupedDanhMuc["ALCOHOLIC"].Add(dm);
+                else
+                    groupedDanhMuc["FUNCTION"].Add(dm);
+            }
+
+            int x = 0, y = 0;
+            foreach (var group in groupedDanhMuc)
+            {
+                if (group.Value.Count == 0) continue;
+
+                Label lblGroup = new Label
+                {
+                    Text = group.Key,
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold), // Tăng kích thước font tiêu đề
+                    ForeColor = Color.Black,
+                    BackColor = Color.FromArgb(180, 200, 220), // Thêm màu nền nhẹ
+                    Padding = new Padding(5),
+                    Location = new Point(x, y),
+                    AutoSize = true
+                };
+                plnDanhMuc.Controls.Add(lblGroup);
+                y += 40; // Tăng khoảng cách giữa tiêu đề và nút
+
+                int buttonWidth = 100, buttonHeight = 60, margin = 10; // Tăng khoảng cách giữa các nút
+                int buttonsPerRow = 3;
+                int count = 0;
+
+                foreach (var dm in group.Value)
+                {
+                    Button btn = new Button
+                    {
+                        Text = dm.TenDanhMuc,
+                        Size = new Size(buttonWidth, buttonHeight),
+                        Font = new Font("Segoe UI", 10),
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Location = new Point(x, y),
+                        BackColor = dm.TenDanhMuc == "Corkage" ? Color.FromArgb(255, 204, 0) : Color.FromArgb(0, 153, 204),
+                        ForeColor = Color.White,
+                        FlatStyle = FlatStyle.Flat,
+                        Tag = dm
+                    };
+                    btn.FlatAppearance.BorderSize = 1; // Thêm viền nhẹ
+                    btn.FlatAppearance.BorderColor = Color.FromArgb(150, 150, 150);
+                    btn.Click += BtnDanhMuc_Click;
+                    plnDanhMuc.Controls.Add(btn);
+
+                    count++;
+                    x += buttonWidth + margin;
+                    if (count % buttonsPerRow == 0)
+                    {
+                        x = 0;
+                        y += buttonHeight + margin;
+                    }
+                }
+                x = 0;
+                y += buttonHeight + 10; // Tăng khoảng cách giữa các nhóm
+            }
+        }
+
+        private void DisplayButtonsSanPham(List<SANPHAM> dsSanPham)
+        {
+            int x = 0, y = 0;
+            int buttonWidth = 150, buttonHeight = 70, margin = 10; // Giảm kích thước nút và khoảng cách
+            int buttonsPerRow = 5; // Hiển thị 4 nút mỗi hàng
+
+            foreach (var sp in dsSanPham)
+            {
+                Button btn = new Button
+                {
+                    Text = $"{sp.TenSanPham}\n{sp.Gia:N0}",
+                    Size = new Size(buttonWidth, buttonHeight),
+                    Font = new Font("Segoe UI", 9), // Giảm kích thước font cho vừa nút
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(x, y),
+                    BackColor = Color.FromArgb(0, 153, 204),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
+                    Tag = sp
+                };
+                btn.FlatAppearance.BorderSize = 1; // Thêm viền nhẹ
+                btn.FlatAppearance.BorderColor = Color.FromArgb(150, 150, 150);
+                btn.Click += BtnSanPham_Click;
+                plnSanPham.Controls.Add(btn);
+
+                x += buttonWidth + margin;
+                if (x + buttonWidth > plnSanPham.Width)
+                {
+                    x = 0;
+                    y += buttonHeight + margin;
+                }
+            }
+        }
+
+        private void DisplayHoaDon()
+        {
+            plnHoaDon.Controls.Clear();
+
+            int y = 0;
+            decimal total = 0;
+
+            Label lblHeader = new Label
+            {
+                Text = "CHECK TYPE        IN HOUSE   SHARE",
+                Font = new Font("Courier New", 10, FontStyle.Bold), // Sử dụng font monospace để căn chỉnh thẳng hàng
+                Location = new Point(0, y),
+                AutoSize = true
+            };
+            plnHoaDon.Controls.Add(lblHeader);
+            y += 30;
+
+            foreach (var sp in selectedSanPhams)
+            {
+                Label lblItem = new Label
+                {
+                    Text = $"{sp.TenSanPham,-20} {1,10} {sp.Gia,10:N0}", // Căn chỉnh thẳng hàng
+                    Font = new Font("Courier New", 10), // Sử dụng font monospace
+                    Location = new Point(0, y),
+                    AutoSize = true
+                };
+                plnHoaDon.Controls.Add(lblItem);
+                total += sp.Gia;
+                y += 25;
+            }
+
+            y += 20;
+            Label lblTotal = new Label
+            {
+                Text = $"WHOLE CHECK: {total:N0}",
+                Font = new Font("Segoe UI", 12, FontStyle.Bold), // Tăng kích thước font
+                ForeColor = Color.FromArgb(0, 153, 204), // Thêm màu sắc nổi bật
+                Location = new Point(0, y),
+                AutoSize = true
+            };
+            plnHoaDon.Controls.Add(lblTotal);
+
+            lblWholeCheck.Text = $"Whole Check: {total:N0}";
+        }
+
+        private void BtnBan_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            currentBan = btn.Tag as Ban;
+            if (currentBan == null)
+            {
+                MessageBox.Show("Không tìm thấy bàn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            selectedSanPhams.Clear();
+            LoadDanhMuc();
+        }
+
+        private void BtnDanhMuc_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            currentDanhMuc = btn.Tag as DanhMucSanPham;
+            if (currentDanhMuc == null)
+            {
+                MessageBox.Show("Không tìm thấy danh mục!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            LoadSanPhamTheoDanhMuc(currentDanhMuc.MaDanhMuc);
+        }
+
+        private void BtnSanPham_Click(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            SANPHAM sp = btn.Tag as SANPHAM;
+            if (sp == null)
+            {
+                MessageBox.Show("Không tìm thấy sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            selectedSanPhams.Add(sp);
+            DisplayHoaDon();
+        }
+
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            if (plnMain.Visible)
+            {
+                LoadBan();
+            }
+        }
+
+        private void btnInfo_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Hệ thống quản lý nhà hàng\nPhiên bản 1.0\nPhát triển bởi Tư Anh", "Thông tin", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -39,170 +401,34 @@ namespace Lounge
             dn.ShowDialog();
             this.Close();
         }
-       
 
-        private void TrangChu_Load(object sender, EventArgs e)
+        private void btnSendCheck_Click(object sender, EventArgs e)
         {
-          
-        }
-        private void LoadSPTheoDanhMuc(int maDanhMuc)
-        {
-            List<SANPHAM> dsSanPham = sanPhamDAL.GetSanPhamTheoDanhMuc(maDanhMuc);
-            plnBan.Controls.Clear();
-
-            int x = 10, y = 10;
-            int count = 0;
-
-            foreach (var sp in dsSanPham)
-            {
-                Button btn = new Button();
-                btn.Width = 120;
-                btn.Height = 80;
-                btn.Text = $"{sp.TenSanPham}\n{sp.Gia} VND";
-                btn.BackColor = Color.RoyalBlue;
-                btn.ForeColor = Color.Orange;
-                btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-                btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Tag = sp.MaSanPham;
-
-                btn.Location = new Point(x, y);
-                plnBan.Controls.Add(btn);
-
-                x += 130;
-                count++;
-                if (count % 4 == 0)
-                {
-                    x = 10;
-                    y += 90;
-                }
-            }
+            MessageBox.Show("Hóa đơn đã được gửi!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void LoadDanhMuc()
+        private void btnPrintCheck_Click(object sender, EventArgs e)
         {
-            plnBan.Visible = true;
-            plnBan.Controls.Clear();
-            List<DanhMucSanPham> dmsp = DanhMucSPDAL.GetAllDanhMucSP();
-            int x = 10, y = 10;
-            int count = 0;
-            foreach (var danhMucSanPham in dmsp)
-            {
-                Button btn = new Button();
-                btn.Width = 120;
-                btn.Height = 80;
-                btn.Text = danhMucSanPham.TenDanhMuc;
-                btn.BackColor = Color.RoyalBlue;
-                btn.ForeColor = Color.Orange;
-                btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-                btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Tag = danhMucSanPham.MaDanhMuc;
-                btn.Location = new Point(x, y);
-                // Gắn đúng sự kiện click
-                btn.Click += DanhMuc_Click;
-                plnBan.Controls.Add(btn);
-                x += 130;
-                count++;
-                if (count % 4 == 0)
-                {
-                    x = 10;
-                    y += 90;
-                }
-            }
-        }
-        private void LoadBan()
-        {
-            plnBan.Controls.Clear();
-            List<Ban> dsban = banDAL.GetAllBan();
-            int x = 10, y = 10;
-            int count = 0;
-
-            foreach (var ban in dsban)
-            {
-                Button btn = new Button();
-                btn.Width = 120;
-                btn.Height = 80;
-                btn.Text = $"{ban.SoBan}\n👤 {ban.SoChoNgoi}\n{ban.TrangThai}";
-                btn.BackColor = ban.TrangThai == "Đang sử dụng" ? Color.RoyalBlue : Color.LightGray;
-                btn.ForeColor = Color.White;
-                btn.Font = new Font("Segoe UI", 9, FontStyle.Bold);
-                btn.TextAlign = ContentAlignment.MiddleCenter;
-                btn.Tag = ban.MaBan;
-
-                btn.Location = new Point(x, y);
-
-                // Gắn đúng sự kiện click
-                btn.Click += Ban_Click;
-
-                plnBan.Controls.Add(btn);
-
-                x += 130;
-                count++;
-                if (count % 4 == 0)
-                {
-                    x = 10;
-                    y += 90;
-                }
-                
-            }
-            
-        }
-        private void Ban_Click(object sender, EventArgs e)
-        {
-            plnBan.Visible = false;
-            plnBan.Controls.Clear();
-           
-            LoadDanhMuc();
-
-            int maBan = (int)(sender as Button).Tag;
-            ban = banDAL.getbanByid(maBan);
-
-            MessageBox.Show($"Bạn đã chọn bàn số: {ban.SoBan}");
+            MessageBox.Show("Hóa đơn đã được in!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void DanhMuc_Click(object sender, EventArgs e)
+        private void btnGuestCheck_Click(object sender, EventArgs e)
         {
-            if (sender is Button button && button.Tag != null)
-            {
-                int maDanhMuc = Convert.ToInt32(button.Tag);
-                MessageBox.Show($"Bạn đã chọn danh mục có mã: {maDanhMuc}");
-
-      
-                plnBan.Visible = true;
-
-                LoadSPTheoDanhMuc(maDanhMuc);
-            }
-            else
-            {
-                MessageBox.Show("Có lỗi xảy ra: Button hoặc Tag không hợp lệ.");
-            }
+            MessageBox.Show("Xem trước hóa đơn!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
-        private void btnTim1_Click(object sender, EventArgs e)
-        {
-            frmThemBan frm = new frmThemBan();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                Ban newBan = frm.banmoi;
 
-                var daTonTai = banDAL.GetBanBySoBan(newBan.SoBan);
-               if(daTonTai != null)
-                {
-                    MessageBox.Show("Bàn đã tồn tại trong hệ thống!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (banDAL.AddNewBan(newBan))
-                {
-                    MessageBox.Show("Thêm bàn thành công!");
-                    LoadBan();
-                }
-                else
-                {
-                    MessageBox.Show("Thêm bàn thất bại!");
-                }
-            }
-         }
-     
-        private void panel1_Paint(object sender, PaintEventArgs e)
+        private void btnPaid_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Thanh toán hoàn tất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            selectedSanPhams.Clear();
+            DisplayHoaDon();
+            LoadBan();
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
+        {
+            selectedSanPhams.Clear();
+            DisplayHoaDon();
             LoadBan();
         }
     }

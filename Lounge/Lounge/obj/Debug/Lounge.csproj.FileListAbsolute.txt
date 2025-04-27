@@ -364,3 +364,4 @@ D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\zh-Hant\Microsoft.Data.SqlClient.r
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.ChonQuyen.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormNhanVien.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQL.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormSanPham.resources

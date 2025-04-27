@@ -12,13 +12,13 @@ namespace Lounge.DAL
     public class SanPhamDAL
     {
         private KetNoi KetNoi = new KetNoi();
-        public List<SANPHAM> GetSanPhamTheoDanhMuc(int maDanhMuc)
+        public List<SANPHAM> GetSanPhamById(int maDanhMuc)
         {
             List<SANPHAM> ds = new List<SANPHAM>();
             KetNoi.GetConnect();
             string query = "SELECT * FROM SANPHAM WHERE MaDanhMuc = @MaDanhMuc";
 
-            using (SqlConnection conn = KetNoi.GetConnect())
+            using (SqlConnection conn = KetNoi.GetOpenConnect())
             {
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.Parameters.AddWithValue("@MaDanhMuc", maDanhMuc);

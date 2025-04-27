@@ -15,7 +15,7 @@ namespace Lounge.DAL
         {
             List<DanhMucSanPham> dsDanhMucSP = new List<DanhMucSanPham>();
             string query = "SELECT * FROM DanhMucSanPham";
-            SqlCommand cmd = new SqlCommand(query, KetNoi.GetConnect());
+            SqlCommand cmd = new SqlCommand(query, KetNoi.GetOpenConnect());
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -24,7 +24,7 @@ namespace Lounge.DAL
                 danhMucSP.TenDanhMuc = reader.GetString(1);
                 dsDanhMucSP.Add(danhMucSP);
             }
-            KetNoi.GetConnect().Close();
+            KetNoi.GetOpenConnect().Close();
             return dsDanhMucSP;
         }
         

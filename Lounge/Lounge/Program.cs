@@ -16,7 +16,7 @@ namespace Lounge
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormQL());
+            Application.Run(new TrangChu());
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Lounge.DAL
         {
             List<Ban> dsban = new List<Ban>();
             string query = "select * from Ban";
-            SqlCommand cmd = new SqlCommand(query, KetNoi.GetConnect());
+            SqlCommand cmd = new SqlCommand(query, KetNoi.GetOpenConnect());
             SqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
@@ -30,7 +30,7 @@ namespace Lounge.DAL
                 ban.TrangThai = reader.GetString(4);
                 dsban.Add(ban);
             }
-            KetNoi.GetConnect().Close();
+            KetNoi.GetOpenConnect().Close();
             return dsban;
         }
         public Ban getbanByid(int maban)
