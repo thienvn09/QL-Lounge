@@ -189,9 +189,9 @@
       <DependentUpon>ChonQuyen.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\BanDAL.cs" />
-    <Compile Include="DAL\ChiTietBanDAL.cs" />
     <Compile Include="DAL\DangNhapDAL.cs" />
     <Compile Include="DAL\DanhMucSPDAL.cs" />
+    <Compile Include="DAL\HoaDonDAL.cs" />
     <Compile Include="DAL\KetNoi.cs" />
     <Compile Include="DAL\NhanVienDAL.cs" />
     <Compile Include="DAL\SanPhamDAL.cs" />
@@ -244,8 +244,9 @@
       <DependentUpon>frmThemBan.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Ban.cs" />
-    <Compile Include="Model\ChiTietBan.cs" />
+    <Compile Include="Model\ChiTietHoaDon.cs" />
     <Compile Include="Model\DanhMucSanPham.cs" />
+    <Compile Include="Model\HoaDon.cs" />
     <Compile Include="Model\NhaCungCap.cs" />
     <Compile Include="Model\NhanVien.cs" />
     <Compile Include="Model\SANPHAM.cs" />
