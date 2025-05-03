@@ -14,8 +14,12 @@ namespace Lounge
         private SanPhamDAL sanPhamDAL = new SanPhamDAL();
         private Timer timer = new Timer();
         private Ban currentBan = null;
+        private ChiTietHoaDonDAL chiTietHoaDonDAL = new ChiTietHoaDonDAL();
         private DanhMucSanPham currentDanhMuc = null;
         private List<SANPHAM> selectedSanPhams = new List<SANPHAM>();
+        private HoaDonDAL hoaDonDAL = new HoaDonDAL();
+        private HoaDon currentHoaDon = null; // Hóa đơn hiện tại
+        private int maNhanVien = 1; // Giả sử MaNhanVien là 1 (có thể thay đổi sau khi đăng nhập)
 
         public TrangChu()
         {
@@ -34,14 +38,14 @@ namespace Lounge
 
             plnDanhMuc.AutoScroll = true;
             plnDanhMuc.BackColor = Color.FromArgb(200, 220, 240);
-            plnDanhMuc.Padding = new Padding(10); // Thêm padding cho panel danh mục
+            plnDanhMuc.Padding = new Padding(10);
 
             plnSanPham.AutoScroll = true;
             plnSanPham.BackColor = Color.FromArgb(200, 220, 240);
-            plnSanPham.Padding = new Padding(10); // Thêm padding cho panel sản phẩm
+            plnSanPham.Padding = new Padding(10);
 
             plnHoaDon.BackColor = Color.FromArgb(200, 220, 240);
-            plnHoaDon.Padding = new Padding(10); // Thêm padding cho panel hóa đơn
+            plnHoaDon.Padding = new Padding(10);
 
             plnBan.Visible = true;
             plnDanhMuc.Visible = false;
@@ -155,6 +159,39 @@ namespace Lounge
             lblCover.Text = $"Cover: {currentBan?.SoChoNgoi ?? 0}";
             lblWholeCheck.Text = "Whole Check: 0.00";
 
+            // Kiểm tra và tạo hóa đơn cho bàn hiện tại
+            try
+            {
+                List<HoaDon> dsHoaDon = hoaDonDAL.LayHoaDonTheoMaBan(currentBan.MaBan);
+                if (dsHoaDon.Count > 0)
+                {
+                    currentHoaDon = dsHoaDon[0]; // Lấy hóa đơn chưa thanh toán đầu tiên
+                }
+                else
+                {
+                    // Tạo hóa đơn mới nếu chưa có
+                    currentHoaDon = new HoaDon
+                    {
+                        MaKhachHang = 1, // Giả sử MaKhachHang là 1 (có thể thay đổi sau)
+                        MaNhanVien = maNhanVien,
+                        MaBan = currentBan.MaBan,
+                        NgayDat = DateTime.Now,
+                        TongTien = 0,
+                        TienGiamGia = 0,
+                        TongThueVAT = 0,
+                        NguoiTao = maNhanVien
+                    };
+                    int maHoaDon = hoaDonDAL.ThemHoaDon(currentHoaDon);
+                    currentHoaDon.MaHoaDon = maHoaDon;
+                }
+                DisplayHoaDon(); // Hiển thị hóa đơn
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi xử lý hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             try
             {
                 List<DanhMucSanPham> dsDanhMuc = danhMucDAL.GetAllDanhMucSP();
@@ -218,17 +255,17 @@ namespace Lounge
                 Label lblGroup = new Label
                 {
                     Text = group.Key,
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold), // Tăng kích thước font tiêu đề
+                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
                     ForeColor = Color.Black,
-                    BackColor = Color.FromArgb(180, 200, 220), // Thêm màu nền nhẹ
+                    BackColor = Color.FromArgb(180, 200, 220),
                     Padding = new Padding(5),
                     Location = new Point(x, y),
                     AutoSize = true
                 };
                 plnDanhMuc.Controls.Add(lblGroup);
-                y += 40; // Tăng khoảng cách giữa tiêu đề và nút
+                y += 40;
 
-                int buttonWidth = 100, buttonHeight = 60, margin = 10; // Tăng khoảng cách giữa các nút
+                int buttonWidth = 100, buttonHeight = 60, margin = 10;
                 int buttonsPerRow = 3;
                 int count = 0;
 
@@ -246,7 +283,7 @@ namespace Lounge
                         FlatStyle = FlatStyle.Flat,
                         Tag = dm
                     };
-                    btn.FlatAppearance.BorderSize = 1; // Thêm viền nhẹ
+                    btn.FlatAppearance.BorderSize = 1;
                     btn.FlatAppearance.BorderColor = Color.FromArgb(150, 150, 150);
                     btn.Click += BtnDanhMuc_Click;
                     plnDanhMuc.Controls.Add(btn);
@@ -260,15 +297,15 @@ namespace Lounge
                     }
                 }
                 x = 0;
-                y += buttonHeight + 10; // Tăng khoảng cách giữa các nhóm
+                y += buttonHeight + 10;
             }
         }
 
         private void DisplayButtonsSanPham(List<SANPHAM> dsSanPham)
         {
             int x = 0, y = 0;
-            int buttonWidth = 150, buttonHeight = 70, margin = 10; // Giảm kích thước nút và khoảng cách
-            int buttonsPerRow = 5; // Hiển thị 4 nút mỗi hàng
+            int buttonWidth = 150, buttonHeight = 70, margin = 10;
+            int buttonsPerRow = 5;
 
             foreach (var sp in dsSanPham)
             {
@@ -276,7 +313,7 @@ namespace Lounge
                 {
                     Text = $"{sp.TenSanPham}\n{sp.Gia:N0}",
                     Size = new Size(buttonWidth, buttonHeight),
-                    Font = new Font("Segoe UI", 9), // Giảm kích thước font cho vừa nút
+                    Font = new Font("Segoe UI", 9),
                     TextAlign = ContentAlignment.MiddleCenter,
                     Location = new Point(x, y),
                     BackColor = Color.FromArgb(0, 153, 204),
@@ -284,7 +321,7 @@ namespace Lounge
                     FlatStyle = FlatStyle.Flat,
                     Tag = sp
                 };
-                btn.FlatAppearance.BorderSize = 1; // Thêm viền nhẹ
+                btn.FlatAppearance.BorderSize = 1;
                 btn.FlatAppearance.BorderColor = Color.FromArgb(150, 150, 150);
                 btn.Click += BtnSanPham_Click;
                 plnSanPham.Controls.Add(btn);
@@ -308,33 +345,42 @@ namespace Lounge
             Label lblHeader = new Label
             {
                 Text = "CHECK TYPE        IN HOUSE   SHARE",
-                Font = new Font("Courier New", 10, FontStyle.Bold), // Sử dụng font monospace để căn chỉnh thẳng hàng
+                Font = new Font("Courier New", 10, FontStyle.Bold),
                 Location = new Point(0, y),
                 AutoSize = true
             };
             plnHoaDon.Controls.Add(lblHeader);
             y += 30;
 
-            foreach (var sp in selectedSanPhams)
+            try
             {
-                Label lblItem = new Label
+                List<ChiTietHoaDon> dsChiTiet = chiTietHoaDonDAL.LayChiTietHoaDonTheoMaHoaDon(currentHoaDon.MaHoaDon);
+                foreach (var chiTiet in dsChiTiet)
                 {
-                    Text = $"{sp.TenSanPham,-20} {1,10} {sp.Gia,10:N0}", // Căn chỉnh thẳng hàng
-                    Font = new Font("Courier New", 10), // Sử dụng font monospace
-                    Location = new Point(0, y),
-                    AutoSize = true
-                };
-                plnHoaDon.Controls.Add(lblItem);
-                total += sp.Gia;
-                y += 25;
+                    Label lblItem = new Label
+                    {
+                        Text = $"{chiTiet.TenSanPham,-20} {chiTiet.SoLuong,10} {chiTiet.ThanhTien,10:N0}",
+                        Font = new Font("Courier New", 10),
+                        Location = new Point(0, y),
+                        AutoSize = true
+                    };
+                    plnHoaDon.Controls.Add(lblItem);
+                    total += (decimal)chiTiet.ThanhTien;
+                    y += 25;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi hiển thị hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             y += 20;
             Label lblTotal = new Label
             {
                 Text = $"WHOLE CHECK: {total:N0}",
-                Font = new Font("Segoe UI", 12, FontStyle.Bold), // Tăng kích thước font
-                ForeColor = Color.FromArgb(0, 153, 204), // Thêm màu sắc nổi bật
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                ForeColor = Color.FromArgb(0, 153, 204),
                 Location = new Point(0, y),
                 AutoSize = true
             };
@@ -352,7 +398,6 @@ namespace Lounge
                 MessageBox.Show("Không tìm thấy bàn!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            selectedSanPhams.Clear();
             LoadDanhMuc();
         }
 
@@ -377,8 +422,46 @@ namespace Lounge
                 MessageBox.Show("Không tìm thấy sản phẩm!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            selectedSanPhams.Add(sp);
-            DisplayHoaDon();
+
+            // Đảm bảo currentHoaDon đã được khởi tạo
+            if (currentHoaDon == null)
+            {
+                MessageBox.Show("Hóa đơn chưa được tạo! Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Kiểm tra và thêm sản phẩm vào hóa đơn
+            try
+            {
+                ChiTietHoaDon chiTietTonTai = chiTietHoaDonDAL.KiemTraSanPhamTrongHoaDon(currentHoaDon.MaHoaDon, sp.MaSanPham);
+                if (chiTietTonTai != null)
+                {
+                    // Nếu sản phẩm đã có, tăng số lượng
+                    int soLuongMoi = chiTietTonTai.SoLuong + 1;
+                    chiTietHoaDonDAL.CapNhatSoLuongChiTietHoaDon(currentHoaDon.MaHoaDon, sp.MaSanPham, soLuongMoi);
+                }
+                else
+                {
+                    // Nếu sản phẩm chưa có, thêm mới
+                    ChiTietHoaDon chiTiet = new ChiTietHoaDon
+                    {
+                        MaHoaDon = currentHoaDon.MaHoaDon,
+                        MaSanPham = sp.MaSanPham,
+                        SoLuong = 1,
+                        Gia = (float)sp.Gia,
+                        ThueVAT = 10 // Giả sử thuế VAT là 10% (có thể lấy từ bảng DanhMucSanPham nếu có)
+                    };
+                    chiTietHoaDonDAL.ThemChiTietHoaDon(chiTiet);
+                }
+
+                // Cập nhật tổng tiền và tổng thuế của hóa đơn
+                hoaDonDAL.CapNhatTongTienHoaDon(currentHoaDon.MaHoaDon);
+                DisplayHoaDon();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi thêm sản phẩm vào hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnBack_Click(object sender, EventArgs e)
@@ -419,16 +502,25 @@ namespace Lounge
 
         private void btnPaid_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Thanh toán hoàn tất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            selectedSanPhams.Clear();
-            DisplayHoaDon();
-            LoadBan();
+            if (currentHoaDon != null)
+            {
+                try
+                {
+                    hoaDonDAL.CapNhatTrangThaiHoaDon(currentHoaDon.MaHoaDon, "Đã thanh toán");
+                    MessageBox.Show("Thanh toán hoàn tất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    currentHoaDon = null;
+                    LoadBan();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            selectedSanPhams.Clear();
-            DisplayHoaDon();
+            currentHoaDon = null;
             LoadBan();
         }
     }

@@ -16,5 +16,6 @@ namespace Lounge.Model
         public float ThueVAT { get; set; }
         public float TienThue { get; set; }
         public float ThanhTien { get; set; }
+        public string TenSanPham { get; set; }
     }
 }

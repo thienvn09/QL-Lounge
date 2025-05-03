@@ -189,6 +189,7 @@
       <DependentUpon>ChonQuyen.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\BanDAL.cs" />
+    <Compile Include="DAL\ChiTietHoaDonDAl.cs" />
     <Compile Include="DAL\DangNhapDAL.cs" />
     <Compile Include="DAL\DanhMucSPDAL.cs" />
     <Compile Include="DAL\HoaDonDAL.cs" />
