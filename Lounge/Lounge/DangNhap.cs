@@ -24,7 +24,7 @@ namespace Lounge
         {
             try
             {
-                using (SqlConnection conn = KetNoi.GetConnect()) // dùng hàm mới GetConnection()
+                using (SqlConnection conn = KetNoi.GetOpenConnect()) // dùng hàm mới GetConnection()
                 {
                     conn.Open(); // mở trong using thì tự đóng
                     if (conn.State == ConnectionState.Open)

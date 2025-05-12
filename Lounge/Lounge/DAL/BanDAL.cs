@@ -53,6 +53,7 @@ namespace Lounge.DAL
                     TrangThai = row["TrangThai"].ToString()
                 };
             }
+            KetNoi.GetOpenConnect().Close();
             return null;
         }
         public Ban GetBanBySoBan(string soBan)
@@ -75,6 +76,7 @@ namespace Lounge.DAL
                     TrangThai = row["TrangThai"].ToString()
                 };
             }
+            KetNoi.GetOpenConnect().Close();
             return null;
         }
 
@@ -99,9 +101,36 @@ namespace Lounge.DAL
             };
 
             int result = KetNoi.ExecuteNonQuery(query, parameters);
+            KetNoi.GetOpenConnect().Close();
             return result > 0;
         }
+        // Phương thức cập nhật trạng thái bàn
+        public void CapNhatTrangThaiBan(int maBan, string trangThai)
+        {
+            string query = "UPDATE Ban SET TrangThai = @TrangThai WHERE MaBan = @MaBan";
 
-    }
+            using (SqlConnection conn = KetNoi.GetOpenConnect())
+            {
+                if (conn.State != ConnectionState.Open)
+                {
+                    conn.Open();
+                }
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@TrangThai", trangThai);
+                    cmd.Parameters.AddWithValue("@MaBan", maBan);
 
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new Exception("Lỗi khi cập nhật trạng thái bàn: " + ex.Message + "\nStackTrace: " + ex.StackTrace);
+                    }
+                }
+            }
+        }
+
+    } 
 }

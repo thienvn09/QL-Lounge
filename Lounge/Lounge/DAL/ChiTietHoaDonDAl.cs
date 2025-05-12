@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
 using Lounge.Model;
 
@@ -17,33 +16,25 @@ namespace Lounge.DAL
                 INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, Gia, ThueVAT)
                 VALUES (@MaHoaDon, @MaSanPham, @SoLuong, @Gia, @ThueVAT)";
 
-            List<SqlParameter> parameters = new List<SqlParameter>
+            using (SqlConnection conn = ketNoi.GetConnect())
             {
-                new SqlParameter("@MaHoaDon", chiTiet.MaHoaDon),
-                new SqlParameter("@MaSanPham", chiTiet.MaSanPham),
-                new SqlParameter("@SoLuong", chiTiet.SoLuong),
-                new SqlParameter("@Gia", chiTiet.Gia),
-                new SqlParameter("@ThueVAT", chiTiet.ThueVAT)
-            };
-
-            using (SqlConnection conn = ketNoi.GetOpenConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddRange(parameters.ToArray());
-                    try
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        conn.Open(); // Mở kết nối nếu cần
+                        cmd.Parameters.AddWithValue("@MaHoaDon", chiTiet.MaHoaDon);
+                        cmd.Parameters.AddWithValue("@MaSanPham", chiTiet.MaSanPham);
+                        cmd.Parameters.AddWithValue("@SoLuong", chiTiet.SoLuong);
+                        cmd.Parameters.AddWithValue("@Gia", chiTiet.Gia);
+                        cmd.Parameters.AddWithValue("@ThueVAT", chiTiet.ThueVAT);
                         cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi thêm chi tiết hóa đơn: " + ex.Message);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi ThemChiTietHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    throw new Exception($"Lỗi khi thêm chi tiết hóa đơn: {ex.Message}", ex);
                 }
             }
         }
@@ -56,31 +47,23 @@ namespace Lounge.DAL
                 SET SoLuong = @SoLuong 
                 WHERE MaHoaDon = @MaHoaDon AND MaSanPham = @MaSanPham";
 
-            List<SqlParameter> parameters = new List<SqlParameter>
+            using (SqlConnection conn = ketNoi.GetConnect())
             {
-                new SqlParameter("@SoLuong", soLuongMoi),
-                new SqlParameter("@MaHoaDon", maHoaDon),
-                new SqlParameter("@MaSanPham", maSanPham)
-            };
-
-            using (SqlConnection conn = ketNoi.GetOpenConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddRange(parameters.ToArray());
-                    try
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        conn.Open();
+                        cmd.Parameters.AddWithValue("@SoLuong", soLuongMoi);
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        cmd.Parameters.AddWithValue("@MaSanPham", maSanPham);
                         cmd.ExecuteNonQuery();
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi cập nhật số lượng chi tiết hóa đơn: " + ex.Message);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi CapNhatSoLuongChiTietHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    throw new Exception($"Lỗi khi cập nhật số lượng chi tiết hóa đơn: {ex.Message}", ex);
                 }
             }
         }
@@ -92,20 +75,15 @@ namespace Lounge.DAL
                 SELECT * FROM ChiTietHoaDon 
                 WHERE MaHoaDon = @MaHoaDon AND MaSanPham = @MaSanPham";
 
-            List<SqlParameter> parameters = new List<SqlParameter>
+            using (SqlConnection conn = ketNoi.GetConnect())
             {
-                new SqlParameter("@MaHoaDon", maHoaDon),
-                new SqlParameter("@MaSanPham", maSanPham)
-            };
-
-            using (SqlConnection conn = ketNoi.GetOpenConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddRange(parameters.ToArray());
-                    try
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        conn.Open();
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        cmd.Parameters.AddWithValue("@MaSanPham", maSanPham);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
@@ -116,22 +94,19 @@ namespace Lounge.DAL
                                     MaHoaDon = Convert.ToInt32(reader["MaHoaDon"]),
                                     MaSanPham = Convert.ToInt32(reader["MaSanPham"]),
                                     SoLuong = Convert.ToInt32(reader["SoLuong"]),
-                                    Gia = Convert.ToSingle(reader["Gia"]),
-                                    ThueVAT = Convert.ToSingle(reader["ThueVAT"]),
-                                    TienThue = Convert.ToSingle(reader["TienThue"]),
-                                    ThanhTien = Convert.ToSingle(reader["ThanhTien"])
+                                    Gia = (int)Convert.ToDecimal(reader["Gia"]),
+                                    ThueVAT = (int)Convert.ToDecimal(reader["ThueVAT"]),
+                                    TienThue = (int)(reader["TienThue"] != DBNull.Value ? Convert.ToDecimal(reader["TienThue"]) : 0m),
+                                    ThanhTien = (int)(reader["ThanhTien"] != DBNull.Value ? Convert.ToDecimal(reader["ThanhTien"]) : 0m)
                                 };
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi kiểm tra sản phẩm trong hóa đơn: " + ex.Message);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi KiemTraSanPhamTrongHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    throw new Exception($"Lỗi khi kiểm tra sản phẩm trong hóa đơn: {ex.Message}", ex);
                 }
             }
             return null;
@@ -141,57 +116,48 @@ namespace Lounge.DAL
         public List<ChiTietHoaDon> LayChiTietHoaDonTheoMaHoaDon(int maHoaDon)
         {
             List<ChiTietHoaDon> dsChiTiet = new List<ChiTietHoaDon>();
-
             string query = @"
                 SELECT c.*, s.TenSanPham 
                 FROM ChiTietHoaDon c 
                 JOIN SanPham s ON c.MaSanPham = s.MaSanPham 
                 WHERE c.MaHoaDon = @MaHoaDon";
 
-            List<SqlParameter> parameters = new List<SqlParameter>
+            using (SqlConnection conn = ketNoi.GetConnect())
             {
-                new SqlParameter("@MaHoaDon", maHoaDon)
-            };
-
-            using (SqlConnection conn = ketNoi.GetOpenConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    cmd.Parameters.AddRange(parameters.ToArray());
-                    try
+                    conn.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        conn.Open();
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                ChiTietHoaDon chiTiet = new ChiTietHoaDon
+                                dsChiTiet.Add(new ChiTietHoaDon
                                 {
                                     MaChiTietHoaDon = Convert.ToInt32(reader["MaChiTietHoaDon"]),
                                     MaHoaDon = Convert.ToInt32(reader["MaHoaDon"]),
                                     MaSanPham = Convert.ToInt32(reader["MaSanPham"]),
                                     SoLuong = Convert.ToInt32(reader["SoLuong"]),
-                                    Gia = Convert.ToSingle(reader["Gia"]),
-                                    ThueVAT = Convert.ToSingle(reader["ThueVAT"]),
-                                    TienThue = Convert.ToSingle(reader["TienThue"]),
-                                    ThanhTien = Convert.ToSingle(reader["ThanhTien"]),
+                                    Gia = (int)Convert.ToDecimal(reader["Gia"]),
+                                    ThueVAT = (int)Convert.ToDecimal(reader["ThueVAT"]),
+                                    TienThue = (int)(reader["TienThue"] != DBNull.Value ? Convert.ToDecimal(reader["TienThue"]) : 0m),
+                                    ThanhTien = (int)(reader["ThanhTien"] != DBNull.Value ? Convert.ToDecimal(reader["ThanhTien"]) : 0m),
                                     TenSanPham = reader["TenSanPham"].ToString()
-                                };
-                                dsChiTiet.Add(chiTiet);
+                                });
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        throw new Exception("Lỗi khi lấy chi tiết hóa đơn: " + ex.Message);
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
+                    Console.WriteLine($"LayChiTietHoaDonTheoMaHoaDon: Tìm thấy {dsChiTiet.Count} chi tiết cho MaHoaDon = {maHoaDon}");
+                    return dsChiTiet;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi LayChiTietHoaDonTheoMaHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                    throw new Exception($"Lỗi khi lấy chi tiết hóa đơn: {ex.Message}", ex);
                 }
             }
-            return dsChiTiet;
         }
     }
 }

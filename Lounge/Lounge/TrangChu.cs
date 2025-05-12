@@ -91,7 +91,7 @@ namespace Lounge
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải danh sách bàn: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -162,8 +162,15 @@ namespace Lounge
             // Kiểm tra và tạo hóa đơn cho bàn hiện tại
             try
             {
+                // Kiểm tra currentBan trước khi sử dụng
+                if (currentBan == null)
+                {
+                    MessageBox.Show("Bàn hiện tại không tồn tại! Vui lòng chọn một bàn.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 List<HoaDon> dsHoaDon = hoaDonDAL.LayHoaDonTheoMaBan(currentBan.MaBan);
-                if (dsHoaDon.Count > 0)
+                if (dsHoaDon != null && dsHoaDon.Count > 0)
                 {
                     currentHoaDon = dsHoaDon[0]; // Lấy hóa đơn chưa thanh toán đầu tiên
                 }
@@ -182,13 +189,28 @@ namespace Lounge
                         NguoiTao = maNhanVien
                     };
                     int maHoaDon = hoaDonDAL.ThemHoaDon(currentHoaDon);
+                    if (maHoaDon <= 0)
+                    {
+                        throw new Exception("Không thể tạo mã hóa đơn mới. Mã hóa đơn trả về không hợp lệ.");
+                    }
                     currentHoaDon.MaHoaDon = maHoaDon;
+
+                    // Cập nhật trạng thái bàn thành "Đang sử dụng"
+                    banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Đang sử dụng");
                 }
+
+                // Kiểm tra currentHoaDon trước khi gọi DisplayHoaDon
+                if (currentHoaDon == null || currentHoaDon.MaHoaDon <= 0)
+                {
+                    MessageBox.Show("Không thể tạo hoặc lấy hóa đơn! Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 DisplayHoaDon(); // Hiển thị hóa đơn
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi xử lý hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi xử lý hóa đơn: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -204,7 +226,7 @@ namespace Lounge
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải danh mục: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải danh mục: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -224,7 +246,7 @@ namespace Lounge
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi tải sản phẩm: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi tải sản phẩm: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -339,6 +361,13 @@ namespace Lounge
         {
             plnHoaDon.Controls.Clear();
 
+            // Kiểm tra currentHoaDon trước khi sử dụng
+            if (currentHoaDon == null || currentHoaDon.MaHoaDon <= 0)
+            {
+                MessageBox.Show("Hóa đơn hiện tại không hợp lệ! Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             int y = 0;
             decimal total = 0;
 
@@ -355,23 +384,26 @@ namespace Lounge
             try
             {
                 List<ChiTietHoaDon> dsChiTiet = chiTietHoaDonDAL.LayChiTietHoaDonTheoMaHoaDon(currentHoaDon.MaHoaDon);
-                foreach (var chiTiet in dsChiTiet)
+                if (dsChiTiet != null)
                 {
-                    Label lblItem = new Label
+                    foreach (var chiTiet in dsChiTiet)
                     {
-                        Text = $"{chiTiet.TenSanPham,-20} {chiTiet.SoLuong,10} {chiTiet.ThanhTien,10:N0}",
-                        Font = new Font("Courier New", 10),
-                        Location = new Point(0, y),
-                        AutoSize = true
-                    };
-                    plnHoaDon.Controls.Add(lblItem);
-                    total += (decimal)chiTiet.ThanhTien;
-                    y += 25;
+                        Label lblItem = new Label
+                        {
+                            Text = $"{chiTiet.TenSanPham,-20} {chiTiet.SoLuong,10} {chiTiet.ThanhTien,10:N0}",
+                            Font = new Font("Courier New", 10),
+                            Location = new Point(0, y),
+                            AutoSize = true
+                        };
+                        plnHoaDon.Controls.Add(lblItem);
+                        total += (decimal)chiTiet.ThanhTien;
+                        y += 25;
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi hiển thị hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi hiển thị hóa đơn: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -423,10 +455,10 @@ namespace Lounge
                 return;
             }
 
-            // Đảm bảo currentHoaDon đã được khởi tạo
-            if (currentHoaDon == null)
+            // Đảm bảo currentHoaDon đã được khởi tạo và hợp lệ
+            if (currentHoaDon == null || currentHoaDon.MaHoaDon <= 0)
             {
-                MessageBox.Show("Hóa đơn chưa được tạo! Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Hóa đơn chưa được tạo hoặc không hợp lệ! Vui lòng kiểm tra lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -460,7 +492,7 @@ namespace Lounge
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Lỗi khi thêm sản phẩm vào hóa đơn: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi thêm sản phẩm vào hóa đơn: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -502,25 +534,38 @@ namespace Lounge
 
         private void btnPaid_Click(object sender, EventArgs e)
         {
-            if (currentHoaDon != null)
+            if (currentHoaDon != null && currentHoaDon.MaHoaDon > 0)
             {
                 try
                 {
                     hoaDonDAL.CapNhatTrangThaiHoaDon(currentHoaDon.MaHoaDon, "Đã thanh toán");
+
+                    // Cập nhật trạng thái bàn thành "Trống"
+                    if (currentBan != null)
+                    {
+                        banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Trống");
+                    }
+
                     MessageBox.Show("Thanh toán hoàn tất!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     currentHoaDon = null;
+                    currentBan = null;
                     LoadBan();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}\nStackTrace: {ex.StackTrace}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                MessageBox.Show("Không có hóa đơn để thanh toán!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
             currentHoaDon = null;
+            currentBan = null;
             LoadBan();
         }
     }

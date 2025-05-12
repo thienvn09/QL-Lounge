@@ -365,3 +365,6 @@ D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.ChonQuyen.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormNhanVien.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQL.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormSanPham.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLKH.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLSP.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLNCC.resources

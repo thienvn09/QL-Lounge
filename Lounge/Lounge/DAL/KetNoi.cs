@@ -94,14 +94,5 @@ namespace Lounge
 
             return dt;
         }
-
-        /// <summary>
-        /// Ví dụ: Lấy toàn bộ dữ liệu từ bảng DangNhap
-        /// </summary>
-        public DataTable GetAllDangNhap()
-        {
-            string query = "SELECT * FROM DangNhap";
-            return ExecuteQuery(query);
-        }
     }
 }
