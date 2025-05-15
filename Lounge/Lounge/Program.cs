@@ -16,7 +16,7 @@ namespace Lounge
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormQLNCC());
+            Application.Run(new QLHoaDon());
         }
     }
 }

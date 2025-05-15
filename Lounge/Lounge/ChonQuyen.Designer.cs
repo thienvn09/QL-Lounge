@@ -52,7 +52,7 @@
             this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(3, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(834, 39);
+            this.label1.Size = new System.Drawing.Size(800, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "Chào mừng bạn đến với phần mềm quản lý Lounge";
             // 
@@ -78,7 +78,7 @@
             this.btnBH.Name = "btnBH";
             this.btnBH.Size = new System.Drawing.Size(403, 311);
             this.btnBH.TabIndex = 2;
-            this.btnBH.Text = "Quản lý bán hàng";
+            this.btnBH.Text = "Trang chủ";
             this.btnBH.UseVisualStyleBackColor = false;
             this.btnBH.Click += new System.EventHandler(this.btnBH_Click);
             // 

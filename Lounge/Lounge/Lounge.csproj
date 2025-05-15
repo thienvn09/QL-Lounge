@@ -195,6 +195,7 @@
     <Compile Include="DAL\HoaDonDAL.cs" />
     <Compile Include="DAL\KetNoi.cs" />
     <Compile Include="DAL\KhachHanDAL.cs" />
+    <Compile Include="DAL\KhoHangDAL.cs" />
     <Compile Include="DAL\NhaCungCapDAL.cs" />
     <Compile Include="DAL\NhanVienDAL.cs" />
     <Compile Include="DAL\SanPhamDAL.cs" />
@@ -215,12 +216,6 @@
     </Compile>
     <Compile Include="FormNhanVien.Designer.cs">
       <DependentUpon>FormNhanVien.cs</DependentUpon>
-    </Compile>
-    <Compile Include="FormOrder.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormOrder.Designer.cs">
-      <DependentUpon>FormOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="FormQL.cs">
       <SubType>Form</SubType>
@@ -266,14 +261,22 @@
     </Compile>
     <Compile Include="Model\Ban.cs" />
     <Compile Include="Model\ChiTietHoaDon.cs" />
+    <Compile Include="Model\DangNhap.cs" />
     <Compile Include="Model\DanhMucSanPham.cs" />
     <Compile Include="Model\HoaDon.cs" />
     <Compile Include="Model\KhachHan.cs" />
+    <Compile Include="Model\KhoHang.cs" />
     <Compile Include="Model\NhaCungCap.cs" />
     <Compile Include="Model\NhanVien.cs" />
     <Compile Include="Model\SANPHAM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QLHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QLHoaDon.Designer.cs">
+      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="TrangChu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -291,9 +294,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNhanVien.resx">
       <DependentUpon>FormNhanVien.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormOrder.resx">
-      <DependentUpon>FormOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormQL.resx">
       <DependentUpon>FormQL.cs</DependentUpon>
@@ -322,6 +322,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QLHoaDon.resx">
+      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrangChu.resx">
       <DependentUpon>TrangChu.cs</DependentUpon>
     </EmbeddedResource>

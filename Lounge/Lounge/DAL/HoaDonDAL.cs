@@ -220,5 +220,210 @@ namespace Lounge.DAL
                 }
             }
         }
+        public DataTable GetAllHoaDon()
+        {
+            DataTable dt = new DataTable();
+            string query = "SELECT MaHoaDon, MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, ThanhToan, TrangThai, NguoiTao FROM HoaDon";
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
+
+        public bool AddHoaDon(HoaDon hd)
+        {
+            string query = @"INSERT INTO HoaDon (MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, ThanhToan, TrangThai, NguoiTao)
+                            VALUES (@MaKhachHang, @MaNhanVien, @MaBan, @NgayDat, @TongTien, @TienGiamGia, @TongThueVAT, @ThanhToan, @TrangThai, @NguoiTao)";
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaKhachHang", hd.MaKhachHang);
+                    cmd.Parameters.AddWithValue("@MaNhanVien", (object)hd.MaNhanVien ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MaBan", (object)hd.MaBan ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NgayDat", hd.NgayDat);
+                    cmd.Parameters.AddWithValue("@TongTien", hd.TongTien);
+                    cmd.Parameters.AddWithValue("@TienGiamGia", hd.TienGiamGia);
+                    cmd.Parameters.AddWithValue("@TongThueVAT", hd.TongThueVAT);
+                    cmd.Parameters.AddWithValue("@ThanhToan", hd.ThanhToan);
+                    cmd.Parameters.AddWithValue("@TrangThai", hd.TrangThai);
+                    cmd.Parameters.AddWithValue("@NguoiTao", (object)hd.NguoiTao ?? DBNull.Value);
+
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public bool UpdateHoaDon(HoaDon hd)
+        {
+            string query = @"UPDATE HoaDon 
+                            SET MaKhachHang = @MaKhachHang, MaNhanVien = @MaNhanVien, MaBan = @MaBan, 
+                                NgayDat = @NgayDat, TongTien = @TongTien, TienGiamGia = @TienGiamGia, 
+                                TongThueVAT = @TongThueVAT, ThanhToan = @ThanhToan, TrangThai = @TrangThai, 
+                                NguoiTao = @NguoiTao
+                            WHERE MaHoaDon = @MaHoaDon";
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaHoaDon", hd.MaHoaDon);
+                    cmd.Parameters.AddWithValue("@MaKhachHang", hd.MaKhachHang);
+                    cmd.Parameters.AddWithValue("@MaNhanVien", (object)hd.MaNhanVien ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@MaBan", (object)hd.MaBan ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@NgayDat", hd.NgayDat);
+                    cmd.Parameters.AddWithValue("@TongTien", hd.TongTien);
+                    cmd.Parameters.AddWithValue("@TienGiamGia", hd.TienGiamGia);
+                    cmd.Parameters.AddWithValue("@TongThueVAT", hd.TongThueVAT);
+                    cmd.Parameters.AddWithValue("@ThanhToan", hd.ThanhToan);
+                    cmd.Parameters.AddWithValue("@TrangThai", hd.TrangThai);
+                    cmd.Parameters.AddWithValue("@NguoiTao", (object)hd.NguoiTao ?? DBNull.Value);
+
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
+        public bool DeleteHoaDon(int maHoaDon)
+        {
+            string query = "DELETE FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                    conn.Open();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+    
+
+        // Thêm chi tiết hóa đơn
+        public bool AddChiTietHoaDon(ChiTietHoaDon cthd)
+        {
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                string sql = @"
+                    INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, Gia, ThueVAT)
+                    VALUES (@MaHoaDon, @MaSanPham, @SoLuong, @Gia, @ThueVAT)";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaHoaDon", cthd.MaHoaDon);
+                    cmd.Parameters.AddWithValue("@MaSanPham", cthd.MaSanPham);
+                    cmd.Parameters.AddWithValue("@SoLuong", cthd.SoLuong);
+                    cmd.Parameters.AddWithValue("@Gia", cthd.Gia);
+                    cmd.Parameters.AddWithValue("@ThueVAT", cthd.ThueVAT);
+                    conn.Open();
+                    try
+                    {
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Sửa chi tiết hóa đơn
+        public bool UpdateChiTietHoaDon(ChiTietHoaDon cthd)
+        {
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                string sql = @"
+                    UPDATE ChiTietHoaDon
+                    SET MaHoaDon = @MaHoaDon, MaSanPham = @MaSanPham, SoLuong = @SoLuong, 
+                        Gia = @Gia, ThueVAT = @ThueVAT
+                    WHERE MaChiTietHoaDon = @MaChiTietHoaDon";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaChiTietHoaDon", cthd.MaChiTietHoaDon);
+                    cmd.Parameters.AddWithValue("@MaHoaDon", cthd.MaHoaDon);
+                    cmd.Parameters.AddWithValue("@MaSanPham", cthd.MaSanPham);
+                    cmd.Parameters.AddWithValue("@SoLuong", cthd.SoLuong);
+                    cmd.Parameters.AddWithValue("@Gia", cthd.Gia);
+                    cmd.Parameters.AddWithValue("@ThueVAT", cthd.ThueVAT);
+                    conn.Open();
+                    try
+                    {
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Xóa chi tiết hóa đơn
+        public bool DeleteChiTietHoaDon(int maChiTietHoaDon)
+        {
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                string sql = "DELETE FROM ChiTietHoaDon WHERE MaChiTietHoaDon = @MaChiTietHoaDon";
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@MaChiTietHoaDon", maChiTietHoaDon);
+                    conn.Open();
+                    try
+                    {
+                        return cmd.ExecuteNonQuery() > 0;
+                    }
+                    catch
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
+        // Tìm kiếm hóa đơn theo mã hoặc ngày
+        public DataTable SearchHoaDon(string maHoaDon, DateTime? ngayDat)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                string sql = @"
+                    SELECT HD.MaHoaDon, KH.HoTen AS TenKhachHang, NV.HoTen AS TenNhanVien, B.SoBan, 
+                           HD.NgayDat, HD.TongTien, HD.TienGiamGia, HD.TongThueVAT, HD.ThanhToan, HD.TrangThai
+                    FROM HoaDon HD
+                    JOIN KhachHang KH ON HD.MaKhachHang = KH.MaKhachHang
+                    LEFT JOIN NhanVien NV ON HD.MaNhanVien = NV.MaNV
+                    LEFT JOIN Ban B ON HD.MaBan = B.MaBan
+                    WHERE 1=1";
+                if (!string.IsNullOrEmpty(maHoaDon))
+                    sql += " AND HD.MaHoaDon = @MaHoaDon";
+                if (ngayDat.HasValue)
+                    sql += " AND CAST(HD.NgayDat AS DATE) = @NgayDat";
+
+                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                {
+                    if (!string.IsNullOrEmpty(maHoaDon))
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                    if (ngayDat.HasValue)
+                        cmd.Parameters.AddWithValue("@NgayDat", ngayDat.Value.Date);
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
     }
 }

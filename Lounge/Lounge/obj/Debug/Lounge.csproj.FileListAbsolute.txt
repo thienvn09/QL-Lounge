@@ -87,7 +87,6 @@ D:\QL-Lounge\Lounge\Lounge\bin\Debug\zh-Hans\Microsoft.Data.SqlClient.resources.
 D:\QL-Lounge\Lounge\Lounge\bin\Debug\zh-Hant\Microsoft.Data.SqlClient.resources.dll
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.csproj.AssemblyReference.cache
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.DangNhap.resources
-D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormOrder.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.Properties.Resources.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.TrangChu.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.csproj.GenerateResource.cache
@@ -368,3 +367,4 @@ D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormSanPham.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLKH.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLSP.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLNCC.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.QLHoaDon.resources
