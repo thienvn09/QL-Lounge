@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Lounge.Model;
+using System;
 using System.Data.SqlClient;
 using System.Windows;
 
@@ -43,6 +44,48 @@ namespace Lounge.DAL
             }
 
         }
-      
+        // Trong DangNhapDAL.cs
+        public NhanVien GetNhanVienByTenDangNhap(string tenDN)
+        {
+            NhanVien nv = null;
+            // Câu lệnh SQL để lấy thông tin NhanVien từ TenDangNhap
+            // JOIN với bảng NhanVien để lấy HoTen, ChucVu, MaNV
+            string query = @"
+        SELECT nv.MaNV, nv.HoTen, nv.ChucVu 
+        FROM NhanVien nv
+        INNER JOIN DangNhap dn ON nv.MaNV = dn.MaNV
+        WHERE dn.TenDangNhap = @tenDN AND dn.TrangThai = N'Hoạt động'";
+
+            using (SqlConnection connection = kn.GetConnect()) // Giả sử kn là đối tượng KetNoi của bạn
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@tenDN", tenDN);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                nv = new NhanVien
+                                {
+                                    MaNhanvien = reader.GetInt32(reader.GetOrdinal("MaNV")),
+                                    HoTen = reader.GetString(reader.GetOrdinal("HoTen")),
+                                    ChucVu = reader.GetString(reader.GetOrdinal("ChucVu"))
+                                    // Thêm các thuộc tính khác nếu cần
+                                };
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Lỗi khi lấy thông tin nhân viên: " + ex.Message);
+                }
+            }
+            return nv;
+        }
+
     }
 }

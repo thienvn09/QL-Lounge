@@ -23,14 +23,6 @@ namespace Lounge
             this.pnlBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(235)))), ((int)(((byte)(240)))));
         }
 
-        private void FormQL_Load(object sender, EventArgs e)
-        {
-            // Có thể mở một form mặc định ở đây nếu muốn, ví dụ form TrangChu hoặc một dashboard
-            // OpenChildForm(new TrangChu()); // Ví dụ
-            // Hoặc để trống pnlBody ban đầu
-        }
-
-        // Phương thức mở form con đã được cải tiến
         private void OpenChildForm(Form childForm, Button activeButton)
         {
             if (currentChildForm != null)
@@ -95,20 +87,18 @@ namespace Lounge
 
         private void btnNhaCungCap_Click(object sender, EventArgs e)
         {
-            // Giả sử bạn có FormQLNCC
-            // FormQLNCC nhaCungCapForm = new FormQLNCC();
-            // OpenChildForm(nhaCungCapForm, sender as Button);
-            MessageBox.Show("Chức năng Quản lý Nhà Cung Cấp sẽ được mở ở đây.", "Thông báo");
-            // Ví dụ: OpenChildForm(new FormQLNCC(), sender as Button);
+           
+             FormQLNCC nhaCungCapForm = new FormQLNCC();
+            OpenChildForm(nhaCungCapForm, sender as Button);
+            
         }
 
         private void btnSanPham_Click(object sender, EventArgs e)
         {
-            // Giả sử bạn có FormQLSP
-            // FormQLSP sanPhamForm = new FormQLSP();
-            // OpenChildForm(sanPhamForm, sender as Button);
-            MessageBox.Show("Chức năng Quản lý Sản Phẩm sẽ được mở ở đây.", "Thông báo");
-            // Ví dụ: OpenChildForm(new FormQLSP(), sender as Button);
+             
+             FormQLSP sanPhamForm = new FormQLSP();
+             OpenChildForm(sanPhamForm, sender as Button);
+           
         }
 
         private void btnLoaiSanPham_Click(object sender, EventArgs e)
@@ -118,20 +108,19 @@ namespace Lounge
 
         private void btnPhieuNhap_Click(object sender, EventArgs e)
         {
-            // Giả sử bạn có QLPhieuNhapKho
-            // QLPhieuNhapKho phieuNhapForm = new QLPhieuNhapKho();
-            // OpenChildForm(phieuNhapForm, sender as Button);
-            MessageBox.Show("Chức năng Quản lý Phiếu Nhập Kho sẽ được mở ở đây.", "Thông báo");
-            // Ví dụ: OpenChildForm(new FormQLPhieuNhap(), sender as Button);
+        
+             QLPhieuNhapKho phieuNhapForm = new QLPhieuNhapKho();
+             OpenChildForm(phieuNhapForm, sender as Button);
+            
+           
         }
 
         private void btnPhieuXuat_Click(object sender, EventArgs e)
         {
             // Giả sử bạn có QLPhieuXuatKho
-            // QLPhieuXuatKho phieuXuatForm = new QLPhieuXuatKho();
-            // OpenChildForm(phieuXuatForm, sender as Button);
-            MessageBox.Show("Chức năng Quản lý Phiếu Xuất Kho sẽ được mở ở đây.", "Thông báo");
-            // Ví dụ: OpenChildForm(new FormQLPhieuXuat(), sender as Button);
+             QLPhieuXuatKho phieuXuatForm = new QLPhieuXuatKho();
+            OpenChildForm(phieuXuatForm, sender as Button);
+
         }
 
         private void btnVoucher_Click(object sender, EventArgs e)
@@ -151,16 +140,15 @@ namespace Lounge
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
-            ActivateButton(sender as Button); // Làm nổi bật nút đăng xuất
+            ActivateButton(sender as Button); 
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất không?", "Xác nhận Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                // Xử lý logic đăng xuất ở đây
-                // Ví dụ: đóng form hiện tại và mở lại form đăng nhập
-                this.Hide(); // Hoặc this.Close() nếu FormQL là form chính
-                DangNhap loginForm = new DangNhap(); // Giả sử bạn có form DangNhap
+                
+                this.Hide(); 
+                DangNhap loginForm = new DangNhap(); 
                 loginForm.ShowDialog();
-                this.Close(); // Đóng FormQL sau khi form đăng nhập được xử lý xong
+                this.Close(); 
             }
             else
             {
@@ -171,7 +159,7 @@ namespace Lounge
                 }
                 else if (currentActiveButton == (sender as Button)) // Nếu nút Đăng xuất đang active mà lại chọn No
                 {
-                    // Bỏ active nút đăng xuất
+                    
                     (sender as Button).BackColor = Color.FromArgb(70, 70, 70);
                     (sender as Button).ForeColor = Color.WhiteSmoke;
                     currentActiveButton = null; // Không còn nút nào active
@@ -179,10 +167,10 @@ namespace Lounge
             }
         }
 
-        // Các hàm Paint rỗng này có thể xóa đi nếu bạn không dùng đến
+       
         private void Panel_Body_Paint(object sender, PaintEventArgs e)
         {
-            // Có thể vẽ gì đó trên pnlBody nếu muốn, ví dụ ảnh nền mặc định
+            
         }
 
         private void Panel3_Paint(object sender, PaintEventArgs e) // Panel3 giờ là pnlButtons

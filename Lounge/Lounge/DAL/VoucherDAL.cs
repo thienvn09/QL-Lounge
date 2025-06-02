@@ -236,5 +236,6 @@ namespace Lounge.DAL // Hoặc namespace NhaHang.DAL của bạn
             }
             return result > 0;
         }
+       
     }
 }

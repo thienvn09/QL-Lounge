@@ -394,3 +394,8 @@ D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormChiTietHoaDon.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.QLBaoCao.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.QLHoaDon.resources
 D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.FormQLVoucher.resources
+D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\selenium-manager\linux\selenium-manager
+D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\selenium-manager\macos\selenium-manager
+D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\selenium-manager\windows\selenium-manager.exe
+D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\WebDriver.dll
+D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\WebDriver.xml

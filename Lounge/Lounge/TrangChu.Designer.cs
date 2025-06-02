@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrangChu));
             this.pneTitle = new System.Windows.Forms.Panel();
             this.BAR = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
@@ -44,7 +43,7 @@
             this.plnDanhMuc = new System.Windows.Forms.Panel();
             this.plnHoaDon = new System.Windows.Forms.Panel();
             this.plnBottom = new System.Windows.Forms.Panel();
-            this.btnApplyVoucher = new System.Windows.Forms.Button(); // NEW BUTTON
+            this.btnApplyVoucher = new System.Windows.Forms.Button();
             this.btnSendCheck = new System.Windows.Forms.Button();
             this.btnPrintCheck = new System.Windows.Forms.Button();
             this.btnGuestCheck = new System.Windows.Forms.Button();
@@ -79,7 +78,7 @@
             this.BAR.ForeColor = System.Drawing.Color.White;
             this.BAR.Location = new System.Drawing.Point(20, 9);
             this.BAR.Name = "BAR";
-            this.BAR.Size = new System.Drawing.Size(206, 41);
+            this.BAR.Size = new System.Drawing.Size(178, 41);
             this.BAR.TabIndex = 0;
             this.BAR.Text = "LOBBY BAR";
             // 
@@ -150,7 +149,7 @@
             this.lblTable.ForeColor = System.Drawing.Color.White;
             this.lblTable.Location = new System.Drawing.Point(250, 9);
             this.lblTable.Name = "lblTable";
-            this.lblTable.Size = new System.Drawing.Size(88, 23);
+            this.lblTable.Size = new System.Drawing.Size(79, 23);
             this.lblTable.TabIndex = 6;
             this.lblTable.Text = "Bàn: N/A";
             // 
@@ -161,7 +160,7 @@
             this.lblCover.ForeColor = System.Drawing.Color.White;
             this.lblCover.Location = new System.Drawing.Point(250, 32);
             this.lblCover.Name = "lblCover";
-            this.lblCover.Size = new System.Drawing.Size(80, 23);
+            this.lblCover.Size = new System.Drawing.Size(75, 23);
             this.lblCover.TabIndex = 7;
             this.lblCover.Text = "Khách: 0";
             // 
@@ -172,7 +171,7 @@
             this.lblWholeCheck.ForeColor = System.Drawing.Color.Gold;
             this.lblWholeCheck.Location = new System.Drawing.Point(400, 20);
             this.lblWholeCheck.Name = "lblWholeCheck";
-            this.lblWholeCheck.Size = new System.Drawing.Size(140, 23);
+            this.lblWholeCheck.Size = new System.Drawing.Size(132, 23);
             this.lblWholeCheck.TabIndex = 8;
             this.lblWholeCheck.Text = "Tổng cộng: 0.00";
             this.lblWholeCheck.Click += new System.EventHandler(this.lblWholeCheck_Click);
@@ -234,7 +233,7 @@
             // plnBottom
             // 
             this.plnBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.plnBottom.Controls.Add(this.btnApplyVoucher); // NEW
+            this.plnBottom.Controls.Add(this.btnApplyVoucher);
             this.plnBottom.Controls.Add(this.btnSendCheck);
             this.plnBottom.Controls.Add(this.btnPrintCheck);
             this.plnBottom.Controls.Add(this.btnGuestCheck);
@@ -250,18 +249,17 @@
             // btnApplyVoucher
             // 
             this.btnApplyVoucher.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnApplyVoucher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0))))); // Orange color
+            this.btnApplyVoucher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0)))));
             this.btnApplyVoucher.FlatAppearance.BorderSize = 0;
             this.btnApplyVoucher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnApplyVoucher.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnApplyVoucher.ForeColor = System.Drawing.Color.White;
-            this.btnApplyVoucher.Location = new System.Drawing.Point(328, 10); // Adjusted position
+            this.btnApplyVoucher.Location = new System.Drawing.Point(254, 10);
             this.btnApplyVoucher.Name = "btnApplyVoucher";
-            this.btnApplyVoucher.Size = new System.Drawing.Size(130, 50);
-            this.btnApplyVoucher.TabIndex = 0; // NEW TabIndex
+            this.btnApplyVoucher.Size = new System.Drawing.Size(204, 50);
+            this.btnApplyVoucher.TabIndex = 0;
             this.btnApplyVoucher.Text = "ÁP VOUCHER";
             this.btnApplyVoucher.UseVisualStyleBackColor = false;
-            // this.btnApplyVoucher.Click += new System.EventHandler(this.btnApplyVoucher_Click); // Event will be wired in TrangChu.cs
             // 
             // btnSendCheck
             // 
@@ -269,12 +267,12 @@
             this.btnSendCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(76)))));
             this.btnSendCheck.FlatAppearance.BorderSize = 0;
             this.btnSendCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSendCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnSendCheck.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnSendCheck.ForeColor = System.Drawing.Color.White;
             this.btnSendCheck.Location = new System.Drawing.Point(468, 10);
             this.btnSendCheck.Name = "btnSendCheck";
             this.btnSendCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnSendCheck.TabIndex = 1; // Updated TabIndex
+            this.btnSendCheck.TabIndex = 1;
             this.btnSendCheck.Text = "GỬI BẾP";
             this.btnSendCheck.UseVisualStyleBackColor = false;
             this.btnSendCheck.Click += new System.EventHandler(this.btnSendCheck_Click);
@@ -285,12 +283,12 @@
             this.btnPrintCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
             this.btnPrintCheck.FlatAppearance.BorderSize = 0;
             this.btnPrintCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPrintCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnPrintCheck.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnPrintCheck.ForeColor = System.Drawing.Color.White;
             this.btnPrintCheck.Location = new System.Drawing.Point(598, 10);
             this.btnPrintCheck.Name = "btnPrintCheck";
             this.btnPrintCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnPrintCheck.TabIndex = 2; // Updated TabIndex
+            this.btnPrintCheck.TabIndex = 2;
             this.btnPrintCheck.Text = "IN BILL";
             this.btnPrintCheck.UseVisualStyleBackColor = false;
             this.btnPrintCheck.Click += new System.EventHandler(this.btnPrintCheck_Click);
@@ -301,15 +299,15 @@
             this.btnGuestCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.btnGuestCheck.FlatAppearance.BorderSize = 0;
             this.btnGuestCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuestCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGuestCheck.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnGuestCheck.ForeColor = System.Drawing.Color.White;
             this.btnGuestCheck.Location = new System.Drawing.Point(728, 10);
             this.btnGuestCheck.Name = "btnGuestCheck";
             this.btnGuestCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnGuestCheck.TabIndex = 3; // Updated TabIndex
-            this.btnGuestCheck.Text = "IN TẠM"; // This was previously btnPaid's text in TrangChu_Load
+            this.btnGuestCheck.TabIndex = 3;
+            this.btnGuestCheck.Text = "IN TẠM";
             this.btnGuestCheck.UseVisualStyleBackColor = false;
-            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click); // Or btnPrintTempBill_Click if you rename
+            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click);
             // 
             // btnPaid
             // 
@@ -317,13 +315,13 @@
             this.btnPaid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(175)))), ((int)(((byte)(80)))));
             this.btnPaid.FlatAppearance.BorderSize = 0;
             this.btnPaid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPaid.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnPaid.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnPaid.ForeColor = System.Drawing.Color.White;
             this.btnPaid.Location = new System.Drawing.Point(858, 10);
             this.btnPaid.Name = "btnPaid";
             this.btnPaid.Size = new System.Drawing.Size(130, 50);
-            this.btnPaid.TabIndex = 4; // Updated TabIndex
-            this.btnPaid.Text = "THANH TOÁN"; // Text set in TrangChu_Load
+            this.btnPaid.TabIndex = 4;
+            this.btnPaid.Text = "THANH TOÁN";
             this.btnPaid.UseVisualStyleBackColor = false;
             this.btnPaid.Click += new System.EventHandler(this.btnPaid_Click);
             // 
@@ -333,12 +331,12 @@
             this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(211)))), ((int)(((byte)(47)))), ((int)(((byte)(47)))));
             this.btnCancel.FlatAppearance.BorderSize = 0;
             this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnCancel.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Bold);
             this.btnCancel.ForeColor = System.Drawing.Color.White;
             this.btnCancel.Location = new System.Drawing.Point(1008, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(110, 50);
-            this.btnCancel.TabIndex = 5; // Updated TabIndex
+            this.btnCancel.TabIndex = 5;
             this.btnCancel.Text = "HỦY";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
