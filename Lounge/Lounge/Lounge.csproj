@@ -313,6 +313,18 @@
     <Compile Include="QLBaoCao.Designer.cs">
       <DependentUpon>QLBaoCao.cs</DependentUpon>
     </Compile>
+    <Compile Include="QLDanhMucSanPham.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QLDanhMucSanPham.Designer.cs">
+      <DependentUpon>QLDanhMucSanPham.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QLHoaDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QLHoaDon.Designer.cs">
+      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="QLPhieuNhapKho.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -367,6 +379,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="QLDanhMucSanPham.resx">
+      <DependentUpon>QLDanhMucSanPham.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QLHoaDon.resx">
+      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="QLPhieuNhapKho.resx">
       <DependentUpon>QLPhieuNhapKho.cs</DependentUpon>
     </EmbeddedResource>

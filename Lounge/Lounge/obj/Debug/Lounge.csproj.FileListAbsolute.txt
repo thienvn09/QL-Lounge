@@ -389,3 +389,5 @@ D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\Microsoft.Bcl.HashCode.xml
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\RBush.xml
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\SixLabors.Fonts.xml
 D:\QL-Lounge\Lounge\Lounge\bin\DebugTemp\tam1\zh\GrapeCity.DataVisualization.Chart.resources.dll
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.QLDanhMucSanPham.resources
+D:\QL-Lounge\Lounge\Lounge\obj\Debug\Lounge.QLHoaDon.resources

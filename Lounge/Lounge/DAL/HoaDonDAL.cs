@@ -2,428 +2,386 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using Lounge.Model;
+using Lounge.Model; // Đảm bảo bạn có Model.HoaDon
 
 namespace Lounge.DAL
 {
     public class HoaDonDAL
     {
-        private readonly KetNoi ketNoi = new KetNoi();
+        private KetNoi ketNoi = new KetNoi();
+      
 
-        // Thêm hóa đơn mới và trả về mã hóa đơn vừa tạo
-        public int ThemHoaDon(HoaDon hoaDon)
-        {
-            string query = @"
-                INSERT INTO HoaDon (MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, NguoiTao)
-                VALUES (@MaKhachHang, @MaNhanVien, @MaBan, @NgayDat, @TongTien, @TienGiamGia, @TongThueVAT, @NguoiTao);
-                SELECT SCOPE_IDENTITY();";
-
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                try
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@MaKhachHang", hoaDon.MaKhachHang);
-                        cmd.Parameters.AddWithValue("@MaNhanVien", (object)hoaDon.MaNhanVien ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@MaBan", (object)hoaDon.MaBan ?? DBNull.Value);
-                        cmd.Parameters.AddWithValue("@NgayDat", hoaDon.NgayDat);
-                        cmd.Parameters.AddWithValue("@TongTien", (object)hoaDon.TongTien ?? 0m);
-                        cmd.Parameters.AddWithValue("@TienGiamGia", (object)hoaDon.TienGiamGia ?? 0m);
-                        cmd.Parameters.AddWithValue("@TongThueVAT", (object)hoaDon.TongThueVAT ?? 0m);
-                        cmd.Parameters.AddWithValue("@NguoiTao", (object)hoaDon.NguoiTao ?? DBNull.Value);
-
-                        object result = cmd.ExecuteScalar();
-                        if (result == null || result == DBNull.Value)
-                        {
-                            throw new Exception("Không thể lấy mã hóa đơn sau khi thêm.");
-                        }
-                        int maHoaDon = Convert.ToInt32(result);
-                        Console.WriteLine($"ThemHoaDon: Tạo hóa đơn mới với MaHoaDon = {maHoaDon}");
-                        return maHoaDon;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Lỗi ThemHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                    throw new Exception($"Lỗi khi thêm hóa đơn: {ex.Message}", ex);
-                }
-            }
-        }
-
-        // Cập nhật trạng thái hóa đơn
-        public void CapNhatTrangThaiHoaDon(int maHoaDon, string trangThai)
-        {
-            string query = "UPDATE HoaDon SET TrangThai = @TrangThai WHERE MaHoaDon = @MaHoaDon";
-
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                try
-                {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@TrangThai", trangThai);
-                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                        cmd.ExecuteNonQuery();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Lỗi CapNhatTrangThaiHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                    throw new Exception($"Lỗi khi cập nhật trạng thái hóa đơn: {ex.Message}", ex);
-                }
-            }
-        }
-
-        // Lấy danh sách hóa đơn theo mã bàn (chưa thanh toán)
-        public List<HoaDon> LayHoaDonTheoMaBan(int maBan)
+        // Lấy tất cả hóa đơn (có thể kèm tên khách hàng, nhân viên để hiển thị)
+        public List<HoaDon> GetAllHoaDon()
         {
             List<HoaDon> dsHoaDon = new List<HoaDon>();
-            string query = "SELECT * FROM HoaDon WHERE MaBan = @MaBan AND TrangThai = N'Chưa thanh toán'";
+            // Câu lệnh SQL có thể JOIN với bảng KhachHang, NhanVien để lấy tên
+            // ORDER BY NgayDat DESC để hóa đơn mới nhất lên đầu
+            string query = @"
+                SELECT 
+                    hd.MaHoaDon, hd.MaKhachHang, kh.HoTen AS TenKhachHang, 
+                    hd.MaNhanVien, nv.HoTen AS TenNhanVienLap, hd.MaBan, b.SoBan,
+                    hd.NgayDat, hd.TongTien, hd.TienGiamGia, hd.TongThueVAT, 
+                    hd.ThanhToan, hd.TrangThai, hd.NguoiTao, nvTao.HoTen AS TenNguoiTao
+                FROM HoaDon hd
+                LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
+                LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNV 
+                LEFT JOIN Ban b ON hd.MaBan = b.MaBan
+                LEFT JOIN NhanVien nvTao ON hd.NguoiTao = nvTao.MaNV
+                ORDER BY hd.NgayDat DESC";
 
-            using (SqlConnection conn = ketNoi.GetConnect())
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
                 try
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("@MaBan", maBan);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                dsHoaDon.Add(new HoaDon
+                                HoaDon hd = new HoaDon
                                 {
-                                    MaHoaDon = Convert.ToInt32(reader["MaHoaDon"]),
-                                    MaKhachHang = Convert.ToInt32(reader["MaKhachHang"]),
-                                    MaNhanVien = (int)(reader["MaNhanVien"] != DBNull.Value ? (int?)Convert.ToInt32(reader["MaNhanVien"]) : null),
-                                    MaBan = (int)(reader["MaBan"] != DBNull.Value ? (int?)Convert.ToInt32(reader["MaBan"]) : null),
-                                    NgayDat = Convert.ToDateTime(reader["NgayDat"]),
-                                    TongTien = (int)(reader["TongTien"] != DBNull.Value ? Convert.ToDecimal(reader["TongTien"]) : 0m),
-                                    TienGiamGia = (int)(reader["TienGiamGia"] != DBNull.Value ? Convert.ToDecimal(reader["TienGiamGia"]) : 0m),
-                                    TongThueVAT = (int)(reader["TongThueVAT"] != DBNull.Value ? Convert.ToDecimal(reader["TongThueVAT"]) : 0m),
-                                    ThanhToan = (int)(reader["ThanhToan"] != DBNull.Value ? Convert.ToDecimal(reader["ThanhToan"]) : 0m),
-                                    NguoiTao = (int)(reader["NguoiTao"] != DBNull.Value ? (int?)Convert.ToInt32(reader["NguoiTao"]) : null),
-                                    TrangThai = reader["TrangThai"] != DBNull.Value ? reader["TrangThai"].ToString() : null
-                                });
+                                    MaHoaDon = reader.GetInt32(reader.GetOrdinal("MaHoaDon")),
+                                    MaKhachHang = reader.GetInt32(reader.GetOrdinal("MaKhachHang")),
+                                    // TenKhachHang = reader.IsDBNull(reader.GetOrdinal("TenKhachHang")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenKhachHang")), // Model HoaDon cần có thuộc tính này
+
+                                    // Nếu MaNhanVien trong Model là int (không phải int?), giá trị 0 sẽ được gán nếu DB là NULL.
+                                    // Điều này ổn nếu 0 không phải là MaNhanVien hợp lệ.
+                                    // Nên cân nhắc đổi MaNhanVien trong Model thành int? nếu nó có thể NULL trong DB.
+                                    MaNhanVien = reader.IsDBNull(reader.GetOrdinal("MaNhanVien")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaNhanVien")),
+                                    // TenNhanVienLap = reader.IsDBNull(reader.GetOrdinal("TenNhanVienLap")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNhanVienLap")), // Model HoaDon cần có thuộc tính này
+
+                                    MaBan = reader.IsDBNull(reader.GetOrdinal("MaBan")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaBan")),
+                                    // SoBan = reader.IsDBNull(reader.GetOrdinal("SoBan")) ? "N/A" : reader.GetString(reader.GetOrdinal("SoBan")), // Model HoaDon cần có thuộc tính này
+
+                                    NgayDat = reader.GetDateTime(reader.GetOrdinal("NgayDat")),
+
+                                    // Model HoaDon dùng float, DB dùng decimal. Chuyển đổi ở đây.
+                                    // Khuyến nghị: Nên dùng decimal trong Model cho các giá trị tiền tệ.
+                                    TongTien = reader.IsDBNull(reader.GetOrdinal("TongTien")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongTien")),
+                                    TienGiamGia = reader.IsDBNull(reader.GetOrdinal("TienGiamGia")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TienGiamGia")),
+                                    TongThueVAT = reader.IsDBNull(reader.GetOrdinal("TongThueVAT")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongThueVAT")),
+                                    ThanhToan = reader.IsDBNull(reader.GetOrdinal("ThanhToan")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("ThanhToan")),
+
+                                    TrangThai = reader.IsDBNull(reader.GetOrdinal("TrangThai")) ? "N/A" : reader.GetString(reader.GetOrdinal("TrangThai")),
+
+                                    NguoiTao = reader.IsDBNull(reader.GetOrdinal("NguoiTao")) ? 0 : reader.GetInt32(reader.GetOrdinal("NguoiTao"))
+                                    // TenNguoiTao = reader.IsDBNull(reader.GetOrdinal("TenNguoiTao")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNguoiTao")) // Model HoaDon cần có thuộc tính này
+                                };
+                                dsHoaDon.Add(hd);
                             }
                         }
                     }
-                    Console.WriteLine($"LayHoaDonTheoMaBan: Tìm thấy {dsHoaDon.Count} hóa đơn cho MaBan = {maBan}");
-                    return dsHoaDon;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi LayHoaDonTheoMaBan: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                    throw new Exception($"Lỗi khi lấy hóa đơn theo mã bàn {maBan}: {ex.Message}", ex);
+                    Console.WriteLine("Lỗi khi lấy tất cả hóa đơn: " + ex.Message);
+                    // throw; 
                 }
             }
+            return dsHoaDon;
         }
 
-        // Lấy chi tiết hóa đơn theo mã hóa đơn
-        public HoaDon LayHoaDonTheoMaHoaDon(int maHoaDon)
+        public HoaDon LayHoaDonTheoMa(int maHoaDon)
         {
-            HoaDon hoaDon = null;
-            string query = "SELECT * FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+            HoaDon hd = null;
+            string query = @"
+                SELECT 
+                    hd.MaHoaDon, hd.MaKhachHang, kh.HoTen AS TenKhachHang, 
+                    hd.MaNhanVien, nv.HoTen AS TenNhanVienLap, hd.MaBan, b.SoBan,
+                    hd.NgayDat, hd.TongTien, hd.TienGiamGia, hd.TongThueVAT, 
+                    hd.ThanhToan, hd.TrangThai, hd.NguoiTao, nvTao.HoTen AS TenNguoiTao
+                FROM HoaDon hd
+                LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
+                LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNV
+                LEFT JOIN Ban b ON hd.MaBan = b.MaBan
+                LEFT JOIN NhanVien nvTao ON hd.NguoiTao = nvTao.MaNV
+                WHERE hd.MaHoaDon = @MaHoaDon";
 
-            using (SqlConnection conn = ketNoi.GetConnect())
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
                 try
                 {
-                    conn.Open();
-                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
                         cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
                         using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
-                                hoaDon = new HoaDon
+                                hd = new HoaDon
                                 {
-                                    MaHoaDon = Convert.ToInt32(reader["MaHoaDon"]),
-                                    MaKhachHang = Convert.ToInt32(reader["MaKhachHang"]),
-                                    MaNhanVien =(int)( reader["MaNhanVien"] != DBNull.Value ? (int?)Convert.ToInt32(reader["MaNhanVien"]) : null),
-                                    MaBan = (int)(reader["MaBan"] != DBNull.Value ? (int?)Convert.ToInt32(reader["MaBan"]) : null),
-                                    NgayDat = Convert.ToDateTime(reader["NgayDat"]),
-                                    TongTien =  (int)(reader["TongTien"] != DBNull.Value ? Convert.ToDecimal(reader["TongTien"]) : 0m),
-                                    TienGiamGia = (int)(reader["TienGiamGia"] != DBNull.Value ? Convert.ToDecimal(reader["TienGiamGia"]) : 0m),
-                                    TongThueVAT = (int)(reader["TongThueVAT"] != DBNull.Value ? Convert.ToDecimal(reader["TongThueVAT"]) : 0m),
-                                    ThanhToan = (int)(reader["ThanhToan"] != DBNull.Value ? Convert.ToDecimal(reader["ThanhToan"]) : 0m),
-                                    NguoiTao = (int)(reader["NguoiTao"] != DBNull.Value ? (int?)Convert.ToInt32(reader["NguoiTao"]) : null),
-                                    TrangThai = reader["TrangThai"] != DBNull.Value ? reader["TrangThai"].ToString() : null
+                                    MaHoaDon = reader.GetInt32(reader.GetOrdinal("MaHoaDon")),
+                                    MaKhachHang = reader.GetInt32(reader.GetOrdinal("MaKhachHang")),
+                                    // TenKhachHang = reader.IsDBNull(reader.GetOrdinal("TenKhachHang")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenKhachHang")),
+
+                                    MaNhanVien = reader.IsDBNull(reader.GetOrdinal("MaNhanVien")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaNhanVien")),
+                                    // TenNhanVienLap = reader.IsDBNull(reader.GetOrdinal("TenNhanVienLap")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNhanVienLap")),
+
+                                    MaBan = reader.IsDBNull(reader.GetOrdinal("MaBan")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaBan")),
+                                    // SoBan = reader.IsDBNull(reader.GetOrdinal("SoBan")) ? "N/A" : reader.GetString(reader.GetOrdinal("SoBan")),
+
+                                    NgayDat = reader.GetDateTime(reader.GetOrdinal("NgayDat")),
+
+                                    TongTien = reader.IsDBNull(reader.GetOrdinal("TongTien")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongTien")),
+                                    TienGiamGia = reader.IsDBNull(reader.GetOrdinal("TienGiamGia")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TienGiamGia")),
+                                    TongThueVAT = reader.IsDBNull(reader.GetOrdinal("TongThueVAT")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongThueVAT")),
+                                    ThanhToan = reader.IsDBNull(reader.GetOrdinal("ThanhToan")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("ThanhToan")),
+
+                                    TrangThai = reader.IsDBNull(reader.GetOrdinal("TrangThai")) ? "N/A" : reader.GetString(reader.GetOrdinal("TrangThai")),
+
+                                    NguoiTao = reader.IsDBNull(reader.GetOrdinal("NguoiTao")) ? 0 : reader.GetInt32(reader.GetOrdinal("NguoiTao"))
+                                    // TenNguoiTao = reader.IsDBNull(reader.GetOrdinal("TenNguoiTao")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNguoiTao"))
                                 };
                             }
                         }
                     }
-                    return hoaDon;
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi LayHoaDonTheoMaHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                    throw new Exception($"Lỗi khi lấy hóa đơn theo mã hóa đơn: {ex.Message}", ex);
+                    Console.WriteLine($"Lỗi khi lấy hóa đơn theo ID ({maHoaDon}): {ex.Message}");
+                    // throw;
                 }
             }
+            return hd;
         }
 
-        // Cập nhật tổng tiền và thuế VAT cho hóa đơn
-        public void CapNhatTongTienHoaDon(int maHoaDon)
+        public int ThemHoaDon(HoaDon hoaDon)
         {
-            string querySum = @"
-                SELECT 
-                    ISNULL(SUM(ThanhTien), 0) AS TongTien, 
-                    ISNULL(SUM(TienThue), 0) AS TongThueVAT 
-                FROM ChiTietHoaDon 
-                WHERE MaHoaDon = @MaHoaDon";
+            string query = @"
+                INSERT INTO HoaDon (MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, TrangThai, NguoiTao)
+                VALUES (@MaKhachHang, @MaNhanVien, @MaBan, @NgayDat, @TongTien, @TienGiamGia, @TongThueVAT, @TrangThai, @NguoiTao);
+                SELECT SCOPE_IDENTITY();";
+            int newHoaDonId = 0;
 
-            string queryUpdate = @"
-                UPDATE HoaDon
-                SET TongTien = @TongTien, TongThueVAT = @TongThueVAT
-                WHERE MaHoaDon = @MaHoaDon";
-
-            using (SqlConnection conn = ketNoi.GetConnect())
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
                 try
                 {
-                    conn.Open();
-                    decimal tongTien = 0, tongThueVAT = 0;
-
-                    // Tính tổng
-                    using (SqlCommand cmdSum = new SqlCommand(querySum, conn))
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        cmdSum.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                        using (SqlDataReader reader = cmdSum.ExecuteReader())
+                        cmd.Parameters.AddWithValue("@MaKhachHang", hoaDon.MaKhachHang);
+
+                        // Nếu MaNhanVien, MaBan, NguoiTao trong Model là int và không thể null,
+                        // chúng ta giả định rằng giá trị 0 (mặc định của int) có nghĩa là "không có" hoặc "không áp dụng"
+                        // và sẽ truyền DBNull.Value nếu chúng là 0 (hoặc một giá trị quy ước khác).
+                        // Tuy nhiên, cách tốt hơn là dùng int? trong Model nếu DB cho phép NULL.
+                        cmd.Parameters.AddWithValue("@MaNhanVien", hoaDon.MaNhanVien == 0 ? (object)DBNull.Value : hoaDon.MaNhanVien);
+                        cmd.Parameters.AddWithValue("@MaBan", hoaDon.MaBan == 0 ? (object)DBNull.Value : hoaDon.MaBan);
+                        cmd.Parameters.AddWithValue("@NguoiTao", hoaDon.NguoiTao == 0 ? (object)DBNull.Value : hoaDon.NguoiTao);
+
+                        cmd.Parameters.AddWithValue("@NgayDat", hoaDon.NgayDat);
+                        cmd.Parameters.AddWithValue("@TongTien", hoaDon.TongTien); // float sẽ được ADO.NET chuyển đổi
+                        cmd.Parameters.AddWithValue("@TienGiamGia", hoaDon.TienGiamGia);
+                        cmd.Parameters.AddWithValue("@TongThueVAT", hoaDon.TongThueVAT);
+                        cmd.Parameters.AddWithValue("@TrangThai", hoaDon.TrangThai);
+
+                        object result = cmd.ExecuteScalar();
+                        if (result != null && result != DBNull.Value)
                         {
-                            if (reader.Read())
-                            {
-                                tongTien = Convert.ToDecimal(reader["TongTien"]);
-                                tongThueVAT = Convert.ToDecimal(reader["TongThueVAT"]);
-                            }
+                            newHoaDonId = Convert.ToInt32(result);
                         }
-                    }
-
-                    // Cập nhật tổng
-                    using (SqlCommand cmdUpdate = new SqlCommand(queryUpdate, conn))
-                    {
-                        cmdUpdate.Parameters.AddWithValue("@TongTien", tongTien);
-                        cmdUpdate.Parameters.AddWithValue("@TongThueVAT", tongThueVAT);
-                        cmdUpdate.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                        cmdUpdate.ExecuteNonQuery();
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Lỗi CapNhatTongTienHoaDon: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                    throw new Exception($"Lỗi khi cập nhật tổng tiền hóa đơn: {ex.Message}", ex);
+                    Console.WriteLine($"Lỗi khi thêm hóa đơn mới: {ex.Message}");
+                    // throw;
                 }
             }
+            return newHoaDonId;
         }
-        public DataTable GetAllHoaDon()
+
+        public bool CapNhatTongTienHoaDon(int maHoaDon)
         {
-            DataTable dt = new DataTable();
-            string query = "SELECT MaHoaDon, MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, ThanhToan, TrangThai, NguoiTao FROM HoaDon";
-            using (SqlConnection conn = ketNoi.GetConnect())
+            string query = @"
+                UPDATE hd
+                SET 
+                    hd.TongTien = ISNULL(ct.SumThanhTien, 0),
+                    hd.TongThueVAT = ISNULL(ct.SumTienThue, 0)
+                FROM HoaDon hd
+                LEFT JOIN (
+                    SELECT 
+                        MaHoaDon, 
+                        SUM(ThanhTien) as SumThanhTien, 
+                        SUM(TienThue) as SumTienThue 
+                    FROM ChiTietHoaDon 
+                    WHERE MaHoaDon = @MaHoaDon 
+                    GROUP BY MaHoaDon
+                ) ct ON hd.MaHoaDon = ct.MaHoaDon
+                WHERE hd.MaHoaDon = @MaHoaDon;";
+            int result = 0;
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                try
                 {
-                    conn.Open();
-                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        da.Fill(dt);
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        result = cmd.ExecuteNonQuery();
                     }
                 }
-            }
-            return dt;
-        }
-
-        public bool AddHoaDon(HoaDon hd)
-        {
-            string query = @"INSERT INTO HoaDon (MaKhachHang, MaNhanVien, MaBan, NgayDat, TongTien, TienGiamGia, TongThueVAT, ThanhToan, TrangThai, NguoiTao)
-                            VALUES (@MaKhachHang, @MaNhanVien, @MaBan, @NgayDat, @TongTien, @TienGiamGia, @TongThueVAT, @ThanhToan, @TrangThai, @NguoiTao)";
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                catch (Exception ex)
                 {
-                    cmd.Parameters.AddWithValue("@MaKhachHang", hd.MaKhachHang);
-                    cmd.Parameters.AddWithValue("@MaNhanVien", (object)hd.MaNhanVien ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@MaBan", (object)hd.MaBan ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@NgayDat", hd.NgayDat);
-                    cmd.Parameters.AddWithValue("@TongTien", hd.TongTien);
-                    cmd.Parameters.AddWithValue("@TienGiamGia", hd.TienGiamGia);
-                    cmd.Parameters.AddWithValue("@TongThueVAT", hd.TongThueVAT);
-                    cmd.Parameters.AddWithValue("@ThanhToan", hd.ThanhToan);
-                    cmd.Parameters.AddWithValue("@TrangThai", hd.TrangThai);
-                    cmd.Parameters.AddWithValue("@NguoiTao", (object)hd.NguoiTao ?? DBNull.Value);
-
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                    Console.WriteLine($"Lỗi khi cập nhật tổng tiền hóa đơn ({maHoaDon}): {ex.Message}");
                 }
             }
+            return result > 0;
         }
 
-        public bool UpdateHoaDon(HoaDon hd)
+        public bool CapNhatTrangThaiHoaDon(int maHoaDon, string trangThaiMoi)
         {
-            string query = @"UPDATE HoaDon 
-                            SET MaKhachHang = @MaKhachHang, MaNhanVien = @MaNhanVien, MaBan = @MaBan, 
-                                NgayDat = @NgayDat, TongTien = @TongTien, TienGiamGia = @TienGiamGia, 
-                                TongThueVAT = @TongThueVAT, ThanhToan = @ThanhToan, TrangThai = @TrangThai, 
-                                NguoiTao = @NguoiTao
-                            WHERE MaHoaDon = @MaHoaDon";
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaHoaDon", hd.MaHoaDon);
-                    cmd.Parameters.AddWithValue("@MaKhachHang", hd.MaKhachHang);
-                    cmd.Parameters.AddWithValue("@MaNhanVien", (object)hd.MaNhanVien ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@MaBan", (object)hd.MaBan ?? DBNull.Value);
-                    cmd.Parameters.AddWithValue("@NgayDat", hd.NgayDat);
-                    cmd.Parameters.AddWithValue("@TongTien", hd.TongTien);
-                    cmd.Parameters.AddWithValue("@TienGiamGia", hd.TienGiamGia);
-                    cmd.Parameters.AddWithValue("@TongThueVAT", hd.TongThueVAT);
-                    cmd.Parameters.AddWithValue("@ThanhToan", hd.ThanhToan);
-                    cmd.Parameters.AddWithValue("@TrangThai", hd.TrangThai);
-                    cmd.Parameters.AddWithValue("@NguoiTao", (object)hd.NguoiTao ?? DBNull.Value);
+            string query = "UPDATE HoaDon SET TrangThai = @TrangThai WHERE MaHoaDon = @MaHoaDon";
+            int result = 0;
 
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+            using (SqlConnection connection = ketNoi.GetConnect())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@TrangThai", trangThaiMoi);
+                        cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        result = cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi cập nhật trạng thái hóa đơn ({maHoaDon}): {ex.Message}");
+                    // throw;
                 }
             }
+            return result > 0;
+        }
+
+        public HoaDon LayHoaDonChuaThanhToanTheoMaBan(int maBan)
+        {
+            HoaDon hd = null;
+            string query = @"
+                SELECT TOP 1
+                    hd.MaHoaDon, hd.MaKhachHang, kh.HoTen AS TenKhachHang, 
+                    hd.MaNhanVien, nv.HoTen AS TenNhanVienLap, hd.MaBan, b.SoBan,
+                    hd.NgayDat, hd.TongTien, hd.TienGiamGia, hd.TongThueVAT, 
+                    hd.ThanhToan, hd.TrangThai, hd.NguoiTao, nvTao.HoTen AS TenNguoiTao
+                FROM HoaDon hd
+                LEFT JOIN KhachHang kh ON hd.MaKhachHang = kh.MaKhachHang
+                LEFT JOIN NhanVien nv ON hd.MaNhanVien = nv.MaNV
+                LEFT JOIN Ban b ON hd.MaBan = b.MaBan
+                LEFT JOIN NhanVien nvTao ON hd.NguoiTao = nvTao.MaNV
+                WHERE hd.MaBan = @MaBan AND hd.TrangThai = N'Chưa thanh toán'
+                ORDER BY hd.NgayDat DESC";
+
+            using (SqlConnection connection = ketNoi.GetConnect())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("@MaBan", maBan);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                hd = new HoaDon
+                                {
+                                    MaHoaDon = reader.GetInt32(reader.GetOrdinal("MaHoaDon")),
+                                    MaKhachHang = reader.GetInt32(reader.GetOrdinal("MaKhachHang")),
+                                    // TenKhachHang = reader.IsDBNull(reader.GetOrdinal("TenKhachHang")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenKhachHang")),
+                                    MaNhanVien = reader.IsDBNull(reader.GetOrdinal("MaNhanVien")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaNhanVien")),
+                                    // TenNhanVienLap = reader.IsDBNull(reader.GetOrdinal("TenNhanVienLap")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNhanVienLap")),
+                                    MaBan = reader.IsDBNull(reader.GetOrdinal("MaBan")) ? 0 : reader.GetInt32(reader.GetOrdinal("MaBan")),
+                                    // SoBan = reader.IsDBNull(reader.GetOrdinal("SoBan")) ? "N/A" : reader.GetString(reader.GetOrdinal("SoBan")),
+                                    NgayDat = reader.GetDateTime(reader.GetOrdinal("NgayDat")),
+                                    TongTien = reader.IsDBNull(reader.GetOrdinal("TongTien")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongTien")),
+                                    TienGiamGia = reader.IsDBNull(reader.GetOrdinal("TienGiamGia")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TienGiamGia")),
+                                    TongThueVAT = reader.IsDBNull(reader.GetOrdinal("TongThueVAT")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("TongThueVAT")),
+                                    ThanhToan = reader.IsDBNull(reader.GetOrdinal("ThanhToan")) ? 0f : (float)reader.GetDecimal(reader.GetOrdinal("ThanhToan")),
+                                    TrangThai = reader.IsDBNull(reader.GetOrdinal("TrangThai")) ? "N/A" : reader.GetString(reader.GetOrdinal("TrangThai")),
+                                    NguoiTao = reader.IsDBNull(reader.GetOrdinal("NguoiTao")) ? 0 : reader.GetInt32(reader.GetOrdinal("NguoiTao"))
+                                    // TenNguoiTao = reader.IsDBNull(reader.GetOrdinal("TenNguoiTao")) ? "N/A" : reader.GetString(reader.GetOrdinal("TenNguoiTao"))
+                                };
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi lấy hóa đơn chưa thanh toán theo mã bàn ({maBan}): {ex.Message}");
+                    // throw;
+                }
+            }
+            return hd;
         }
 
         public bool DeleteHoaDon(int maHoaDon)
         {
-            string query = "DELETE FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
-            using (SqlConnection conn = ketNoi.GetConnect())
+            string deleteDetailsQuery = "DELETE FROM ChiTietHoaDon WHERE MaHoaDon = @MaHoaDon";
+            string deleteHoaDonQuery = "DELETE FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+            int result = 0;
+
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
-                using (SqlCommand cmd = new SqlCommand(query, conn))
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
                 {
-                    cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                    conn.Open();
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                    using (SqlCommand cmdDetails = new SqlCommand(deleteDetailsQuery, connection, transaction))
+                    {
+                        cmdDetails.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        cmdDetails.ExecuteNonQuery();
+                    }
+
+                    using (SqlCommand cmdHoaDon = new SqlCommand(deleteHoaDonQuery, connection, transaction))
+                    {
+                        cmdHoaDon.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
+                        result = cmdHoaDon.ExecuteNonQuery();
+                    }
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    Console.WriteLine($"Lỗi khi xóa hóa đơn ({maHoaDon}): {ex.Message}");
+                    return false;
                 }
             }
+            return result > 0;
         }
-    
-
-        // Thêm chi tiết hóa đơn
-        public bool AddChiTietHoaDon(ChiTietHoaDon cthd)
+        // LayHoaDonTheoMaHoaDon
+        public int LayHoaDonTheoMaHoaDon(int maHoaDon)
         {
-            using (SqlConnection conn = ketNoi.GetConnect())
+            int result = 0;
+            string query = "SELECT MaHoaDon FROM HoaDon WHERE MaHoaDon = @MaHoaDon";
+            using (SqlConnection connection = ketNoi.GetConnect())
             {
-                string sql = @"
-                    INSERT INTO ChiTietHoaDon (MaHoaDon, MaSanPham, SoLuong, Gia, ThueVAT)
-                    VALUES (@MaHoaDon, @MaSanPham, @SoLuong, @Gia, @ThueVAT)";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                try
                 {
-                    cmd.Parameters.AddWithValue("@MaHoaDon", cthd.MaHoaDon);
-                    cmd.Parameters.AddWithValue("@MaSanPham", cthd.MaSanPham);
-                    cmd.Parameters.AddWithValue("@SoLuong", cthd.SoLuong);
-                    cmd.Parameters.AddWithValue("@Gia", cthd.Gia);
-                    cmd.Parameters.AddWithValue("@ThueVAT", cthd.ThueVAT);
-                    conn.Open();
-                    try
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
                     {
-                        return cmd.ExecuteNonQuery() > 0;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        // Sửa chi tiết hóa đơn
-        public bool UpdateChiTietHoaDon(ChiTietHoaDon cthd)
-        {
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                string sql = @"
-                    UPDATE ChiTietHoaDon
-                    SET MaHoaDon = @MaHoaDon, MaSanPham = @MaSanPham, SoLuong = @SoLuong, 
-                        Gia = @Gia, ThueVAT = @ThueVAT
-                    WHERE MaChiTietHoaDon = @MaChiTietHoaDon";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaChiTietHoaDon", cthd.MaChiTietHoaDon);
-                    cmd.Parameters.AddWithValue("@MaHoaDon", cthd.MaHoaDon);
-                    cmd.Parameters.AddWithValue("@MaSanPham", cthd.MaSanPham);
-                    cmd.Parameters.AddWithValue("@SoLuong", cthd.SoLuong);
-                    cmd.Parameters.AddWithValue("@Gia", cthd.Gia);
-                    cmd.Parameters.AddWithValue("@ThueVAT", cthd.ThueVAT);
-                    conn.Open();
-                    try
-                    {
-                        return cmd.ExecuteNonQuery() > 0;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        // Xóa chi tiết hóa đơn
-        public bool DeleteChiTietHoaDon(int maChiTietHoaDon)
-        {
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                string sql = "DELETE FROM ChiTietHoaDon WHERE MaChiTietHoaDon = @MaChiTietHoaDon";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaChiTietHoaDon", maChiTietHoaDon);
-                    conn.Open();
-                    try
-                    {
-                        return cmd.ExecuteNonQuery() > 0;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        // Tìm kiếm hóa đơn theo mã hoặc ngày
-        public DataTable SearchHoaDon(string maHoaDon, DateTime? ngayDat)
-        {
-            DataTable dt = new DataTable();
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                string sql = @"
-                    SELECT HD.MaHoaDon, KH.HoTen AS TenKhachHang, NV.HoTen AS TenNhanVien, B.SoBan, 
-                           HD.NgayDat, HD.TongTien, HD.TienGiamGia, HD.TongThueVAT, HD.ThanhToan, HD.TrangThai
-                    FROM HoaDon HD
-                    JOIN KhachHang KH ON HD.MaKhachHang = KH.MaKhachHang
-                    LEFT JOIN NhanVien NV ON HD.MaNhanVien = NV.MaNV
-                    LEFT JOIN Ban B ON HD.MaBan = B.MaBan
-                    WHERE 1=1";
-                if (!string.IsNullOrEmpty(maHoaDon))
-                    sql += " AND HD.MaHoaDon = @MaHoaDon";
-                if (ngayDat.HasValue)
-                    sql += " AND CAST(HD.NgayDat AS DATE) = @NgayDat";
-
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    if (!string.IsNullOrEmpty(maHoaDon))
                         cmd.Parameters.AddWithValue("@MaHoaDon", maHoaDon);
-                    if (ngayDat.HasValue)
-                        cmd.Parameters.AddWithValue("@NgayDat", ngayDat.Value.Date);
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
-                    {
-                        adapter.Fill(dt);
+                        object objResult = cmd.ExecuteScalar();
+                        if (objResult != null && objResult != DBNull.Value)
+                        {
+                            result = Convert.ToInt32(objResult);
+                        }
                     }
                 }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Lỗi khi lấy hóa đơn theo mã ({maHoaDon}): {ex.Message}");
+                }
             }
-            return dt;
+            return result;
         }
     }
 }
