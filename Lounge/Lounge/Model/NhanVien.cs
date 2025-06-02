@@ -11,8 +11,6 @@ namespace Lounge.Model
         public int MaNhanvien { get; set; }
         public string HoTen { get; set; }
         public string ChucVu { get; set; }
-        public string GioiTinh { get; set; }
-        public string DiaChi { get; set; }
 
         public string SDT_NV { get; set; }
         public DateTime NgayTao { get; set; }

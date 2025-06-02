@@ -20,7 +20,6 @@ namespace Lounge
         {
             this.pneTitle = new System.Windows.Forms.Panel();
             this.BAR = new System.Windows.Forms.Label();
-            this.lblUser = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
             this.btnInfo = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
@@ -34,11 +33,11 @@ namespace Lounge
             this.plnSanPham = new System.Windows.Forms.Panel();
             this.plnHoaDon = new System.Windows.Forms.Panel();
             this.plnBottom = new System.Windows.Forms.Panel();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnPaid = new System.Windows.Forms.Button();
-            this.btnGuestCheck = new System.Windows.Forms.Button();
-            this.btnPrintCheck = new System.Windows.Forms.Button();
             this.btnSendCheck = new System.Windows.Forms.Button();
+            this.btnPrintCheck = new System.Windows.Forms.Button();
+            this.btnGuestCheck = new System.Windows.Forms.Button();
+            this.btnPaid = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.pneTitle.SuspendLayout();
             this.plnMain.SuspendLayout();
             this.plnBottom.SuspendLayout();
@@ -48,7 +47,6 @@ namespace Lounge
             // 
             this.pneTitle.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
             this.pneTitle.Controls.Add(this.BAR);
-            this.pneTitle.Controls.Add(this.lblUser);
             this.pneTitle.Controls.Add(this.lblTime);
             this.pneTitle.Controls.Add(this.btnInfo);
             this.pneTitle.Controls.Add(this.btnExit);
@@ -72,16 +70,6 @@ namespace Lounge
             this.BAR.Size = new System.Drawing.Size(178, 41);
             this.BAR.TabIndex = 0;
             this.BAR.Text = "LOBBY BAR";
-            // 
-            // lblUser
-            // 
-            this.lblUser.AutoSize = true;
-            this.lblUser.ForeColor = System.Drawing.Color.White;
-            this.lblUser.Location = new System.Drawing.Point(600, 26);
-            this.lblUser.Name = "lblUser";
-            this.lblUser.Size = new System.Drawing.Size(158, 16);
-            this.lblUser.TabIndex = 1;
-            this.lblUser.Text = "Admin | Operator | Tư Anh";
             // 
             // lblTime
             // 
@@ -160,6 +148,7 @@ namespace Lounge
             this.lblWholeCheck.Size = new System.Drawing.Size(117, 16);
             this.lblWholeCheck.TabIndex = 8;
             this.lblWholeCheck.Text = "Whole Check: 0.00";
+            this.lblWholeCheck.Click += new System.EventHandler(this.lblWholeCheck_Click);
             // 
             // plnBan
             // 
@@ -223,47 +212,19 @@ namespace Lounge
             this.plnBottom.TabIndex = 3;
             this.plnBottom.Visible = false;
             // 
-            // btnCancel
+            // btnSendCheck
             // 
-            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
-            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.ForeColor = System.Drawing.Color.White;
-            this.btnCancel.Location = new System.Drawing.Point(1300, 10);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(90, 40);
-            this.btnCancel.TabIndex = 4;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // btnPaid
-            // 
-            this.btnPaid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(0)))), ((int)(((byte)(204)))));
-            this.btnPaid.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.btnPaid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPaid.ForeColor = System.Drawing.Color.White;
-            this.btnPaid.Location = new System.Drawing.Point(1200, 10);
-            this.btnPaid.Name = "btnPaid";
-            this.btnPaid.Size = new System.Drawing.Size(90, 40);
-            this.btnPaid.TabIndex = 3;
-            this.btnPaid.Text = "Paid";
-            this.btnPaid.UseVisualStyleBackColor = false;
-            this.btnPaid.Click += new System.EventHandler(this.btnPaid_Click);
-            // 
-            // btnGuestCheck
-            // 
-            this.btnGuestCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            this.btnGuestCheck.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.btnGuestCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnGuestCheck.ForeColor = System.Drawing.Color.White;
-            this.btnGuestCheck.Location = new System.Drawing.Point(1100, 10);
-            this.btnGuestCheck.Name = "btnGuestCheck";
-            this.btnGuestCheck.Size = new System.Drawing.Size(90, 40);
-            this.btnGuestCheck.TabIndex = 2;
-            this.btnGuestCheck.Text = "Guest";
-            this.btnGuestCheck.UseVisualStyleBackColor = false;
-            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click);
+            this.btnSendCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            this.btnSendCheck.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnSendCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSendCheck.ForeColor = System.Drawing.Color.White;
+            this.btnSendCheck.Location = new System.Drawing.Point(900, 10);
+            this.btnSendCheck.Name = "btnSendCheck";
+            this.btnSendCheck.Size = new System.Drawing.Size(90, 40);
+            this.btnSendCheck.TabIndex = 0;
+            this.btnSendCheck.Text = "Send";
+            this.btnSendCheck.UseVisualStyleBackColor = false;
+            this.btnSendCheck.Click += new System.EventHandler(this.btnSendCheck_Click);
             // 
             // btnPrintCheck
             // 
@@ -279,19 +240,47 @@ namespace Lounge
             this.btnPrintCheck.UseVisualStyleBackColor = false;
             this.btnPrintCheck.Click += new System.EventHandler(this.btnPrintCheck_Click);
             // 
-            // btnSendCheck
+            // btnGuestCheck
             // 
-            this.btnSendCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
-            this.btnSendCheck.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
-            this.btnSendCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSendCheck.ForeColor = System.Drawing.Color.White;
-            this.btnSendCheck.Location = new System.Drawing.Point(900, 10);
-            this.btnSendCheck.Name = "btnSendCheck";
-            this.btnSendCheck.Size = new System.Drawing.Size(90, 40);
-            this.btnSendCheck.TabIndex = 0;
-            this.btnSendCheck.Text = "Send";
-            this.btnSendCheck.UseVisualStyleBackColor = false;
-            this.btnSendCheck.Click += new System.EventHandler(this.btnSendCheck_Click);
+            this.btnGuestCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(204)))), ((int)(((byte)(0)))));
+            this.btnGuestCheck.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnGuestCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGuestCheck.ForeColor = System.Drawing.Color.White;
+            this.btnGuestCheck.Location = new System.Drawing.Point(1100, 10);
+            this.btnGuestCheck.Name = "btnGuestCheck";
+            this.btnGuestCheck.Size = new System.Drawing.Size(90, 40);
+            this.btnGuestCheck.TabIndex = 2;
+            this.btnGuestCheck.Text = "Guest";
+            this.btnGuestCheck.UseVisualStyleBackColor = false;
+            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click);
+            // 
+            // btnPaid
+            // 
+            this.btnPaid.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(102)))), ((int)(((byte)(0)))), ((int)(((byte)(204)))));
+            this.btnPaid.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnPaid.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPaid.ForeColor = System.Drawing.Color.White;
+            this.btnPaid.Location = new System.Drawing.Point(1200, 10);
+            this.btnPaid.Name = "btnPaid";
+            this.btnPaid.Size = new System.Drawing.Size(90, 40);
+            this.btnPaid.TabIndex = 3;
+            this.btnPaid.Text = "Paid";
+            this.btnPaid.UseVisualStyleBackColor = false;
+            this.btnPaid.Click += new System.EventHandler(this.btnPaid_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(77)))), ((int)(((byte)(77)))));
+            this.btnCancel.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(150)))), ((int)(((byte)(150)))), ((int)(((byte)(150)))));
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCancel.ForeColor = System.Drawing.Color.White;
+            this.btnCancel.Location = new System.Drawing.Point(1300, 10);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(90, 40);
+            this.btnCancel.TabIndex = 4;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = false;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // TrangChu
             // 
@@ -315,7 +304,6 @@ namespace Lounge
 
         private System.Windows.Forms.Panel pneTitle;
         private System.Windows.Forms.Label BAR;
-        private System.Windows.Forms.Label lblUser;
         private System.Windows.Forms.Label lblTime;
         private System.Windows.Forms.Button btnInfo;
         private System.Windows.Forms.Button btnExit;

@@ -1,4 +1,5 @@
 ﻿using Lounge.Model;
+using NhaHang;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -48,6 +49,47 @@ namespace Lounge
         private void Panel3_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void btnKhachHang_Click(object sender, EventArgs e)
+        {
+            FormQLKH khachHang = new FormQLKH();
+            OpenChildForm(currentFrch, Panel_Body, khachHang);
+        }
+
+        private void btnNhaCungCap_Click(object sender, EventArgs e)
+        {
+            FormQLNCC nhaCungCap = new FormQLNCC();
+            OpenChildForm(currentFrch, Panel_Body, nhaCungCap);
+        }
+
+        private void btnPhieuNhap_Click(object sender, EventArgs e)
+        {
+            QLPhieuNhapKho phieuNhapKho = new QLPhieuNhapKho();
+            OpenChildForm(currentFrch, Panel_Body, phieuNhapKho);
+        }
+
+        private void btnPhieuXuat_Click(object sender, EventArgs e)
+        {
+            QLPhieuXuatKho qLPhieuXuatKho = new QLPhieuXuatKho();
+            OpenChildForm(currentFrch, Panel_Body, qLPhieuXuatKho);
+        }
+
+        private void btnHoaDon_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            QLBaoCao qLBaoCao = new QLBaoCao();
+            OpenChildForm(currentFrch, Panel_Body, qLBaoCao);
+        }
+
+        private void btnSanPham_Click(object sender, EventArgs e)
+        {
+            FormQLSP sanPham = new FormQLSP();
+            OpenChildForm(currentFrch, Panel_Body, sanPham);
         }
     }
 }

@@ -20,28 +20,10 @@ namespace Lounge
         {
             InitializeComponent();
         }
-        public void Checkconnection()
-        {
-            try
-            {
-                using (SqlConnection conn = KetNoi.GetOpenConnect()) // dùng hàm mới GetConnection()
-                {
-                    conn.Open(); // mở trong using thì tự đóng
-                    if (conn.State == ConnectionState.Open)
-                    {
-                        MessageBox.Show("Kết nối cơ sở dữ liệu thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi kết nối: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+       
 
         private void DangNhap_Load(object sender, EventArgs e)
         {
-            Checkconnection();
           
         }
 

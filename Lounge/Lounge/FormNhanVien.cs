@@ -1,74 +1,85 @@
 ﻿using Lounge.DAL;
 using Lounge.Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Markup;
 
 namespace Lounge
 {
     public partial class FormNhanVien : Form
     {
-        KetNoi kn = new KetNoi();
-        public NhanVienDAL nhanVienDAL = new NhanVienDAL();
+        private KetNoi kn = new KetNoi();
+        private NhanVienDAL nhanVienDAL = new NhanVienDAL();
         private BindingSource bdsource = new BindingSource();
+
         public FormNhanVien()
         {
             InitializeComponent();
         }
+
         private void LoadData()
         {
-            bdsource.DataSource = nhanVienDAL.GetAllNhanVien(); // Gọi dữ liệu nhân viên
-            dgvNhanVien.DataSource = bdsource;
-            // SELECT MaNV, HoTen, ChucVu, SDT_NV, Email_NV, DiaChi, GioiTinh, NgayTao
-            txtHienHanh.Text = (bdsource.Position + 1).ToString();
-            lblTongTin.Text = bdsource.Count.ToString();
+            try
+            {
+                bdsource.DataSource = nhanVienDAL.GetAllNhanVien();
+                dgvNhanVien.DataSource = bdsource;
 
-            // Thay đổi độ rộng các cột
-            dgvNhanVien.Columns[0].Width = 100;//MaNhanVien
-            dgvNhanVien.Columns[1].Width = 120;  // HoTen
-            dgvNhanVien.Columns[2].Width = 80;   // ChucVu
-            dgvNhanVien.Columns[3].Width = 100;  // SDT_NV
-            dgvNhanVien.Columns[4].Width = 150;  // Email_NV
-            dgvNhanVien.Columns[5].Width = 150;  // DiaChi
-            dgvNhanVien.Columns[6].Width = 80;   // NgayTao
-            dgvNhanVien.Columns[7].Width = 80;   // GioiTinh (vị trí 6 nếu thêm sau NgayTao)
+                txtHienHanh.Text = (bdsource.Position + 1).ToString();
+                lblTongTin.Text = bdsource.Count.ToString();
 
-            // Cài đặt style cho DataGridView
-            dgvNhanVien.CellBorderStyle = DataGridViewCellBorderStyle.Sunken;
-            dgvNhanVien.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
-            dgvNhanVien.DefaultCellStyle.SelectionForeColor = Color.Black;
-            dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                // Thay đổi độ rộng các cột
+                dgvNhanVien.Columns["MaNhanvien"].Width = 100;
+                dgvNhanVien.Columns["HoTen"].Width = 120;
+                //dgvNhanVien.Columns["ChucVu"].Width = 80; // Uncomment if ChucVu is in model
+                dgvNhanVien.Columns["SDT_NV"].Width = 100;
+                dgvNhanVien.Columns["Email_NV"].Width = 150;
+                dgvNhanVien.Columns["NgayTao"].Width = 80;
 
-            // Nạp dữ liệu cho ComboBox giới tính
-            cboxGioiTinh.Items.Clear();
-            cboxGioiTinh.Items.Add("Nam");
-            cboxGioiTinh.Items.Add("Nữ");
-            cboxGioiTinh.Items.Add("Khác");
-            cboxGioiTinh.SelectedIndex = -1; // Đặt giá trị mặc định là không chọn gì
+                // Đặt tiêu đề cột
+                dgvNhanVien.Columns["MaNhanvien"].HeaderText = "Mã NV";
+                dgvNhanVien.Columns["HoTen"].HeaderText = "Họ Tên";
+                //dgvNhanVien.Columns["ChucVu"].HeaderText = "Chức Vụ"; // Uncomment if ChucVu is in model
+                dgvNhanVien.Columns["SDT_NV"].HeaderText = "SĐT";
+                dgvNhanVien.Columns["Email_NV"].HeaderText = "Email";
+                dgvNhanVien.Columns["NgayTao"].HeaderText = "Ngày Tạo";
 
+                // Cài đặt style cho DataGridView
+                dgvNhanVien.CellBorderStyle = DataGridViewCellBorderStyle.Sunken;
+                dgvNhanVien.DefaultCellStyle.SelectionBackColor = Color.LightSkyBlue;
+                dgvNhanVien.DefaultCellStyle.SelectionForeColor = Color.Black;
+                dgvNhanVien.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+                UpdateNavigationButtons();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi tải danh sách nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void UpdateNavigationButtons()
+        {
+            btnDau.Enabled = bdsource.Count > 1 && bdsource.Position > 0;
+            btnTruoc.Enabled = bdsource.Count > 1 && bdsource.Position > 0;
+            btnKe.Enabled = bdsource.Count > 1 && bdsource.Position < bdsource.Count - 1;
+            btnCuoi.Enabled = bdsource.Count > 1 && bdsource.Position < bdsource.Count - 1;
         }
 
         private void FormNhanVien_Load(object sender, EventArgs e)
         {
             LoadData();
+            txtMaNV.Enabled = false; // Vô hiệu hóa txtMaNV vì MaNV tự sinh
+            radTenNV.Checked = true; // Default to search by name
         }
+
         private void btnDau_Click(object sender, EventArgs e)
         {
             bdsource.Position = 0;
             txtHienHanh.Text = (bdsource.Position + 1).ToString();
             lblTongTin.Text = bdsource.Count.ToString();
-
-            btnTruoc.Enabled = false;
-            btnDau.Enabled = false;
-            btnKe.Enabled = true;
-            btnCuoi.Enabled = true;
+            UpdateNavigationButtons();
         }
 
         private void btnTruoc_Click(object sender, EventArgs e)
@@ -76,14 +87,7 @@ namespace Lounge
             bdsource.Position -= 1;
             txtHienHanh.Text = (bdsource.Position + 1).ToString();
             lblTongTin.Text = bdsource.Count.ToString();
-
-            if (bdsource.Position == 0)
-            {
-                btnTruoc.Enabled = false;
-                btnDau.Enabled = false;
-            }
-            btnKe.Enabled = true;
-            btnCuoi.Enabled = true;
+            UpdateNavigationButtons();
         }
 
         private void btnKe_Click(object sender, EventArgs e)
@@ -91,14 +95,7 @@ namespace Lounge
             bdsource.Position += 1;
             txtHienHanh.Text = (bdsource.Position + 1).ToString();
             lblTongTin.Text = bdsource.Count.ToString();
-
-            if (bdsource.Position == bdsource.Count - 1)
-            {
-                btnKe.Enabled = false;
-                btnCuoi.Enabled = false;
-            }
-            btnTruoc.Enabled = true;
-            btnDau.Enabled = true;
+            UpdateNavigationButtons();
         }
 
         private void btnCuoi_Click(object sender, EventArgs e)
@@ -106,103 +103,225 @@ namespace Lounge
             bdsource.Position = bdsource.Count - 1;
             txtHienHanh.Text = (bdsource.Position + 1).ToString();
             lblTongTin.Text = bdsource.Count.ToString();
-
-            btnTruoc.Enabled = true;
-            btnDau.Enabled = true;
-            btnKe.Enabled = false;
-            btnCuoi.Enabled = false;
+            UpdateNavigationButtons();
         }
 
         private void btnLamMoi_Click(object sender, EventArgs e)
         {
             LoadData();
-            txtMaNV.Text = "";
-            txtTenNV.Text = "";
-            txtDienThoai.Text = "";
-            txtEmail.Text = "";
-            cboxGioiTinh.Text = "";
-            txtMaNV.Enabled = true;
+            ClearInputs();
+            txtMaNV.Enabled = false;
             btnThem.Enabled = true;
-            btnXoa.Enabled = true;
-
+            btnXoa.Enabled = false;
+            btnSua.Enabled = false;
+            txt_timMaNV.Clear();
+            txt_timTenNV.Clear();
+            radTenNV.Checked = true;
         }
 
         private void btnLoc_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string filter = "";
+                if (radMaNV.Checked && !string.IsNullOrWhiteSpace(txt_timMaNV.Text))
+                {
+                    filter = $"MaNhanvien = '{txt_timMaNV.Text.Trim()}'";
+                }
+                else if (radTenNV.Checked && !string.IsNullOrWhiteSpace(txt_timTenNV.Text))
+                {
+                    filter = $"HoTen LIKE '%{txt_timTenNV.Text.Trim()}%'";
+                }
+
+                var list = nhanVienDAL.GetAllNhanVien();
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    bdsource.DataSource = list.Where(nv => filter == "" || (radMaNV.Checked && nv.MaNhanvien.ToString() == txt_timMaNV.Text.Trim()) || (radTenNV.Checked && nv.HoTen.Contains(txt_timTenNV.Text.Trim()))).ToList();
+
+                }
+                else
+                {
+                    bdsource.DataSource = list;
+                }
+
+                dgvNhanVien.DataSource = bdsource;
+                txtHienHanh.Text = (bdsource.Position + 1).ToString();
+                lblTongTin.Text = bdsource.Count.ToString();
+                UpdateNavigationButtons();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi lọc nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnKoLoc_Click(object sender, EventArgs e)
+        {
+            txt_timMaNV.Clear();
+            txt_timTenNV.Clear();
+            radTenNV.Checked = true;
             LoadData();
         }
 
         private void btnThem_Click(object sender, EventArgs e)
         {
-            NhanVien nhanVien = new NhanVien()
-            {
-                HoTen = txtTenNV.Text.Trim(),
-                ChucVu = txtChucVu.Text.Trim(),
-                SDT_NV = txtDienThoai.Text.Trim(),
-                Email_NV = txtEmail.Text.Trim(),
-                NgayTao = dtpNgayVaoLam.Value,
-                DiaChi = txtDiaChi.Text.Trim(),
-                GioiTinh = cboxGioiTinh.SelectedItem?.ToString()
-            };
             try
             {
+                if (!ValidateInput()) return;
+
+                NhanVien nhanVien = new NhanVien
+                {
+                    HoTen = txtTenNV.Text.Trim(),
+                    ChucVu = txtChucVu.Text.Trim(), 
+                    SDT_NV = txtDienThoai.Text.Trim(),
+                    Email_NV = txtEmail.Text.Trim(),
+                    NgayTao = dtpNgayVaoLam.Value
+                };
+
                 nhanVienDAL.ThemNhanVien(nhanVien);
                 MessageBox.Show("Thêm nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                LoadData(); // Cập nhật lại DataGridView
+                LoadData();
+                ClearInputs();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi thêm nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi thêm nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!ValidateInput()) return;
+                if (!int.TryParse(txtMaNV.Text, out int maNV))
+                {
+                    MessageBox.Show("Mã nhân viên không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                NhanVien nhanVien = new NhanVien
+                {
+                    MaNhanvien = maNV,
+                    HoTen = txtTenNV.Text.Trim(),
+                    ChucVu = txtChucVu.Text.Trim(), // Uncomment if ChucVu is in model
+                    SDT_NV = txtDienThoai.Text.Trim(),
+                    Email_NV = txtEmail.Text.Trim(),
+                    NgayTao = dtpNgayVaoLam.Value
+                };
+
+                nhanVienDAL.SuaNhanVien(nhanVien);
+                MessageBox.Show("Sửa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LoadData();
+                ClearInputs();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi sửa nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
             try
             {
-                if (int.TryParse(txtMaNV.Text, out int manv)) // Convert string to int safely  
-                {
-                    DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result == DialogResult.Yes)
-                    {
-                        nhanVienDAL.XoaNhanVien(manv); // Pass the integer value  
-                        MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadData(); // Cập nhật lại DataGridView  
-                    }
-                }
-                else
+                if (!int.TryParse(txtMaNV.Text, out int maNV))
                 {
                     MessageBox.Show("Mã nhân viên không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn xóa nhân viên này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    nhanVienDAL.XoaNhanVien(maNV);
+                    MessageBox.Show("Xóa nhân viên thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadData();
+                    ClearInputs();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi xóa nhân viên: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Lỗi khi xóa nhân viên: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-       
-        private void dgvNhanVien_SelectionChanged(object sender, DataGridViewCellEventArgs e)
+
+        private void btnThoat_Click(object sender, EventArgs e)
         {
-            
-                txtMaNV.Text = dgvNhanVien.CurrentRow.Cells["MaNhanVien"].Value.ToString();
-                txtTenNV.Text = dgvNhanVien.CurrentRow.Cells["HoTen"].Value.ToString();
-                txtChucVu.Text = dgvNhanVien.CurrentRow.Cells["ChucVu"].Value.ToString();
-                if(dgvNhanVien.CurrentRow.Cells["GioiTinh"].Value != null)
-                {
-                cboxGioiTinh.SelectedItem = dgvNhanVien.CurrentRow.Cells["GioiTinh"].Value.ToString();
-                }
-                else
-                {
-                cboxGioiTinh.SelectedIndex = -1; // Đặt giá trị mặc định là không chọn gì
-                }
-                txtDiaChi.Text = dgvNhanVien.CurrentRow.Cells["DiaChi"].Value.ToString();
-                txtDienThoai.Text = dgvNhanVien.CurrentRow.Cells["SDT_NV"].Value.ToString();
-                dtpNgayVaoLam.Value = Convert.ToDateTime(dgvNhanVien.CurrentRow.Cells["NgayTao"].Value);
-                txtEmail.Text = dgvNhanVien.CurrentRow.Cells["Email_NV"].Value.ToString();
-            
+            this.Close();
         }
 
-      
+        private void dgvNhanVien_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvNhanVien.SelectedRows.Count > 0)
+            {
+                var row = dgvNhanVien.SelectedRows[0];
+                txtMaNV.Text = row.Cells["MaNhanvien"].Value.ToString();
+                txtTenNV.Text = row.Cells["HoTen"].Value.ToString();
+                txtChucVu.Text = row.Cells["ChucVu"].Value.ToString(); // Uncomment if ChucVu is in model
+                txtDienThoai.Text = row.Cells["SDT_NV"].Value.ToString();
+                txtEmail.Text = row.Cells["Email_NV"].Value?.ToString() ?? "";
+                dtpNgayVaoLam.Value = Convert.ToDateTime(row.Cells["NgayTao"].Value);
+
+                txtMaNV.Enabled = false;
+                btnSua.Enabled = true;
+                btnXoa.Enabled = true;
+                btnThem.Enabled = false;
+            }
+        }
+
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrWhiteSpace(txtTenNV.Text))
+            {
+                MessageBox.Show("Vui lòng nhập họ tên!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtTenNV.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtChucVu.Text)) // Uncomment if ChucVu is in model
+            {
+               MessageBox.Show("Vui lòng nhập chức vụ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               txtChucVu.Focus();
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtDienThoai.Text) || !System.Text.RegularExpressions.Regex.IsMatch(txtDienThoai.Text, @"^\+?\d[\d\s-]{8,12}\d$"))
+            {
+                MessageBox.Show("Số điện thoại không hợp lệ! Phải có 10-13 chữ số, có thể chứa dấu cách hoặc gạch ngang.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtDienThoai.Focus();
+                return false;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                try
+                {
+                    new System.Net.Mail.MailAddress(txtEmail.Text);
+                }
+                catch
+                {
+                    MessageBox.Show("Email không hợp lệ!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    txtEmail.Focus();
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private void ClearInputs()
+        {
+            txtMaNV.Text = "";
+            txtTenNV.Text = "";
+            txtChucVu.Text = ""; 
+            txtDienThoai.Text = "";
+            txtEmail.Text = "";
+            dtpNgayVaoLam.Value = DateTime.Now;
+            txtMaNV.Enabled = false;
+            btnThem.Enabled = true;
+            btnSua.Enabled = false;
+            btnXoa.Enabled = false;
+        }
     }
 }

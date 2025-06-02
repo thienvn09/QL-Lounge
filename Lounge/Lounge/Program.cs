@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NhaHang;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace Lounge
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new QLHoaDon());
+            Application.Run(new DangNhap());
         }
     }
 }

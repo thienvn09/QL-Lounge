@@ -1,108 +1,46 @@
-﻿using Lounge.Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Lounge.Model;
 
 namespace Lounge.DAL
 {
     public class KhoHangDAL
     {
-        public KetNoi ketNoi = new KetNoi();
-        // Lấy danh sách tất cả sản phẩm trong kho
-        public List<KhoHang> getallKho()
+        private KetNoi ketNoi = new KetNoi();
+
+        public DataTable GetAllKhoHang()
         {
-            List<KhoHang> khoHangs = new List<KhoHang>();
+            DataTable dt = new DataTable();
+            string query = @"
+                SELECT KH.MaKhoHang, KH.MaSanPham, KH.SoLuongTonKho, SP.TenSanPham
+                FROM KhoHang KH
+                JOIN SanPham SP ON KH.MaSanPham = SP.MaSanPham";
             using (SqlConnection conn = ketNoi.GetConnect())
             {
-                string sql = "SELECT * FROM KhoHang";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     conn.Open();
-                    SqlDataReader reader = cmd.ExecuteReader();
-                    while (reader.Read())
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
                     {
-                        KhoHang khoHang = new KhoHang
-                        {
-                            MaKhoHang = reader.GetInt32(0),
-                            MaSanPham = reader.GetInt32(1),
-                            SoLuongTonKho = reader.GetInt32(2)
-                        };
-                        khoHangs.Add(khoHang);
-                    }
-                }
-                return khoHangs;
-            }
-        }
-        // Thêm sản phẩm vào kho
-        public bool AddKhoHang(KhoHang khoHang)
-        {
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                string sql = @"INSERT INTO KhoHang (MaSanPham, SoLuongTonKho) 
-                              VALUES (@MaSanPham, @SoLuongTonKho)";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaSanPham", khoHang.MaSanPham);
-                    cmd.Parameters.AddWithValue("@SoLuongTonKho", khoHang.SoLuongTonKho);
-                    conn.Open();
-                    try
-                    {
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        return rowsAffected > 0;
-                    }
-                    catch (SqlException)
-                    {
-                        return false; // Handle errors (e.g., unique constraints)
+                        da.Fill(dt);
                     }
                 }
             }
+            return dt;
         }
-        public bool UpdateKhoHang(KhoHang khoHang)
+
+        public bool UpdateSoLuongTon(int maSanPham, int soLuong)
         {
+            string query = "UPDATE KhoHang SET SoLuongTon = @SoLuong WHERE MaSanPham = @MaSanPham";
             using (SqlConnection conn = ketNoi.GetConnect())
             {
-                string sql = @"UPDATE KhoHang 
-                               SET SoLuongTonKho = @SoLuongTonKho 
-                               WHERE MaSanPham = @MaSanPham";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("@MaSanPham", khoHang.MaSanPham);
-                    cmd.Parameters.AddWithValue("@SoLuongTonKho", khoHang.SoLuongTonKho);
-                    conn.Open();
-                    try
-                    {
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        return rowsAffected > 0;
-                    }
-                    catch (SqlException)
-                    {
-                        return false; // Handle errors (e.g., unique constraints)
-                    }
-                }
-            }
-        }
-        // Xóa sản phẩm khỏi kho
-        public bool DeleteKhoHang(int maSanPham)
-        {
-            using (SqlConnection conn = ketNoi.GetConnect())
-            {
-                string sql = "DELETE FROM KhoHang WHERE MaSanPham = @MaSanPham";
-                using (SqlCommand cmd = new SqlCommand(sql, conn))
+                using (SqlCommand cmd = new SqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@MaSanPham", maSanPham);
+                    cmd.Parameters.AddWithValue("@SoLuong", soLuong);
                     conn.Open();
-                    try
-                    {
-                        int rowsAffected = cmd.ExecuteNonQuery();
-                        return rowsAffected > 0;
-                    }
-                    catch (SqlException)
-                    {
-                        return false; // Handle errors (e.g., foreign key constraints)
-                    }
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    return rowsAffected > 0;
                 }
             }
         }

@@ -1,6 +1,7 @@
 ﻿using Lounge.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,23 @@ namespace Lounge.DAL
     public class SanPhamDAL
     {
         private KetNoi ketNoi = new KetNoi();
+        public DataTable GetAllSanPham()
+        {
+            DataTable dt = new DataTable();
+            string query = "SELECT MaSanPham, TenSanPham, SoLuongTonKho FROM SanPham";
+            using (SqlConnection conn = ketNoi.GetConnect())
+            {
+                using (SqlCommand cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    using (SqlDataAdapter da = new SqlDataAdapter(cmd))
+                    {
+                        da.Fill(dt);
+                    }
+                }
+            }
+            return dt;
+        }
         public List<SANPHAM> GetSanPhamById(int maDanhMuc)
         {
             List<SANPHAM> ds = new List<SANPHAM>();

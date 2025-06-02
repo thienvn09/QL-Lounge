@@ -57,11 +57,38 @@
     <Reference Include="Azure.Identity, Version=1.11.4.0, Culture=neutral, PublicKeyToken=92742159e12e44c8, processorArchitecture=MSIL">
       <HintPath>..\packages\Azure.Identity.1.11.4\lib\netstandard2.0\Azure.Identity.dll</HintPath>
     </Reference>
+    <Reference Include="ClosedXML, Version=0.105.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.105.0\lib\netstandard2.0\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML.Parser, Version=1.0.0.0, Culture=neutral, PublicKeyToken=1d5f7376574c51ec, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.Parser.2.0.0\lib\netstandard2.0\ClosedXML.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.1.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.1.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.1.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ExcelNumberFormat, Version=1.1.0.0, Culture=neutral, PublicKeyToken=23c6f5d73be07eca, processorArchitecture=MSIL">
+      <HintPath>..\packages\ExcelNumberFormat.1.1.0\lib\net20\ExcelNumberFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.Compat, Version=2025.2.2.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.Compat.2025.2.2\lib\net462\FastReport.Compat.dll</HintPath>
+    </Reference>
+    <Reference Include="FastReport.DataVisualization, Version=2025.2.2.0, Culture=neutral, PublicKeyToken=5ceb240df42bf6e8, processorArchitecture=MSIL">
+      <HintPath>..\packages\FastReport.DataVisualization.2025.2.2\lib\net462\FastReport.DataVisualization.dll</HintPath>
+    </Reference>
+    <Reference Include="GrapeCity.DataVisualization.Chart, Version=0.4.136.0, Culture=neutral, PublicKeyToken=8dbeb54e07a9de91, processorArchitecture=MSIL">
+      <HintPath>..\packages\GrapeCity.DataVisualization.Chart.0.4.136\lib\net461\GrapeCity.DataVisualization.Chart.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.Cryptography, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Cryptography.8.0.0\lib\net462\Microsoft.Bcl.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.1\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.SqlClient, Version=6.0.0.0, Culture=neutral, PublicKeyToken=23ec7fc2d6eaa4a5, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.SqlClient.6.0.1\lib\net462\Microsoft.Data.SqlClient.dll</HintPath>
@@ -110,6 +137,12 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="RBush, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c77e27b81f4d0187, processorArchitecture=MSIL">
+      <HintPath>..\packages\RBush.Signed.4.0.0\lib\net47\RBush.dll</HintPath>
+    </Reference>
+    <Reference Include="SixLabors.Fonts, Version=1.0.0.0, Culture=neutral, PublicKeyToken=d998eea7b14cab13, processorArchitecture=MSIL">
+      <HintPath>..\packages\SixLabors.Fonts.1.0.0\lib\netstandard2.0\SixLabors.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
@@ -189,7 +222,10 @@
       <DependentUpon>ChonQuyen.cs</DependentUpon>
     </Compile>
     <Compile Include="DAL\BanDAL.cs" />
+    <Compile Include="DAL\BaoCaoDAL.cs" />
     <Compile Include="DAL\ChiTietHoaDonDAl.cs" />
+    <Compile Include="DAL\ChiTietPhieuNhapKhoDAL.cs" />
+    <Compile Include="DAL\ChiTietPhieuXuatDAL.cs" />
     <Compile Include="DAL\DangNhapDAL.cs" />
     <Compile Include="DAL\DanhMucSPDAL.cs" />
     <Compile Include="DAL\HoaDonDAL.cs" />
@@ -198,6 +234,8 @@
     <Compile Include="DAL\KhoHangDAL.cs" />
     <Compile Include="DAL\NhaCungCapDAL.cs" />
     <Compile Include="DAL\NhanVienDAL.cs" />
+    <Compile Include="DAL\PhieuNhapKhoDAL.cs" />
+    <Compile Include="DAL\PhieuXuatKhoDAL.cs" />
     <Compile Include="DAL\SanPhamDAL.cs" />
     <Compile Include="DangNhap.cs">
       <SubType>Form</SubType>
@@ -205,11 +243,17 @@
     <Compile Include="DangNhap.Designer.cs">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormChiTietBan.cs">
+    <Compile Include="FormChiTietPhieuNhapKho.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormChiTietBan.Designer.cs">
-      <DependentUpon>FormChiTietBan.cs</DependentUpon>
+    <Compile Include="FormChiTietPhieuNhapKho.Designer.cs">
+      <DependentUpon>FormChiTietPhieuNhapKho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormChiTietPhieuXuat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormChiTietPhieuXuat.Designer.cs">
+      <DependentUpon>FormChiTietPhieuXuat.cs</DependentUpon>
     </Compile>
     <Compile Include="FormNhanVien.cs">
       <SubType>Form</SubType>
@@ -241,18 +285,6 @@
     <Compile Include="FormQLSP.Designer.cs">
       <DependentUpon>FormQLSP.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormSanPham.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormSanPham.Designer.cs">
-      <DependentUpon>FormSanPham.cs</DependentUpon>
-    </Compile>
-    <Compile Include="frmTaoHoaDon.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmTaoHoaDon.Designer.cs">
-      <DependentUpon>frmTaoHoaDon.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmThemBan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -261,6 +293,8 @@
     </Compile>
     <Compile Include="Model\Ban.cs" />
     <Compile Include="Model\ChiTietHoaDon.cs" />
+    <Compile Include="Model\ChiTietPhieuNhapKho.cs" />
+    <Compile Include="Model\ChiTietPhieuXuat.cs" />
     <Compile Include="Model\DangNhap.cs" />
     <Compile Include="Model\DanhMucSanPham.cs" />
     <Compile Include="Model\HoaDon.cs" />
@@ -268,14 +302,28 @@
     <Compile Include="Model\KhoHang.cs" />
     <Compile Include="Model\NhaCungCap.cs" />
     <Compile Include="Model\NhanVien.cs" />
+    <Compile Include="Model\PhieuNhapKho.cs" />
+    <Compile Include="Model\PhieuXuatKho.cs" />
     <Compile Include="Model\SANPHAM.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QLHoaDon.cs">
+    <Compile Include="QLBaoCao.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="QLHoaDon.Designer.cs">
-      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    <Compile Include="QLBaoCao.Designer.cs">
+      <DependentUpon>QLBaoCao.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QLPhieuNhapKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QLPhieuNhapKho.Designer.cs">
+      <DependentUpon>QLPhieuNhapKho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QLPhieuXuatKho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QLPhieuXuatKho.Designer.cs">
+      <DependentUpon>QLPhieuXuatKho.cs</DependentUpon>
     </Compile>
     <Compile Include="TrangChu.cs">
       <SubType>Form</SubType>
@@ -289,8 +337,8 @@
     <EmbeddedResource Include="DangNhap.resx">
       <DependentUpon>DangNhap.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormChiTietBan.resx">
-      <DependentUpon>FormChiTietBan.cs</DependentUpon>
+    <EmbeddedResource Include="FormChiTietPhieuNhapKho.resx">
+      <DependentUpon>FormChiTietPhieuNhapKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNhanVien.resx">
       <DependentUpon>FormNhanVien.cs</DependentUpon>
@@ -307,9 +355,6 @@
     <EmbeddedResource Include="FormQLSP.resx">
       <DependentUpon>FormQLSP.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSanPham.resx">
-      <DependentUpon>FormSanPham.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmThemBan.resx">
       <DependentUpon>frmThemBan.cs</DependentUpon>
     </EmbeddedResource>
@@ -322,8 +367,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="QLHoaDon.resx">
-      <DependentUpon>QLHoaDon.cs</DependentUpon>
+    <EmbeddedResource Include="QLPhieuNhapKho.resx">
+      <DependentUpon>QLPhieuNhapKho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QLPhieuXuatKho.resx">
+      <DependentUpon>QLPhieuXuatKho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrangChu.resx">
       <DependentUpon>TrangChu.cs</DependentUpon>

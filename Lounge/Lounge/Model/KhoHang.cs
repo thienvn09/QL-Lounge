@@ -10,7 +10,7 @@ namespace Lounge.Model
     {
        public int MaKhoHang { get; set; }
        public int MaSanPham { get; set; }
-        public int SoLuongTonKho { get; set; }
+       public int SoLuongTonKho { get; set; }
 
     }
 }

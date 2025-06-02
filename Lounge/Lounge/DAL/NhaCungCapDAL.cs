@@ -1,6 +1,7 @@
 ﻿using Lounge.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace Lounge.DAL
@@ -109,6 +110,14 @@ namespace Lounge.DAL
                     }
                 }
             }
+        }
+        public DataTable GetAllNhaCungCap1()
+        {
+            string query = "SELECT MaNhaCungCap, TenNhaCungCap FROM NhaCungCap";
+            SqlDataAdapter adapter = new SqlDataAdapter(query, ketNoi.GetConnect());
+            DataTable dt = new DataTable();
+            adapter.Fill(dt);
+            return dt;
         }
     }
 

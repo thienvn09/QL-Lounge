@@ -331,5 +331,20 @@ namespace Lounge
                 MessageBox.Show("Vui lòng chọn sản phẩm hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void btnLoc_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FormQLSP_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtMoTa_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

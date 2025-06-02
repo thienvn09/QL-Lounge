@@ -62,7 +62,6 @@ namespace Lounge
 
         private void TrangChu_Load(object sender, EventArgs e)
         {
-            lblUser.Text = "Admin | Operator | Tư Anh";
             lblTable.Text = "Table: N/A";
             lblCover.Text = "Cover: 0";
             lblWholeCheck.Text = "Whole Check: 0.00";
@@ -252,76 +251,59 @@ namespace Lounge
 
         private void DisplayButtonsDanhMuc(List<DanhMucSanPham> dsDanhMuc)
         {
-            var groupedDanhMuc = new Dictionary<string, List<DanhMucSanPham>>
-            {
-                { "FOOD", new List<DanhMucSanPham>() },
-                { "ALCOHOLIC", new List<DanhMucSanPham>() },
-                { "FUNCTION", new List<DanhMucSanPham>() }
-            };
-
-            foreach (var dm in dsDanhMuc)
-            {
-                if (dm.TenDanhMuc.Contains("Phở") || dm.TenDanhMuc.Contains("Soup"))
-                    groupedDanhMuc["FOOD"].Add(dm);
-                else if (dm.TenDanhMuc.Contains("Cocktail"))
-                    groupedDanhMuc["ALCOHOLIC"].Add(dm);
-                else
-                    groupedDanhMuc["FUNCTION"].Add(dm);
-            }
+            MessageBox.Show("Đang ở trong DisplayButtonsDanhMuc!");
+            plnDanhMuc.Controls.Clear();
 
             int x = 0, y = 0;
-            foreach (var group in groupedDanhMuc)
+            int buttonWidth = 120;
+            int buttonHeight = 60;
+            int margin = 15;
+            int buttonsPerRow = 2; // số nút trên mỗi hàng
+
+            Label lblTitle = new Label
             {
-                if (group.Value.Count == 0) continue;
+                Text = "DANH MỤC SẢN PHẨM",
+                Font = new Font("Segoe UI", 16, FontStyle.Bold),
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(45, 85, 155),
+                Padding = new Padding(10),
+                AutoSize = true,
+                Location = new Point(x, y)
+            };
+            plnDanhMuc.Controls.Add(lblTitle);
 
-                Label lblGroup = new Label
+            y += lblTitle.Height + 20;
+            x = 0;
+
+            int count = 0;
+            foreach (var dm in dsDanhMuc)
+            {
+                Button btn = new Button
                 {
-                    Text = group.Key,
-                    Font = new Font("Segoe UI", 14, FontStyle.Bold),
-                    ForeColor = Color.Black,
-                    BackColor = Color.FromArgb(180, 200, 220),
-                    Padding = new Padding(5),
+                    Text = dm.TenDanhMuc,
+                    Size = new Size(buttonWidth, buttonHeight),
+                    Font = new Font("Segoe UI", 11, FontStyle.Bold),
+                    BackColor = dm.TenDanhMuc == "Corkage" ? Color.FromArgb(255, 204, 0) : Color.FromArgb(52, 152, 219),
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat,
                     Location = new Point(x, y),
-                    AutoSize = true
+                    Tag = dm
                 };
-                plnDanhMuc.Controls.Add(lblGroup);
-                y += 40;
+                btn.FlatAppearance.BorderSize = 0;
+                btn.Click += BtnDanhMuc_Click;
+                plnDanhMuc.Controls.Add(btn);
 
-                int buttonWidth = 100, buttonHeight = 60, margin = 10;
-                int buttonsPerRow = 3;
-                int count = 0;
+                count++;
+                x += buttonWidth + margin;
 
-                foreach (var dm in group.Value)
+                if (count % buttonsPerRow == 0)
                 {
-                    Button btn = new Button
-                    {
-                        Text = dm.TenDanhMuc,
-                        Size = new Size(buttonWidth, buttonHeight),
-                        Font = new Font("Segoe UI", 10),
-                        TextAlign = ContentAlignment.MiddleCenter,
-                        Location = new Point(x, y),
-                        BackColor = dm.TenDanhMuc == "Corkage" ? Color.FromArgb(255, 204, 0) : Color.FromArgb(0, 153, 204),
-                        ForeColor = Color.White,
-                        FlatStyle = FlatStyle.Flat,
-                        Tag = dm
-                    };
-                    btn.FlatAppearance.BorderSize = 1;
-                    btn.FlatAppearance.BorderColor = Color.FromArgb(150, 150, 150);
-                    btn.Click += BtnDanhMuc_Click;
-                    plnDanhMuc.Controls.Add(btn);
-
-                    count++;
-                    x += buttonWidth + margin;
-                    if (count % buttonsPerRow == 0)
-                    {
-                        x = 0;
-                        y += buttonHeight + margin;
-                    }
+                    x = 0;
+                    y += buttonHeight + margin;
                 }
-                x = 0;
-                y += buttonHeight + 10;
             }
         }
+
 
         private void DisplayButtonsSanPham(List<SANPHAM> dsSanPham)
         {
@@ -567,6 +549,11 @@ namespace Lounge
             currentHoaDon = null;
             currentBan = null;
             LoadBan();
+        }
+
+        private void lblWholeCheck_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

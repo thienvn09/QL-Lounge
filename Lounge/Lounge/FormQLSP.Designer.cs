@@ -19,6 +19,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormQLSP));
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.btnThoat = new System.Windows.Forms.Button();
+            this.btnXoa = new System.Windows.Forms.Button();
+            this.btnSua = new System.Windows.Forms.Button();
+            this.btnThem = new System.Windows.Forms.Button();
             this.txtSoLuongTonKho = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtMoTa = new System.Windows.Forms.TextBox();
@@ -51,10 +55,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txt_timMaSP = new System.Windows.Forms.TextBox();
             this.btnLamMoi = new System.Windows.Forms.Button();
-            this.btnThoat = new System.Windows.Forms.Button();
-            this.btnXoa = new System.Windows.Forms.Button();
-            this.btnSua = new System.Windows.Forms.Button();
-            this.btnThem = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -90,9 +90,65 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Thông tin sản phẩm";
             // 
+            // btnThoat
+            // 
+            this.btnThoat.BackColor = System.Drawing.Color.Transparent;
+            this.btnThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThoat.Image = ((System.Drawing.Image)(resources.GetObject("btnThoat.Image")));
+            this.btnThoat.Location = new System.Drawing.Point(389, 448);
+            this.btnThoat.Name = "btnThoat";
+            this.btnThoat.Size = new System.Drawing.Size(111, 57);
+            this.btnThoat.TabIndex = 64;
+            this.btnThoat.Text = "Thoát";
+            this.btnThoat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnThoat.UseVisualStyleBackColor = false;
+            // 
+            // btnXoa
+            // 
+            this.btnXoa.BackColor = System.Drawing.Color.Transparent;
+            this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnXoa.Image = ((System.Drawing.Image)(resources.GetObject("btnXoa.Image")));
+            this.btnXoa.Location = new System.Drawing.Point(271, 448);
+            this.btnXoa.Name = "btnXoa";
+            this.btnXoa.Size = new System.Drawing.Size(111, 57);
+            this.btnXoa.TabIndex = 63;
+            this.btnXoa.Text = "Xóa";
+            this.btnXoa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnXoa.UseVisualStyleBackColor = false;
+            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
+            // 
+            // btnSua
+            // 
+            this.btnSua.BackColor = System.Drawing.Color.Transparent;
+            this.btnSua.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSua.Image = ((System.Drawing.Image)(resources.GetObject("btnSua.Image")));
+            this.btnSua.Location = new System.Drawing.Point(155, 448);
+            this.btnSua.Name = "btnSua";
+            this.btnSua.Size = new System.Drawing.Size(111, 57);
+            this.btnSua.TabIndex = 62;
+            this.btnSua.Text = "Sửa";
+            this.btnSua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnSua.UseVisualStyleBackColor = false;
+            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
+            // 
+            // btnThem
+            // 
+            this.btnThem.BackColor = System.Drawing.Color.Transparent;
+            this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnThem.Image = ((System.Drawing.Image)(resources.GetObject("btnThem.Image")));
+            this.btnThem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnThem.Location = new System.Drawing.Point(36, 448);
+            this.btnThem.Name = "btnThem";
+            this.btnThem.Size = new System.Drawing.Size(111, 57);
+            this.btnThem.TabIndex = 61;
+            this.btnThem.Text = "Thêm";
+            this.btnThem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnThem.UseVisualStyleBackColor = false;
+            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
+            // 
             // txtSoLuongTonKho
             // 
-            this.txtSoLuongTonKho.Location = new System.Drawing.Point(203, 353);
+            this.txtSoLuongTonKho.Location = new System.Drawing.Point(207, 383);
             this.txtSoLuongTonKho.Name = "txtSoLuongTonKho";
             this.txtSoLuongTonKho.Size = new System.Drawing.Size(293, 30);
             this.txtSoLuongTonKho.TabIndex = 60;
@@ -100,7 +156,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(25, 358);
+            this.label8.Location = new System.Drawing.Point(25, 386);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(182, 25);
             this.label8.TabIndex = 59;
@@ -113,6 +169,7 @@
             this.txtMoTa.Name = "txtMoTa";
             this.txtMoTa.Size = new System.Drawing.Size(293, 59);
             this.txtMoTa.TabIndex = 58;
+            this.txtMoTa.TextChanged += new System.EventHandler(this.txtMoTa_TextChanged);
             // 
             // label7
             // 
@@ -311,6 +368,7 @@
             this.btnLoc.Text = "Lọc";
             this.btnLoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnLoc.UseVisualStyleBackColor = false;
+            this.btnLoc.Click += new System.EventHandler(this.btnLoc_Click_1);
             // 
             // groupBox3
             // 
@@ -332,7 +390,7 @@
             // txt_timTenSP
             // 
             this.txt_timTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timTenSP.Location = new System.Drawing.Point(360, 145);
+            this.txt_timTenSP.Location = new System.Drawing.Point(279, 69);
             this.txt_timTenSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timTenSP.Name = "txt_timTenSP";
             this.txt_timTenSP.Size = new System.Drawing.Size(234, 30);
@@ -343,8 +401,12 @@
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.btnKoLoc);
             this.groupBox2.Controls.Add(this.btnLoc);
+            this.groupBox2.Controls.Add(this.radMaSP);
+            this.groupBox2.Controls.Add(this.txt_timTenSP);
+            this.groupBox2.Controls.Add(this.txt_timMaSP);
+            this.groupBox2.Controls.Add(this.radTenSP);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(99, 103);
+            this.groupBox2.Location = new System.Drawing.Point(105, 94);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -357,7 +419,7 @@
             // 
             this.radTenSP.AutoSize = true;
             this.radTenSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radTenSP.Location = new System.Drawing.Point(149, 146);
+            this.radTenSP.Location = new System.Drawing.Point(66, 70);
             this.radTenSP.Name = "radTenSP";
             this.radTenSP.Size = new System.Drawing.Size(178, 29);
             this.radTenSP.TabIndex = 53;
@@ -369,7 +431,7 @@
             // 
             this.radMaSP.AutoSize = true;
             this.radMaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radMaSP.Location = new System.Drawing.Point(149, 106);
+            this.radMaSP.Location = new System.Drawing.Point(66, 31);
             this.radMaSP.Name = "radMaSP";
             this.radMaSP.Size = new System.Drawing.Size(170, 29);
             this.radMaSP.TabIndex = 52;
@@ -383,7 +445,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.DarkGreen;
-            this.label1.Location = new System.Drawing.Point(476, 42);
+            this.label1.Location = new System.Drawing.Point(509, 32);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(403, 42);
             this.label1.TabIndex = 56;
@@ -392,7 +454,7 @@
             // txt_timMaSP
             // 
             this.txt_timMaSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timMaSP.Location = new System.Drawing.Point(360, 105);
+            this.txt_timMaSP.Location = new System.Drawing.Point(279, 31);
             this.txt_timMaSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timMaSP.Name = "txt_timMaSP";
             this.txt_timMaSP.Size = new System.Drawing.Size(234, 30);
@@ -410,62 +472,6 @@
             this.btnLamMoi.UseVisualStyleBackColor = true;
             this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
-            // btnThoat
-            // 
-            this.btnThoat.BackColor = System.Drawing.Color.Transparent;
-            this.btnThoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThoat.Image = ((System.Drawing.Image)(resources.GetObject("btnThoat.Image")));
-            this.btnThoat.Location = new System.Drawing.Point(389, 448);
-            this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(111, 57);
-            this.btnThoat.TabIndex = 64;
-            this.btnThoat.Text = "Thoát";
-            this.btnThoat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnThoat.UseVisualStyleBackColor = false;
-            // 
-            // btnXoa
-            // 
-            this.btnXoa.BackColor = System.Drawing.Color.Transparent;
-            this.btnXoa.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnXoa.Image = ((System.Drawing.Image)(resources.GetObject("btnXoa.Image")));
-            this.btnXoa.Location = new System.Drawing.Point(271, 448);
-            this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(111, 57);
-            this.btnXoa.TabIndex = 63;
-            this.btnXoa.Text = "Xóa";
-            this.btnXoa.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnXoa.UseVisualStyleBackColor = false;
-            this.btnXoa.Click += new System.EventHandler(this.btnXoa_Click);
-            // 
-            // btnSua
-            // 
-            this.btnSua.BackColor = System.Drawing.Color.Transparent;
-            this.btnSua.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnSua.Image = ((System.Drawing.Image)(resources.GetObject("btnSua.Image")));
-            this.btnSua.Location = new System.Drawing.Point(155, 448);
-            this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(111, 57);
-            this.btnSua.TabIndex = 62;
-            this.btnSua.Text = "Sửa";
-            this.btnSua.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnSua.UseVisualStyleBackColor = false;
-            this.btnSua.Click += new System.EventHandler(this.btnSua_Click);
-            // 
-            // btnThem
-            // 
-            this.btnThem.BackColor = System.Drawing.Color.Transparent;
-            this.btnThem.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnThem.Image = ((System.Drawing.Image)(resources.GetObject("btnThem.Image")));
-            this.btnThem.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnThem.Location = new System.Drawing.Point(36, 448);
-            this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(111, 57);
-            this.btnThem.TabIndex = 61;
-            this.btnThem.Text = "Thêm";
-            this.btnThem.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnThem.UseVisualStyleBackColor = false;
-            this.btnThem.Click += new System.EventHandler(this.btnThem_Click);
-            // 
             // FormQLSP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -474,21 +480,19 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.dgvSanPham);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.txt_timTenSP);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.radTenSP);
-            this.Controls.Add(this.radMaSP);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txt_timMaSP);
             this.Controls.Add(this.btnLamMoi);
             this.Name = "FormQLSP";
             this.Text = "FormQLSP";
+            this.Load += new System.EventHandler(this.FormQLSP_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSanPham)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

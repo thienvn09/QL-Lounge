@@ -109,7 +109,7 @@
             this.labelTiLeGiamGia.AutoSize = true;
             this.labelTiLeGiamGia.Location = new System.Drawing.Point(25, 358);
             this.labelTiLeGiamGia.Name = "labelTiLeGiamGia";
-            this.labelTiLeGiamGia.Size = new System.Drawing.Size(147, 25);
+            this.labelTiLeGiamGia.Size = new System.Drawing.Size(148, 25);
             this.labelTiLeGiamGia.TabIndex = 59;
             this.labelTiLeGiamGia.Text = "Tỉ lệ giảm giá:";
             // 
@@ -219,7 +219,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(24, 226);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(139, 25);
+            this.label6.Size = new System.Drawing.Size(152, 25);
             this.label6.TabIndex = 49;
             this.label6.Text = "Ngày sử dụng:";
             // 
@@ -376,7 +376,7 @@
             // txt_timTenKH
             // 
             this.txt_timTenKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timTenKH.Location = new System.Drawing.Point(360, 145);
+            this.txt_timTenKH.Location = new System.Drawing.Point(257, 74);
             this.txt_timTenKH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timTenKH.Name = "txt_timTenKH";
             this.txt_timTenKH.Size = new System.Drawing.Size(234, 30);
@@ -387,8 +387,12 @@
             this.groupBox2.BackColor = System.Drawing.Color.Transparent;
             this.groupBox2.Controls.Add(this.btnKoLoc);
             this.groupBox2.Controls.Add(this.btnLoc);
+            this.groupBox2.Controls.Add(this.radMaKH);
+            this.groupBox2.Controls.Add(this.txt_timTenKH);
+            this.groupBox2.Controls.Add(this.txt_timMaKH);
+            this.groupBox2.Controls.Add(this.radTenKH);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(99, 103);
+            this.groupBox2.Location = new System.Drawing.Point(116, 86);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -401,7 +405,7 @@
             // 
             this.radTenKH.AutoSize = true;
             this.radTenKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radTenKH.Location = new System.Drawing.Point(149, 146);
+            this.radTenKH.Location = new System.Drawing.Point(46, 75);
             this.radTenKH.Name = "radTenKH";
             this.radTenKH.Size = new System.Drawing.Size(196, 29);
             this.radTenKH.TabIndex = 53;
@@ -413,7 +417,7 @@
             // 
             this.radMaKH.AutoSize = true;
             this.radMaKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radMaKH.Location = new System.Drawing.Point(149, 106);
+            this.radMaKH.Location = new System.Drawing.Point(46, 35);
             this.radMaKH.Name = "radMaKH";
             this.radMaKH.Size = new System.Drawing.Size(188, 29);
             this.radMaKH.TabIndex = 52;
@@ -436,7 +440,7 @@
             // txt_timMaKH
             // 
             this.txt_timMaKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timMaKH.Location = new System.Drawing.Point(360, 105);
+            this.txt_timMaKH.Location = new System.Drawing.Point(257, 34);
             this.txt_timMaKH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timMaKH.Name = "txt_timMaKH";
             this.txt_timMaKH.Size = new System.Drawing.Size(234, 30);
@@ -463,21 +467,19 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.dgvKhachHang);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.txt_timTenKH);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.radTenKH);
-            this.Controls.Add(this.radMaKH);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txt_timMaKH);
             this.Controls.Add(this.btnLamMoi);
             this.Name = "FormQLKH";
             this.Text = "FormQLKH";
+            this.Load += new System.EventHandler(this.FormQLKH_Load);
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 

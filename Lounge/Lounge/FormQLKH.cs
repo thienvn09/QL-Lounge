@@ -313,5 +313,10 @@ namespace Lounge
                 UpdateNavigation();
             }
         }
+
+        private void FormQLKH_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -39,16 +39,16 @@
             this.btnDau = new System.Windows.Forms.Button();
             this.btnCuoi = new System.Windows.Forms.Button();
             this.btnTruoc = new System.Windows.Forms.Button();
-            this.btnKoLoc = new System.Windows.Forms.Button();
-            this.btnLoc = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txt_timTenNCC = new System.Windows.Forms.TextBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.radTenNCC = new System.Windows.Forms.RadioButton();
             this.radMaNCC = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.txt_timMaNCC = new System.Windows.Forms.TextBox();
             this.btnLamMoi = new System.Windows.Forms.Button();
+            this.btnLoc = new System.Windows.Forms.Button();
+            this.btnKoLoc = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvNhaCungCap)).BeginInit();
             this.groupBox3.SuspendLayout();
@@ -278,30 +278,6 @@
             this.btnTruoc.Text = "<";
             this.btnTruoc.UseVisualStyleBackColor = false;
             // 
-            // btnKoLoc
-            // 
-            this.btnKoLoc.BackColor = System.Drawing.SystemColors.Control;
-            this.btnKoLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnKoLoc.Location = new System.Drawing.Point(535, 70);
-            this.btnKoLoc.Name = "btnKoLoc";
-            this.btnKoLoc.Size = new System.Drawing.Size(147, 43);
-            this.btnKoLoc.TabIndex = 59;
-            this.btnKoLoc.Text = "Không Lọc";
-            this.btnKoLoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnKoLoc.UseVisualStyleBackColor = false;
-            // 
-            // btnLoc
-            // 
-            this.btnLoc.BackColor = System.Drawing.SystemColors.Control;
-            this.btnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLoc.Location = new System.Drawing.Point(535, 21);
-            this.btnLoc.Name = "btnLoc";
-            this.btnLoc.Size = new System.Drawing.Size(147, 43);
-            this.btnLoc.TabIndex = 58;
-            this.btnLoc.Text = "Lọc";
-            this.btnLoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btnLoc.UseVisualStyleBackColor = false;
-            // 
             // groupBox3
             // 
             this.groupBox3.BackColor = System.Drawing.Color.Transparent;
@@ -322,32 +298,17 @@
             // txt_timTenNCC
             // 
             this.txt_timTenNCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timTenNCC.Location = new System.Drawing.Point(360, 145);
+            this.txt_timTenNCC.Location = new System.Drawing.Point(290, 74);
             this.txt_timTenNCC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timTenNCC.Name = "txt_timTenNCC";
             this.txt_timTenNCC.Size = new System.Drawing.Size(234, 30);
             this.txt_timTenNCC.TabIndex = 54;
             // 
-            // groupBox2
-            // 
-            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
-            this.groupBox2.Controls.Add(this.btnKoLoc);
-            this.groupBox2.Controls.Add(this.btnLoc);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(99, 103);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(747, 118);
-            this.groupBox2.TabIndex = 60;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Tìm kiếm";
-            // 
             // radTenNCC
             // 
             this.radTenNCC.AutoSize = true;
             this.radTenNCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radTenNCC.Location = new System.Drawing.Point(149, 146);
+            this.radTenNCC.Location = new System.Drawing.Point(79, 75);
             this.radTenNCC.Name = "radTenNCC";
             this.radTenNCC.Size = new System.Drawing.Size(214, 29);
             this.radTenNCC.TabIndex = 53;
@@ -359,7 +320,7 @@
             // 
             this.radMaNCC.AutoSize = true;
             this.radMaNCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radMaNCC.Location = new System.Drawing.Point(149, 106);
+            this.radMaNCC.Location = new System.Drawing.Point(79, 35);
             this.radMaNCC.Name = "radMaNCC";
             this.radMaNCC.Size = new System.Drawing.Size(206, 29);
             this.radMaNCC.TabIndex = 52;
@@ -382,7 +343,7 @@
             // txt_timMaNCC
             // 
             this.txt_timMaNCC.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timMaNCC.Location = new System.Drawing.Point(360, 105);
+            this.txt_timMaNCC.Location = new System.Drawing.Point(290, 34);
             this.txt_timMaNCC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_timMaNCC.Name = "txt_timMaNCC";
             this.txt_timMaNCC.Size = new System.Drawing.Size(234, 30);
@@ -400,6 +361,49 @@
             this.btnLamMoi.UseVisualStyleBackColor = true;
             this.btnLamMoi.Click += new System.EventHandler(this.btnLamMoi_Click);
             // 
+            // btnLoc
+            // 
+            this.btnLoc.BackColor = System.Drawing.SystemColors.Control;
+            this.btnLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnLoc.Location = new System.Drawing.Point(535, 21);
+            this.btnLoc.Name = "btnLoc";
+            this.btnLoc.Size = new System.Drawing.Size(147, 43);
+            this.btnLoc.TabIndex = 58;
+            this.btnLoc.Text = "Lọc";
+            this.btnLoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnLoc.UseVisualStyleBackColor = false;
+            // 
+            // btnKoLoc
+            // 
+            this.btnKoLoc.BackColor = System.Drawing.SystemColors.Control;
+            this.btnKoLoc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnKoLoc.Location = new System.Drawing.Point(535, 70);
+            this.btnKoLoc.Name = "btnKoLoc";
+            this.btnKoLoc.Size = new System.Drawing.Size(147, 43);
+            this.btnKoLoc.TabIndex = 59;
+            this.btnKoLoc.Text = "Không Lọc";
+            this.btnKoLoc.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnKoLoc.UseVisualStyleBackColor = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.Transparent;
+            this.groupBox2.Controls.Add(this.btnKoLoc);
+            this.groupBox2.Controls.Add(this.btnLoc);
+            this.groupBox2.Controls.Add(this.txt_timMaNCC);
+            this.groupBox2.Controls.Add(this.txt_timTenNCC);
+            this.groupBox2.Controls.Add(this.radMaNCC);
+            this.groupBox2.Controls.Add(this.radTenNCC);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Location = new System.Drawing.Point(141, 86);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Size = new System.Drawing.Size(747, 118);
+            this.groupBox2.TabIndex = 60;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Tìm kiếm";
+            // 
             // FormQLNCC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -408,12 +412,8 @@
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.dgvNhaCungCap);
             this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.txt_timTenNCC);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.radTenNCC);
-            this.Controls.Add(this.radMaNCC);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.txt_timMaNCC);
             this.Controls.Add(this.btnLamMoi);
             this.Name = "FormQLNCC";
             this.Text = "FormQLNCC";
@@ -423,6 +423,7 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -447,11 +448,8 @@
         private System.Windows.Forms.Button btnDau;
         private System.Windows.Forms.Button btnCuoi;
         private System.Windows.Forms.Button btnTruoc;
-        private System.Windows.Forms.Button btnKoLoc;
-        private System.Windows.Forms.Button btnLoc;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox txt_timTenNCC;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.RadioButton radTenNCC;
         private System.Windows.Forms.RadioButton radMaNCC;
         private System.Windows.Forms.Label label1;
@@ -461,5 +459,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnSua;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Button btnLoc;
+        private System.Windows.Forms.Button btnKoLoc;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }
