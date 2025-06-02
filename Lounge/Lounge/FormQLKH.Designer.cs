@@ -59,10 +59,10 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txt_timTenKH = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radTenKH = new System.Windows.Forms.RadioButton();
             this.radMaKH = new System.Windows.Forms.RadioButton();
-            this.label1 = new System.Windows.Forms.Label();
             this.txt_timMaKH = new System.Windows.Forms.TextBox();
+            this.radTenKH = new System.Windows.Forms.RadioButton();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnLamMoi = new System.Windows.Forms.Button();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvKhachHang)).BeginInit();
@@ -401,18 +401,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Tìm kiếm";
             // 
-            // radTenKH
-            // 
-            this.radTenKH.AutoSize = true;
-            this.radTenKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radTenKH.Location = new System.Drawing.Point(46, 75);
-            this.radTenKH.Name = "radTenKH";
-            this.radTenKH.Size = new System.Drawing.Size(196, 29);
-            this.radTenKH.TabIndex = 53;
-            this.radTenKH.TabStop = true;
-            this.radTenKH.Text = "Tên khách hàng:";
-            this.radTenKH.UseVisualStyleBackColor = true;
-            // 
             // radMaKH
             // 
             this.radMaKH.AutoSize = true;
@@ -425,6 +413,27 @@
             this.radMaKH.Text = "Mã khách hàng:";
             this.radMaKH.UseVisualStyleBackColor = true;
             // 
+            // txt_timMaKH
+            // 
+            this.txt_timMaKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txt_timMaKH.Location = new System.Drawing.Point(257, 34);
+            this.txt_timMaKH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_timMaKH.Name = "txt_timMaKH";
+            this.txt_timMaKH.Size = new System.Drawing.Size(234, 30);
+            this.txt_timMaKH.TabIndex = 51;
+            // 
+            // radTenKH
+            // 
+            this.radTenKH.AutoSize = true;
+            this.radTenKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.radTenKH.Location = new System.Drawing.Point(46, 75);
+            this.radTenKH.Name = "radTenKH";
+            this.radTenKH.Size = new System.Drawing.Size(196, 29);
+            this.radTenKH.TabIndex = 53;
+            this.radTenKH.TabStop = true;
+            this.radTenKH.Text = "Tên khách hàng:";
+            this.radTenKH.UseVisualStyleBackColor = true;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -436,15 +445,6 @@
             this.label1.Size = new System.Drawing.Size(459, 42);
             this.label1.TabIndex = 56;
             this.label1.Text = "QUẢN LÝ KHÁCH HÀNG";
-            // 
-            // txt_timMaKH
-            // 
-            this.txt_timMaKH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txt_timMaKH.Location = new System.Drawing.Point(257, 34);
-            this.txt_timMaKH.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txt_timMaKH.Name = "txt_timMaKH";
-            this.txt_timMaKH.Size = new System.Drawing.Size(234, 30);
-            this.txt_timMaKH.TabIndex = 51;
             // 
             // btnLamMoi
             // 
@@ -470,6 +470,8 @@
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLamMoi);
+            this.ForeColor = System.Drawing.SystemColors.Desktop;
+            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "FormQLKH";
             this.Text = "FormQLKH";
             this.Load += new System.EventHandler(this.FormQLKH_Load);

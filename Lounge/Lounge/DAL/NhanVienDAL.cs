@@ -172,5 +172,41 @@ namespace Lounge.DAL
                 throw new Exception($"Lỗi khi sửa nhân viên: {ex.Message}", ex);
             }
         }
+        // Lấy danh sách nhân viên để hiển thị trong ComboBox (chỉ cần MaNV và HoTen)
+        public List<NhanVien> GetNhanVienForComboBox()
+        {
+            List<NhanVien> dsNhanVien = new List<NhanVien>();
+            string query = "SELECT MaNV, HoTen FROM NhanVien ORDER BY HoTen";
+
+            using (SqlConnection connection = kn.GetConnect())
+            {
+                try
+                {
+                    connection.Open();
+                    using (SqlCommand cmd = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                NhanVien nv = new NhanVien
+                                {
+                                    MaNhanvien = reader.GetInt32(reader.GetOrdinal("MaNV")),
+                                    HoTen = reader.GetString(reader.GetOrdinal("HoTen"))
+                                    // Các thuộc tính khác không cần thiết cho ComboBox này
+                                };
+                                dsNhanVien.Add(nv);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[DATABASE ERROR] GetNhanVienForComboBox: {ex.Message}");
+                    // throw;
+                }
+            }
+            return dsNhanVien;
+        }
     }
 }

@@ -279,6 +279,7 @@
             this.btnXemChiTiet.Text = "Xem Chi Tiết Hóa Đơn";
             this.btnXemChiTiet.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXemChiTiet.UseVisualStyleBackColor = true;
+
             // 
             // txtTenKhachHang
             // 
@@ -330,8 +331,9 @@
             this.dgvHoaDon.RowHeadersWidth = 51;
             this.dgvHoaDon.RowTemplate.Height = 24;
             this.dgvHoaDon.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvHoaDon.Size = new System.Drawing.Size(760, 380);
+            this.dgvHoaDon.Size = new System.Drawing.Size(760, 438);
             this.dgvHoaDon.TabIndex = 4;
+            this.dgvHoaDon.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvHoaDon_CellContentClick);
             // 
             // grpDieuHuong
             // 
@@ -345,7 +347,7 @@
             this.grpDieuHuong.Controls.Add(this.btnCuoi);
             this.grpDieuHuong.Controls.Add(this.btnTruoc);
             this.grpDieuHuong.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(163)));
-            this.grpDieuHuong.Location = new System.Drawing.Point(130, 620);
+            this.grpDieuHuong.Location = new System.Drawing.Point(130, 678);
             this.grpDieuHuong.Name = "grpDieuHuong";
             this.grpDieuHuong.Size = new System.Drawing.Size(580, 120);
             this.grpDieuHuong.TabIndex = 3;
@@ -458,7 +460,7 @@
             // 
             this.dtpTimNgayDat.CustomFormat = "dd/MM/yyyy";
             this.dtpTimNgayDat.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpTimNgayDat.Location = new System.Drawing.Point(400, 58);
+            this.dtpTimNgayDat.Location = new System.Drawing.Point(400, 87);
             this.dtpTimNgayDat.Name = "dtpTimNgayDat";
             this.dtpTimNgayDat.Size = new System.Drawing.Size(160, 27);
             this.dtpTimNgayDat.TabIndex = 6;
@@ -466,7 +468,7 @@
             // radNgayDat
             // 
             this.radNgayDat.AutoSize = true;
-            this.radNgayDat.Location = new System.Drawing.Point(290, 60);
+            this.radNgayDat.Location = new System.Drawing.Point(286, 92);
             this.radNgayDat.Name = "radNgayDat";
             this.radNgayDat.Size = new System.Drawing.Size(104, 24);
             this.radNgayDat.TabIndex = 5;
@@ -478,7 +480,7 @@
             // 
             this.cboTimTrangThai.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTimTrangThai.FormattingEnabled = true;
-            this.cboTimTrangThai.Location = new System.Drawing.Point(400, 23);
+            this.cboTimTrangThai.Location = new System.Drawing.Point(400, 37);
             this.cboTimTrangThai.Name = "cboTimTrangThai";
             this.cboTimTrangThai.Size = new System.Drawing.Size(160, 28);
             this.cboTimTrangThai.TabIndex = 4;
@@ -486,7 +488,7 @@
             // radTrangThai
             // 
             this.radTrangThai.AutoSize = true;
-            this.radTrangThai.Location = new System.Drawing.Point(290, 25);
+            this.radTrangThai.Location = new System.Drawing.Point(279, 38);
             this.radTrangThai.Name = "radTrangThai";
             this.radTrangThai.Size = new System.Drawing.Size(115, 24);
             this.radTrangThai.TabIndex = 3;
@@ -538,7 +540,7 @@
             // 
             // txtTimMaHoaDon
             // 
-            this.txtTimMaHoaDon.Location = new System.Drawing.Point(130, 24);
+            this.txtTimMaHoaDon.Location = new System.Drawing.Point(130, 38);
             this.txtTimMaHoaDon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txtTimMaHoaDon.Name = "txtTimMaHoaDon";
             this.txtTimMaHoaDon.Size = new System.Drawing.Size(140, 27);
@@ -547,7 +549,7 @@
             // radMaHoaDon
             // 
             this.radMaHoaDon.AutoSize = true;
-            this.radMaHoaDon.Location = new System.Drawing.Point(20, 25);
+            this.radMaHoaDon.Location = new System.Drawing.Point(20, 41);
             this.radMaHoaDon.Name = "radMaHoaDon";
             this.radMaHoaDon.Size = new System.Drawing.Size(88, 24);
             this.radMaHoaDon.TabIndex = 0;
@@ -584,7 +586,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1370, 770);
+            this.ClientSize = new System.Drawing.Size(1370, 828);
             this.Controls.Add(this.grpThongTin);
             this.Controls.Add(this.dgvHoaDon);
             this.Controls.Add(this.grpDieuHuong);
@@ -595,6 +597,7 @@
             this.Name = "QLHoaDon";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quản Lý Hóa Đơn";
+            this.Load += new System.EventHandler(this.FormQLHoaDon_Load);
             this.grpThongTin.ResumeLayout(false);
             this.grpThongTin.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvHoaDon)).EndInit();

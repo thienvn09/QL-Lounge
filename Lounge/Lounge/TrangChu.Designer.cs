@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrangChu));
             this.pneTitle = new System.Windows.Forms.Panel();
             this.BAR = new System.Windows.Forms.Label();
             this.lblTime = new System.Windows.Forms.Label();
@@ -39,10 +40,11 @@
             this.lblWholeCheck = new System.Windows.Forms.Label();
             this.plnBan = new System.Windows.Forms.Panel();
             this.plnMain = new System.Windows.Forms.Panel();
-            this.plnSanPham = new System.Windows.Forms.Panel(); // Sẽ nằm giữa
-            this.plnDanhMuc = new System.Windows.Forms.Panel(); // Sẽ nằm bên trái
-            this.plnHoaDon = new System.Windows.Forms.Panel();  // Sẽ nằm bên phải
+            this.plnSanPham = new System.Windows.Forms.Panel();
+            this.plnDanhMuc = new System.Windows.Forms.Panel();
+            this.plnHoaDon = new System.Windows.Forms.Panel();
             this.plnBottom = new System.Windows.Forms.Panel();
+            this.btnApplyVoucher = new System.Windows.Forms.Button(); // NEW BUTTON
             this.btnSendCheck = new System.Windows.Forms.Button();
             this.btnPrintCheck = new System.Windows.Forms.Button();
             this.btnGuestCheck = new System.Windows.Forms.Button();
@@ -67,7 +69,7 @@
             this.pneTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.pneTitle.Location = new System.Drawing.Point(0, 0);
             this.pneTitle.Name = "pneTitle";
-            this.pneTitle.Size = new System.Drawing.Size(1555, 60); // Giữ nguyên kích thước
+            this.pneTitle.Size = new System.Drawing.Size(1555, 60);
             this.pneTitle.TabIndex = 0;
             // 
             // BAR
@@ -77,16 +79,16 @@
             this.BAR.ForeColor = System.Drawing.Color.White;
             this.BAR.Location = new System.Drawing.Point(20, 9);
             this.BAR.Name = "BAR";
-            this.BAR.Size = new System.Drawing.Size(206, 41); // Cập nhật Size nếu cần
+            this.BAR.Size = new System.Drawing.Size(206, 41);
             this.BAR.TabIndex = 0;
-            this.BAR.Text = "LOBBY BAR"; // Hoặc tên ứng dụng của bạn
+            this.BAR.Text = "LOBBY BAR";
             // 
             // lblTime
             // 
             this.lblTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblTime.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTime.ForeColor = System.Drawing.Color.White;
-            this.lblTime.Location = new System.Drawing.Point(730, 23); // Điều chỉnh vị trí
+            this.lblTime.Location = new System.Drawing.Point(730, 23);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(150, 20);
             this.lblTime.TabIndex = 2;
@@ -101,7 +103,7 @@
             this.btnInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnInfo.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnInfo.ForeColor = System.Drawing.Color.White;
-            this.btnInfo.Location = new System.Drawing.Point(1363, 15); // Điều chỉnh vị trí
+            this.btnInfo.Location = new System.Drawing.Point(1363, 15);
             this.btnInfo.Name = "btnInfo";
             this.btnInfo.Size = new System.Drawing.Size(80, 30);
             this.btnInfo.TabIndex = 3;
@@ -117,7 +119,7 @@
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
             this.btnExit.ForeColor = System.Drawing.Color.White;
-            this.btnExit.Location = new System.Drawing.Point(1459, 15); // Điều chỉnh vị trí
+            this.btnExit.Location = new System.Drawing.Point(1459, 15);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(80, 30);
             this.btnExit.TabIndex = 4;
@@ -133,7 +135,7 @@
             this.btnBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBack.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnBack.ForeColor = System.Drawing.Color.White;
-            this.btnBack.Location = new System.Drawing.Point(1267, 15); // Điều chỉnh vị trí
+            this.btnBack.Location = new System.Drawing.Point(1267, 15);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(80, 30);
             this.btnBack.TabIndex = 5;
@@ -146,7 +148,7 @@
             this.lblTable.AutoSize = true;
             this.lblTable.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTable.ForeColor = System.Drawing.Color.White;
-            this.lblTable.Location = new System.Drawing.Point(250, 9); // Điều chỉnh vị trí
+            this.lblTable.Location = new System.Drawing.Point(250, 9);
             this.lblTable.Name = "lblTable";
             this.lblTable.Size = new System.Drawing.Size(88, 23);
             this.lblTable.TabIndex = 6;
@@ -157,7 +159,7 @@
             this.lblCover.AutoSize = true;
             this.lblCover.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold);
             this.lblCover.ForeColor = System.Drawing.Color.White;
-            this.lblCover.Location = new System.Drawing.Point(250, 32); // Điều chỉnh vị trí
+            this.lblCover.Location = new System.Drawing.Point(250, 32);
             this.lblCover.Name = "lblCover";
             this.lblCover.Size = new System.Drawing.Size(80, 23);
             this.lblCover.TabIndex = 7;
@@ -168,7 +170,7 @@
             this.lblWholeCheck.AutoSize = true;
             this.lblWholeCheck.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold);
             this.lblWholeCheck.ForeColor = System.Drawing.Color.Gold;
-            this.lblWholeCheck.Location = new System.Drawing.Point(400, 20); // Điều chỉnh vị trí
+            this.lblWholeCheck.Location = new System.Drawing.Point(400, 20);
             this.lblWholeCheck.Name = "lblWholeCheck";
             this.lblWholeCheck.Size = new System.Drawing.Size(140, 23);
             this.lblWholeCheck.TabIndex = 8;
@@ -181,30 +183,30 @@
             this.plnBan.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plnBan.Location = new System.Drawing.Point(0, 60);
             this.plnBan.Name = "plnBan";
-            this.plnBan.Size = new System.Drawing.Size(1555, 768); // Kích thước sẽ trừ đi plnBottom
+            this.plnBan.Size = new System.Drawing.Size(1555, 768);
             this.plnBan.TabIndex = 1;
             // 
             // plnMain
             // 
-            this.plnMain.Controls.Add(this.plnSanPham); // Thêm plnSanPham trước để nó fill
+            this.plnMain.Controls.Add(this.plnSanPham);
             this.plnMain.Controls.Add(this.plnDanhMuc);
             this.plnMain.Controls.Add(this.plnHoaDon);
             this.plnMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.plnMain.Location = new System.Drawing.Point(0, 60);
             this.plnMain.Name = "plnMain";
-            this.plnMain.Size = new System.Drawing.Size(1555, 768); // Kích thước sẽ trừ đi plnBottom
+            this.plnMain.Size = new System.Drawing.Size(1555, 768);
             this.plnMain.TabIndex = 2;
-            this.plnMain.Visible = false; // Ban đầu ẩn
+            this.plnMain.Visible = false;
             // 
             // plnSanPham
             // 
             this.plnSanPham.AutoScroll = true;
             this.plnSanPham.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(240)))), ((int)(((byte)(255)))));
             this.plnSanPham.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.plnSanPham.Location = new System.Drawing.Point(280, 0); // Sẽ nằm sau plnDanhMuc
+            this.plnSanPham.Location = new System.Drawing.Point(280, 0);
             this.plnSanPham.Name = "plnSanPham";
             this.plnSanPham.Padding = new System.Windows.Forms.Padding(10);
-            this.plnSanPham.Size = new System.Drawing.Size(855, 768); // (1555 - 280 - 420)
+            this.plnSanPham.Size = new System.Drawing.Size(855, 768);
             this.plnSanPham.TabIndex = 1;
             // 
             // plnDanhMuc
@@ -223,7 +225,7 @@
             this.plnHoaDon.AutoScroll = true;
             this.plnHoaDon.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(220)))), ((int)(((byte)(240)))));
             this.plnHoaDon.Dock = System.Windows.Forms.DockStyle.Right;
-            this.plnHoaDon.Location = new System.Drawing.Point(1135, 0); // (280 + 855)
+            this.plnHoaDon.Location = new System.Drawing.Point(1135, 0);
             this.plnHoaDon.Name = "plnHoaDon";
             this.plnHoaDon.Padding = new System.Windows.Forms.Padding(10);
             this.plnHoaDon.Size = new System.Drawing.Size(420, 768);
@@ -232,30 +234,47 @@
             // plnBottom
             // 
             this.plnBottom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.plnBottom.Controls.Add(this.btnApplyVoucher); // NEW
             this.plnBottom.Controls.Add(this.btnSendCheck);
             this.plnBottom.Controls.Add(this.btnPrintCheck);
             this.plnBottom.Controls.Add(this.btnGuestCheck);
             this.plnBottom.Controls.Add(this.btnPaid);
             this.plnBottom.Controls.Add(this.btnCancel);
             this.plnBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.plnBottom.Location = new System.Drawing.Point(0, 828); // Tổng height - 70
+            this.plnBottom.Location = new System.Drawing.Point(0, 828);
             this.plnBottom.Name = "plnBottom";
             this.plnBottom.Size = new System.Drawing.Size(1555, 70);
             this.plnBottom.TabIndex = 3;
-            this.plnBottom.Visible = false; // Ban đầu ẩn
+            this.plnBottom.Visible = false;
+            // 
+            // btnApplyVoucher
+            // 
+            this.btnApplyVoucher.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnApplyVoucher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(152)))), ((int)(((byte)(0))))); // Orange color
+            this.btnApplyVoucher.FlatAppearance.BorderSize = 0;
+            this.btnApplyVoucher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnApplyVoucher.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnApplyVoucher.ForeColor = System.Drawing.Color.White;
+            this.btnApplyVoucher.Location = new System.Drawing.Point(328, 10); // Adjusted position
+            this.btnApplyVoucher.Name = "btnApplyVoucher";
+            this.btnApplyVoucher.Size = new System.Drawing.Size(130, 50);
+            this.btnApplyVoucher.TabIndex = 0; // NEW TabIndex
+            this.btnApplyVoucher.Text = "ÁP VOUCHER";
+            this.btnApplyVoucher.UseVisualStyleBackColor = false;
+            // this.btnApplyVoucher.Click += new System.EventHandler(this.btnApplyVoucher_Click); // Event will be wired in TrangChu.cs
             // 
             // btnSendCheck
             // 
-            this.btnSendCheck.Anchor = System.Windows.Forms.AnchorStyles.None; // Canh giữa các nút
+            this.btnSendCheck.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnSendCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(153)))), ((int)(((byte)(76)))));
             this.btnSendCheck.FlatAppearance.BorderSize = 0;
             this.btnSendCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSendCheck.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
             this.btnSendCheck.ForeColor = System.Drawing.Color.White;
-            this.btnSendCheck.Location = new System.Drawing.Point(468, 10); // Điều chỉnh vị trí để canh giữa
+            this.btnSendCheck.Location = new System.Drawing.Point(468, 10);
             this.btnSendCheck.Name = "btnSendCheck";
             this.btnSendCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnSendCheck.TabIndex = 0;
+            this.btnSendCheck.TabIndex = 1; // Updated TabIndex
             this.btnSendCheck.Text = "GỬI BẾP";
             this.btnSendCheck.UseVisualStyleBackColor = false;
             this.btnSendCheck.Click += new System.EventHandler(this.btnSendCheck_Click);
@@ -271,7 +290,7 @@
             this.btnPrintCheck.Location = new System.Drawing.Point(598, 10);
             this.btnPrintCheck.Name = "btnPrintCheck";
             this.btnPrintCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnPrintCheck.TabIndex = 1;
+            this.btnPrintCheck.TabIndex = 2; // Updated TabIndex
             this.btnPrintCheck.Text = "IN BILL";
             this.btnPrintCheck.UseVisualStyleBackColor = false;
             this.btnPrintCheck.Click += new System.EventHandler(this.btnPrintCheck_Click);
@@ -287,10 +306,10 @@
             this.btnGuestCheck.Location = new System.Drawing.Point(728, 10);
             this.btnGuestCheck.Name = "btnGuestCheck";
             this.btnGuestCheck.Size = new System.Drawing.Size(110, 50);
-            this.btnGuestCheck.TabIndex = 2;
-            this.btnGuestCheck.Text = "IN TẠM";
+            this.btnGuestCheck.TabIndex = 3; // Updated TabIndex
+            this.btnGuestCheck.Text = "IN TẠM"; // This was previously btnPaid's text in TrangChu_Load
             this.btnGuestCheck.UseVisualStyleBackColor = false;
-            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click);
+            this.btnGuestCheck.Click += new System.EventHandler(this.btnGuestCheck_Click); // Or btnPrintTempBill_Click if you rename
             // 
             // btnPaid
             // 
@@ -303,8 +322,8 @@
             this.btnPaid.Location = new System.Drawing.Point(858, 10);
             this.btnPaid.Name = "btnPaid";
             this.btnPaid.Size = new System.Drawing.Size(130, 50);
-            this.btnPaid.TabIndex = 3;
-            this.btnPaid.Text = "THANH TOÁN";
+            this.btnPaid.TabIndex = 4; // Updated TabIndex
+            this.btnPaid.Text = "THANH TOÁN"; // Text set in TrangChu_Load
             this.btnPaid.UseVisualStyleBackColor = false;
             this.btnPaid.Click += new System.EventHandler(this.btnPaid_Click);
             // 
@@ -319,7 +338,7 @@
             this.btnCancel.Location = new System.Drawing.Point(1008, 10);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(110, 50);
-            this.btnCancel.TabIndex = 4;
+            this.btnCancel.TabIndex = 5; // Updated TabIndex
             this.btnCancel.Text = "HỦY";
             this.btnCancel.UseVisualStyleBackColor = false;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -328,12 +347,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1555, 898); // Giữ nguyên ClientSize
-            this.Controls.Add(this.plnMain); // plnMain và plnBan có thể chồng lên nhau, visibility sẽ quyết định
+            this.ClientSize = new System.Drawing.Size(1555, 898);
+            this.Controls.Add(this.plnMain);
             this.Controls.Add(this.plnBan);
             this.Controls.Add(this.plnBottom);
             this.Controls.Add(this.pneTitle);
-            this.MinimumSize = new System.Drawing.Size(1280, 720); // Kích thước tối thiểu cho form
+            this.MinimumSize = new System.Drawing.Size(1280, 720);
             this.Name = "TrangChu";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Trang Chủ - Hệ Thống Quản Lý Lounge";
@@ -368,5 +387,6 @@
         private System.Windows.Forms.Button btnGuestCheck;
         private System.Windows.Forms.Button btnPaid;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnApplyVoucher;
     }
 }
