@@ -279,7 +279,7 @@
             this.btnXemChiTiet.Text = "Xem Chi Tiết Hóa Đơn";
             this.btnXemChiTiet.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnXemChiTiet.UseVisualStyleBackColor = true;
-
+            this.btnXemChiTiet.Click += new System.EventHandler(this.btnXemChiTiet_Click_1);
             // 
             // txtTenKhachHang
             // 

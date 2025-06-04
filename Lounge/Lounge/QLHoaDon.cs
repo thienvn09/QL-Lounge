@@ -340,5 +340,9 @@ namespace Lounge
 
         }
 
+        private void btnXemChiTiet_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }
