@@ -118,13 +118,12 @@
             this.btnDangXuat.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDangXuat.ForeColor = System.Drawing.Color.White;
             this.btnDangXuat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnDangXuat.Location = new System.Drawing.Point(598, 383);
+            this.btnDangXuat.Location = new System.Drawing.Point(546, 380);
             this.btnDangXuat.Name = "btnDangXuat";
             this.btnDangXuat.Padding = new System.Windows.Forms.Padding(15, 0, 20, 0);
-            this.btnDangXuat.Size = new System.Drawing.Size(180, 55);
+            this.btnDangXuat.Size = new System.Drawing.Size(234, 58);
             this.btnDangXuat.TabIndex = 2;
             this.btnDangXuat.Text = "  Đăng xuất";
-            this.btnDangXuat.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnDangXuat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDangXuat.UseVisualStyleBackColor = false;
             // 

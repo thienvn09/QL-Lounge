@@ -179,13 +179,6 @@ namespace Lounge.DAL
 
         public bool CapNhatTongTienHoaDon(int maHoaDon)
         {
-            // Trigger trg_UpdateHoaDonTotals trong CSDL sẽ tự động cập nhật TongTien và TongThueVAT
-            // dựa trên thay đổi của ChiTietHoaDon.
-            // Hàm này trong C# có thể không cần thiết nếu bạn chỉ dựa vào trigger.
-            // Tuy nhiên, nếu bạn cập nhật TienGiamGia trực tiếp trên HoaDon và muốn ThanhToan (cột tính toán)
-            // được tính lại, bạn có thể cần trigger phức tạp hơn hoặc gọi 1 stored procedure để tính toán lại tất cả.
-            // Hoặc, hàm này có thể được dùng để tính lại nếu không có trigger.
-            // Hiện tại, mình sẽ giữ lại câu lệnh UPDATE này như một cách để đồng bộ từ C# nếu cần.
             string query = @"
                 UPDATE hd
                 SET 

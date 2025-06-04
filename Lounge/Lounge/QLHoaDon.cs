@@ -184,9 +184,9 @@ namespace Lounge
             if (currentIndex >= 0 && currentIndex < dsHoaDon.Count)
             {
                 int maHoaDonXem = dsHoaDon[currentIndex].MaHoaDon;
-                // TODO: Mở form FormChiTietHoaDon (bạn cần tạo form này)
-                // FormChiTietHoaDon frmChiTiet = new FormChiTietHoaDon(maHoaDonXem);
-                // frmChiTiet.ShowDialog();
+                
+                 FormChiTietHoaDon frmChiTiet = new FormChiTietHoaDon(maHoaDonXem);
+                 frmChiTiet.ShowDialog();
                 MessageBox.Show($"Sẽ hiển thị chi tiết cho hóa đơn Mã HĐ: {maHoaDonXem}\n" +
                                 $"Khách hàng: {dsHoaDon[currentIndex].TenKhachHang}\n" +
                                 $"Tổng thanh toán: {dsHoaDon[currentIndex].ThanhToan:N0}đ",

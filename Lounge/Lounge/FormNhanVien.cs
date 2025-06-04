@@ -18,7 +18,12 @@ namespace Lounge
         {
             InitializeComponent();
         }
-
+        private void FormNhanVien_Resize(object sender, EventArgs e)
+        {
+            this.label17.Location = new System.Drawing.Point((this.ClientSize.Width - this.label17.Width) / 2, 8);
+            this.groupBox4.Location = new System.Drawing.Point(this.ClientSize.Width - 550, 60);
+            this.btnLamMoi.Location = new System.Drawing.Point(this.ClientSize.Width - 200, 20);
+        }
         private void LoadData()
         {
             try

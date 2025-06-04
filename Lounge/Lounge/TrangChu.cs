@@ -570,12 +570,12 @@ namespace Lounge
                 MessageBox.Show("Vui lòng chọn bàn trước.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            // Cho phép áp voucher ngay cả khi chưa có món, voucher có thể giảm trực tiếp vào hóa đơn
-            // if (!tempOrderItems.Any() && currentHoaDon == null)
-            // {
-            //      MessageBox.Show("Vui lòng thêm sản phẩm vào hóa đơn trước khi áp dụng voucher.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //     return;
-            // }
+             // Cho phép áp voucher ngay cả khi chưa có món, voucher có thể giảm trực tiếp vào hóa đơn
+             if (!tempOrderItems.Any() && currentHoaDon == null)
+             {
+                  MessageBox.Show("Vui lòng thêm sản phẩm vào hóa đơn trước khi áp dụng voucher.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                 return;
+             }
             if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng")
             {
                 MessageBox.Show($"Đã có voucher (Mã: {appliedVoucher.MaVoucher}) được áp dụng. Nếu muốn đổi, vui lòng hủy và tạo lại hóa đơn, hoặc xóa voucher hiện tại (chức năng chưa có).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
