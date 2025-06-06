@@ -11,7 +11,7 @@ namespace Lounge.Model
         public int MaVoucher { get; set; }
         public int? MaKhachHang { get; set; } // Cho phép null vì trong CSDL cột này không NOT NULL
         public int? MaSanPham { get; set; }   // Cho phép null vì trong CSDL cột này không NOT NULL
-        public decimal GiaTri { get; set; }    // Dùng decimal cho tiền tệ
+        public float GiaTri { get; set; }    // Dùng decimal cho tiền tệ
         public DateTime? NgayHetHan { get; set; } // Cho phép null nếu ngày hết hạn không bắt buộc, hoặc DateTime nếu luôn có
         public string TrangThai { get; set; }
 

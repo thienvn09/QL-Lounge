@@ -41,7 +41,7 @@ namespace Lounge.DAL // Hoặc namespace NhaHang.DAL của bạn
                                     TenKhachHang = reader.IsDBNull(reader.GetOrdinal("TenKhachHang")) ? "Áp dụng chung" : reader.GetString(reader.GetOrdinal("TenKhachHang")),
                                     MaSanPham = reader.IsDBNull(reader.GetOrdinal("MaSanPham")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("MaSanPham")),
                                     TenSanPham = reader.IsDBNull(reader.GetOrdinal("TenSanPham")) ? "Toàn bộ hóa đơn" : reader.GetString(reader.GetOrdinal("TenSanPham")),
-                                    GiaTri = reader.GetDecimal(reader.GetOrdinal("GiaTri")),
+                                    GiaTri = (float)reader.GetDecimal(reader.GetOrdinal("GiaTri")),
                                     NgayHetHan = reader.IsDBNull(reader.GetOrdinal("NgayHetHan")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("NgayHetHan")),
                                     TrangThai = reader.GetString(reader.GetOrdinal("TrangThai"))
                                 };
@@ -92,7 +92,7 @@ namespace Lounge.DAL // Hoặc namespace NhaHang.DAL của bạn
                                     TenKhachHang = reader.IsDBNull(reader.GetOrdinal("TenKhachHang")) ? "Áp dụng chung" : reader.GetString(reader.GetOrdinal("TenKhachHang")),
                                     MaSanPham = reader.IsDBNull(reader.GetOrdinal("MaSanPham")) ? (int?)null : reader.GetInt32(reader.GetOrdinal("MaSanPham")),
                                     TenSanPham = reader.IsDBNull(reader.GetOrdinal("TenSanPham")) ? "Toàn bộ hóa đơn" : reader.GetString(reader.GetOrdinal("TenSanPham")),
-                                    GiaTri = reader.GetDecimal(reader.GetOrdinal("GiaTri")),
+                                    GiaTri = (float)reader.GetDecimal(reader.GetOrdinal("GiaTri")),
                                     NgayHetHan = reader.IsDBNull(reader.GetOrdinal("NgayHetHan")) ? (DateTime?)null : reader.GetDateTime(reader.GetOrdinal("NgayHetHan")),
                                     TrangThai = reader.GetString(reader.GetOrdinal("TrangThai"))
                                 };

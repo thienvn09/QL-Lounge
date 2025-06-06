@@ -248,7 +248,7 @@ namespace Lounge
                 {
                     MaKhachHang = (cboKhachHang.SelectedValue != null && (int)cboKhachHang.SelectedValue != 0) ? (int?)cboKhachHang.SelectedValue : null,
                     MaSanPham = (cboSanPham.SelectedValue != null && (int)cboSanPham.SelectedValue != 0) ? (int?)cboSanPham.SelectedValue : null,
-                    GiaTri = decimal.Parse(txtGiaTri.Text),
+                    GiaTri = float.Parse(txtGiaTri.Text),
                     NgayHetHan = dtpNgayHetHan.Checked ? (DateTime?)dtpNgayHetHan.Value.Date : null,
                     TrangThai = cboTrangThai.SelectedItem.ToString()
                 };
@@ -288,7 +288,7 @@ namespace Lounge
                     MaVoucher = int.Parse(txtMaVoucher.Text),
                     MaKhachHang = (cboKhachHang.SelectedValue != null && (int)cboKhachHang.SelectedValue != 0) ? (int?)cboKhachHang.SelectedValue : null,
                     MaSanPham = (cboSanPham.SelectedValue != null && (int)cboSanPham.SelectedValue != 0) ? (int?)cboSanPham.SelectedValue : null,
-                    GiaTri = decimal.Parse(txtGiaTri.Text),
+                    GiaTri = float.Parse(txtGiaTri.Text),
                     NgayHetHan = dtpNgayHetHan.Checked ? (DateTime?)dtpNgayHetHan.Value.Date : null,
                     TrangThai = cboTrangThai.SelectedItem.ToString()
                 };

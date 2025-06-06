@@ -31,9 +31,6 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormQL));
             this.pnlLeftSide = new System.Windows.Forms.Panel();
             this.pnlButtons = new System.Windows.Forms.Panel();
-            this.pnlLogo = new System.Windows.Forms.Panel();
-            this.lblAppName = new System.Windows.Forms.Label();
-            this.pnlBody = new System.Windows.Forms.Panel();
             this.btnVoucher = new System.Windows.Forms.Button();
             this.btnLoaiSanPham = new System.Windows.Forms.Button();
             this.btnDangXuat = new System.Windows.Forms.Button();
@@ -45,7 +42,10 @@
             this.btnNhaCungCap = new System.Windows.Forms.Button();
             this.btnKhachHang = new System.Windows.Forms.Button();
             this.btnNhanVien = new System.Windows.Forms.Button();
+            this.pnlLogo = new System.Windows.Forms.Panel();
+            this.lblAppName = new System.Windows.Forms.Label();
             this.picLogo = new System.Windows.Forms.PictureBox();
+            this.pnlBody = new System.Windows.Forms.Panel();
             this.pnlLeftSide.SuspendLayout();
             this.pnlButtons.SuspendLayout();
             this.pnlLogo.SuspendLayout();
@@ -85,41 +85,6 @@
             this.pnlButtons.Padding = new System.Windows.Forms.Padding(10, 0, 10, 10);
             this.pnlButtons.Size = new System.Drawing.Size(270, 633);
             this.pnlButtons.TabIndex = 11;
-            // 
-            // pnlLogo
-            // 
-            this.pnlLogo.Controls.Add(this.lblAppName);
-            this.pnlLogo.Controls.Add(this.picLogo);
-            this.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlLogo.Location = new System.Drawing.Point(0, 0);
-            this.pnlLogo.Name = "pnlLogo";
-            this.pnlLogo.Size = new System.Drawing.Size(270, 120);
-            this.pnlLogo.TabIndex = 0;
-            // 
-            // lblAppName
-            // 
-            this.lblAppName.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.lblAppName.AutoSize = true;
-            this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppName.ForeColor = System.Drawing.Color.WhiteSmoke;
-            this.lblAppName.Location = new System.Drawing.Point(60, 75);
-            this.lblAppName.Name = "lblAppName";
-            this.lblAppName.Size = new System.Drawing.Size(140, 31);
-            this.lblAppName.TabIndex = 1;
-            this.lblAppName.Text = "LOUNGE QL";
-            this.lblAppName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // pnlBody
-            // 
-            this.pnlBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(242)))), ((int)(((byte)(245)))));
-            this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBody.Location = new System.Drawing.Point(270, 0);
-            this.pnlBody.Margin = new System.Windows.Forms.Padding(4);
-            this.pnlBody.Name = "pnlBody";
-            this.pnlBody.Padding = new System.Windows.Forms.Padding(10);
-            this.pnlBody.Size = new System.Drawing.Size(1231, 753);
-            this.pnlBody.TabIndex = 8;
-            this.pnlBody.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_Body_Paint);
             // 
             // btnVoucher
             // 
@@ -194,6 +159,7 @@
             this.btnDangXuat.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btnDangXuat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnDangXuat.UseVisualStyleBackColor = false;
+            this.btnDangXuat.Click += new System.EventHandler(this.btnDangXuat_Click_1);
             // 
             // btnThongKe
             // 
@@ -395,6 +361,29 @@
             this.btnNhanVien.UseVisualStyleBackColor = false;
             this.btnNhanVien.Click += new System.EventHandler(this.btnNhanVien_Click);
             // 
+            // pnlLogo
+            // 
+            this.pnlLogo.Controls.Add(this.lblAppName);
+            this.pnlLogo.Controls.Add(this.picLogo);
+            this.pnlLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlLogo.Location = new System.Drawing.Point(0, 0);
+            this.pnlLogo.Name = "pnlLogo";
+            this.pnlLogo.Size = new System.Drawing.Size(270, 120);
+            this.pnlLogo.TabIndex = 0;
+            // 
+            // lblAppName
+            // 
+            this.lblAppName.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.lblAppName.AutoSize = true;
+            this.lblAppName.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblAppName.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.lblAppName.Location = new System.Drawing.Point(60, 75);
+            this.lblAppName.Name = "lblAppName";
+            this.lblAppName.Size = new System.Drawing.Size(140, 31);
+            this.lblAppName.TabIndex = 1;
+            this.lblAppName.Text = "LOUNGE QL";
+            this.lblAppName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // picLogo
             // 
             this.picLogo.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -405,6 +394,18 @@
             this.picLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.picLogo.TabIndex = 0;
             this.picLogo.TabStop = false;
+            // 
+            // pnlBody
+            // 
+            this.pnlBody.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(242)))), ((int)(((byte)(245)))));
+            this.pnlBody.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlBody.Location = new System.Drawing.Point(270, 0);
+            this.pnlBody.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlBody.Name = "pnlBody";
+            this.pnlBody.Padding = new System.Windows.Forms.Padding(10);
+            this.pnlBody.Size = new System.Drawing.Size(1231, 753);
+            this.pnlBody.TabIndex = 8;
+            this.pnlBody.Paint += new System.Windows.Forms.PaintEventHandler(this.Panel_Body_Paint);
             // 
             // FormQL
             // 
@@ -418,6 +419,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hệ Thống Quản Lý Nhà Hàng - Lounge";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Load += new System.EventHandler(this.FormQL_Load);
             this.pnlLeftSide.ResumeLayout(false);
             this.pnlButtons.ResumeLayout(false);
             this.pnlLogo.ResumeLayout(false);

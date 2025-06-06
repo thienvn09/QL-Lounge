@@ -106,6 +106,11 @@ namespace Lounge
 
         private void btnDangXuat_Click(object sender, EventArgs e)
         {
+          
+        }
+
+        private void btnDangXuat_Click_1(object sender, EventArgs e)
+        {
             DialogResult result = MessageBox.Show("Bạn có chắc chắn muốn đăng xuất?", "Xác nhận Đăng xuất", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {

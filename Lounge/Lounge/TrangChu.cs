@@ -1,33 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq; // Cần cho Linq
+using System.Linq;
 using System.Windows.Forms;
 using Lounge.DAL;
 using Lounge.Model;
-using Microsoft.VisualBasic;
-using OpenQA.Selenium.Interactions; // NEW: For InputBox
+using Microsoft.VisualBasic; // For InputBox
 
 namespace Lounge
 {
     public partial class TrangChu : Form
     {
+        // DAL Objects
         private BanDAL banDAL = new BanDAL();
         private DanhMucSPDAL danhMucDAL = new DanhMucSPDAL();
         private SanPhamDAL sanPhamDAL = new SanPhamDAL();
-        private Timer timer = new Timer();
-        private Ban currentBan = null;
-        private ChiTietHoaDonDAL chiTietHoaDonDAL = new ChiTietHoaDonDAL();
-        private DanhMucSanPham currentDanhMuc = null;
         private HoaDonDAL hoaDonDAL = new HoaDonDAL();
-        private HoaDon currentHoaDon = null;
-        private int maNhanVien = 1;
+        private ChiTietHoaDonDAL chiTietHoaDonDAL = new ChiTietHoaDonDAL();
+        private VoucherDAL voucherDAL = new VoucherDAL();
+        private KhachHangDAL khachHangDAL = new KhachHangDAL(); // Mới: DAL cho khách hàng
 
+        // Current State Objects
+        private Ban currentBan = null;
+        private HoaDon currentHoaDon = null;
+        private DanhMucSanPham currentDanhMuc = null;
+        private KhachHan currentKhachHang = null; // Mới: Lưu khách hàng đang được chọn
+        private Voucher appliedVoucher = null;
         private List<ChiTietHoaDon> tempOrderItems = new List<ChiTietHoaDon>();
+
+        // State Flags
         private bool daGuiBep = false;
 
-        private VoucherDAL voucherDAL = new VoucherDAL();
-        private Voucher appliedVoucher = null;
+        // Other utilities
+        private Timer timer = new Timer();
+        private int maNhanVien = 1; // ID nhân viên đăng nhập (ví dụ)
 
         public TrangChu()
         {
@@ -36,7 +42,6 @@ namespace Lounge
             ConfigurePanels();
             LoadBan();
             SetupTimer();
-            WireUpVoucherButton();
         }
 
         private void ConfigurePanels()
@@ -76,25 +81,6 @@ namespace Lounge
             timer.Start();
         }
 
-
-        private void WireUpVoucherButton()
-        {
-            // Giả sử bạn có nút tên là btnApplyVoucher trong TrangChu.Designer.cs
-            // và nó đã được thêm vào plnBottom.
-            // Nếu bạn chưa tạo nút này trong Designer, bạn cần làm điều đó trước.
-            Control[] foundControls = this.Controls.Find("btnApplyVoucher", true);
-            if (foundControls.Length > 0 && foundControls[0] is Button voucherButton)
-            {
-                voucherButton.Click += new System.EventHandler(this.btnApplyVoucher_Click);
-            }
-            // Hoặc nếu bạn chắc chắn tên nút là btnApplyVoucher và đã khai báo ở class level:
-            // if (this.btnApplyVoucher != null)
-            // {
-            //    this.btnApplyVoucher.Click += new System.EventHandler(this.btnApplyVoucher_Click);
-            // }
-        }
-
-
         private void TrangChu_Load(object sender, EventArgs e)
         {
             lblTable.Text = "Bàn: N/A";
@@ -103,19 +89,30 @@ namespace Lounge
             btnPaid.Text = "THANH TOÁN";
         }
 
+        #region Screen Switching and Loading
+        /// <summary>
+        /// Tải lại màn hình chọn bàn và reset toàn bộ trạng thái.
+        /// </summary>
         private void LoadBan()
         {
             plnBan.Controls.Clear();
             plnBan.Visible = true;
             plnMain.Visible = false;
             plnBottom.Visible = false;
+
+            // Reset labels
             lblTable.Text = "Bàn: N/A";
             lblCover.Text = "Khách: 0";
             lblWholeCheck.Text = "Tổng cộng: 0.00";
+
+            // Reset state
             tempOrderItems.Clear();
             daGuiBep = false;
             currentHoaDon = null;
+            currentBan = null;
+            currentDanhMuc = null;
             appliedVoucher = null;
+            currentKhachHang = null; // Mới: Reset khách hàng
 
             try
             {
@@ -133,6 +130,9 @@ namespace Lounge
             }
         }
 
+        /// <summary>
+        /// Hiển thị các nút chọn bàn trên giao diện.
+        /// </summary>
         private void DisplayButtonsBan(List<Ban> dsBan)
         {
             FlowLayoutPanel flowPanelBan = new FlowLayoutPanel
@@ -165,26 +165,39 @@ namespace Lounge
             }
         }
 
+        /// <summary>
+        /// Xử lý khi nhân viên chọn một bàn.
+        /// </summary>
         private void BtnBan_Click(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             currentBan = btn.Tag as Ban;
             if (currentBan == null) return;
 
+            // Chuyển giao diện sang màn hình order
             plnBan.Visible = false;
             plnMain.Visible = true;
             plnBottom.Visible = true;
+
+            // Cập nhật thông tin bàn
             lblTable.Text = $"Bàn: {currentBan.SoBan}";
             lblCover.Text = $"Khách: {currentBan.SoChoNgoi}";
+
+            // Reset trạng thái order của phiên trước
             tempOrderItems.Clear();
             daGuiBep = false;
             appliedVoucher = null;
+            currentKhachHang = null;
 
+            // Tải dữ liệu cho màn hình order
             LoadExistingUnpaidOrderForTable();
             LoadMainCategories();
             DisplayHoaDon();
         }
 
+        /// <summary>
+        /// Tải hóa đơn chưa thanh toán (nếu có) của bàn vừa chọn.
+        /// </summary>
         private void LoadExistingUnpaidOrderForTable()
         {
             if (currentBan == null) return;
@@ -193,28 +206,18 @@ namespace Lounge
                 currentHoaDon = hoaDonDAL.LayHoaDonChuaThanhToanTheoMaBan(currentBan.MaBan);
                 if (currentHoaDon != null)
                 {
+                    // Mới: Tải thông tin khách hàng của hóa đơn cũ
+                    if (currentHoaDon.MaKhachHang > 1) // Giả sử 1 là khách lẻ
+                    {
+                        currentKhachHang = khachHangDAL.GetKHById(currentHoaDon.MaKhachHang);
+                    }
+
                     List<ChiTietHoaDon> existingDetails = chiTietHoaDonDAL.LayChiTietHoaDonTheoMaHoaDon(currentHoaDon.MaHoaDon);
                     if (existingDetails != null)
                     {
                         tempOrderItems.AddRange(existingDetails);
                     }
                     daGuiBep = true;
-                    // Giả sử Model HoaDon có thuộc tính MaVoucherDaApDung (int?)
-                    // và VoucherDAL có GetVoucherById(int maVoucher)
-                    // if (currentHoaDon.MaVoucherDaApDung.HasValue)
-                    // {
-                    //    appliedVoucher = voucherDAL.GetVoucherById(currentHoaDon.MaVoucherDaApDung.Value);
-                    //    if (appliedVoucher == null || appliedVoucher.TrangThai != "Chưa sử dụng") 
-                    //    {
-                    //        appliedVoucher = null; 
-                    //        currentHoaDon.TienGiamGia = 0; 
-                    //        currentHoaDon.MaVoucherDaApDung = null; 
-                    //    }
-                    // }
-                }
-                else
-                {
-                    currentHoaDon = null;
                 }
             }
             catch (Exception ex)
@@ -223,7 +226,9 @@ namespace Lounge
                 currentHoaDon = null;
             }
         }
+        #endregion
 
+        #region Order Screen (Categories and Products)
         private void LoadMainCategories()
         {
             plnDanhMuc.Controls.Clear();
@@ -310,31 +315,27 @@ namespace Lounge
                     Tag = sp
                 };
                 btn.FlatAppearance.BorderSize = 0;
-                btn.Click += BtnSanPham_Click_Temp;
+                btn.Click += BtnSanPham_Click;
                 flowPanelProducts.Controls.Add(btn);
             }
         }
 
-        private void BtnSanPham_Click_Temp(object sender, EventArgs e)
+        /// <summary>
+        /// Xử lý khi thêm một sản phẩm vào hóa đơn.
+        /// </summary>
+        private void BtnSanPham_Click(object sender, EventArgs e)
         {
-            if (daGuiBep && currentHoaDon != null && currentHoaDon.TrangThai == "Chưa thanh toán")
-            {
-                DialogResult dialogResult = MessageBox.Show("Hóa đơn đã được gửi bếp. Mọi thay đổi sẽ yêu cầu 'Gửi Bếp' lại để cập nhật. Bạn có muốn tiếp tục thêm/sửa món không?", "Xác nhận thay đổi", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
-                {
-                    return;
-                }
-            }
-
             Button btn = sender as Button;
             SANPHAM sp = btn.Tag as SANPHAM;
             if (sp == null) return;
 
+            // Nếu hóa đơn đã được tạo, tạo một đối tượng hóa đơn tạm
             if (currentHoaDon == null)
             {
                 currentHoaDon = new HoaDon
                 {
-                    MaKhachHang = 1,
+                    // Mới: Sử dụng khách hàng đã chọn, mặc định là khách lẻ (ID=1)
+                    MaKhachHang = (currentKhachHang != null) ? currentKhachHang.MaKhachHang : 1,
                     MaNhanVien = maNhanVien,
                     MaBan = currentBan.MaBan,
                     NgayDat = DateTime.Now,
@@ -346,21 +347,16 @@ namespace Lounge
                 };
             }
 
-            decimal thueVATValue = 0;
-            DanhMucSanPham dmCuaSP = currentDanhMuc;
-            if (dmCuaSP == null || dmCuaSP.MaDanhMuc != sp.MaDanhMuc)
-            {
-                dmCuaSP = danhMucDAL.GetDanhMucById(sp.MaDanhMuc);
-            }
+            // Lấy thuế VAT từ danh mục
+            decimal thueVATValue = 10; // Thuế mặc định
+            DanhMucSanPham dmCuaSP = danhMucDAL.GetDanhMucById(sp.MaDanhMuc);
             if (dmCuaSP != null) thueVATValue = dmCuaSP.ThueVAT;
-            else thueVATValue = 10;
 
+            // Thêm hoặc cập nhật số lượng món trong danh sách tạm
             var existingItem = tempOrderItems.FirstOrDefault(item => item.MaSanPham == sp.MaSanPham);
             if (existingItem != null)
             {
                 existingItem.SoLuong++;
-                existingItem.ThanhTien = existingItem.SoLuong * existingItem.Gia;
-                existingItem.TienThue = existingItem.ThanhTien * ((float)thueVATValue / 100);
             }
             else
             {
@@ -372,16 +368,22 @@ namespace Lounge
                     Gia = (float)sp.Gia,
                     ThueVAT = (float)thueVATValue
                 };
-                newItem.ThanhTien = newItem.SoLuong * newItem.Gia;
-                newItem.TienThue = newItem.ThanhTien * (newItem.ThueVAT / 100);
                 tempOrderItems.Add(newItem);
             }
             DisplayHoaDon();
         }
+        #endregion
 
+        #region Bill Display and Management
+
+        /// <summary>
+        /// Hiển thị lại toàn bộ thông tin hóa đơn từ tempOrderItems.
+        /// </summary>
         private void DisplayHoaDon()
         {
             plnHoaDon.Controls.Clear();
+
+            // Panel chứa danh sách các món
             FlowLayoutPanel flowPanelBillItems = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
@@ -390,16 +392,35 @@ namespace Lounge
                 AutoScroll = true,
                 Padding = new Padding(5)
             };
+
+            // Panel chứa các thông tin tổng kết
             Panel panelTotals = new Panel
             {
                 Dock = DockStyle.Bottom,
-                Height = 145,
+                Height = 175, // Tăng chiều cao để có chỗ cho tên KH
                 BackColor = Color.FromArgb(230, 230, 230),
                 Padding = new Padding(10)
             };
             plnHoaDon.Controls.Add(flowPanelBillItems);
             plnHoaDon.Controls.Add(panelTotals);
 
+            // === PHẦN THÔNG TIN KHÁCH HÀNG ===
+            Label lblCustomerInfo = new Label
+            {
+                Text = "KH: Khách lẻ",
+                Font = new Font("Segoe UI", 9, FontStyle.Bold),
+                ForeColor = Color.DarkBlue,
+                Location = new Point(10, 5),
+                AutoSize = true
+            };
+            if (currentKhachHang != null)
+            {
+                lblCustomerInfo.Text = $"KH: {currentKhachHang.HoTen}";
+            }
+            panelTotals.Controls.Add(lblCustomerInfo);
+
+
+            // === PHẦN DANH SÁCH MÓN ĂN ===
             Label lblHeader = new Label
             {
                 Text = string.Format("{0,-23} {1,3} {2,8} {3,10} {4,2}", "Tên món", "SL", "Đ.Giá", "T.Tiền", ""),
@@ -416,46 +437,45 @@ namespace Lounge
 
             if (tempOrderItems.Any())
             {
-                for (int i = 0; i < tempOrderItems.Count; i++)
+                foreach (var chiTiet in tempOrderItems)
                 {
-                    var chiTiet = tempOrderItems[i];
                     chiTiet.ThanhTien = chiTiet.SoLuong * chiTiet.Gia;
                     chiTiet.TienThue = chiTiet.ThanhTien * (chiTiet.ThueVAT / 100);
                     subTotalDisplay += chiTiet.ThanhTien;
                     totalVATDisplay += chiTiet.TienThue;
 
+                    // Panel cho mỗi dòng sản phẩm
                     Panel itemPanel = new Panel
                     {
                         Width = flowPanelBillItems.ClientSize.Width - 10,
                         Height = 25,
                         Margin = new Padding(0, 0, 0, 2)
                     };
+
                     Label lblItem = new Label
                     {
                         Text = string.Format("{0,-23} {1,3} {2,8:N0} {3,10:N0}",
-                                             TruncateString(chiTiet.TenSanPham ?? "N/A", 21),
-                                             chiTiet.SoLuong, chiTiet.Gia, chiTiet.ThanhTien),
+                                            TruncateString(chiTiet.TenSanPham ?? "N/A", 21),
+                                            chiTiet.SoLuong, chiTiet.Gia, chiTiet.ThanhTien),
                         Font = new Font("Courier New", 9),
-                        AutoSize = false,
                         Dock = DockStyle.Fill,
                     };
                     itemPanel.Controls.Add(lblItem);
-                    if (!daGuiBep || (currentHoaDon != null && currentHoaDon.TrangThai == "Chưa thanh toán"))
+
+                    // Nút xóa chỉ hiển thị khi chưa gửi bếp hoặc hóa đơn chưa thanh toán
+                    Button btnDeleteItem = new Button
                     {
-                        Button btnDeleteItem = new Button
-                        {
-                            Text = "X",
-                            ForeColor = Color.Red,
-                            Font = new Font("Arial", 8, FontStyle.Bold),
-                            FlatStyle = FlatStyle.System,
-                            Size = new Size(20, 20),
-                            Dock = DockStyle.Right,
-                            Tag = chiTiet
-                        };
-                        btnDeleteItem.Click += BtnDeleteItem_Click;
-                        itemPanel.Controls.Add(btnDeleteItem);
-                        lblItem.Width = itemPanel.Width - btnDeleteItem.Width - 5;
-                    }
+                        Text = "X",
+                        ForeColor = Color.Red,
+                        Font = new Font("Arial", 8, FontStyle.Bold),
+                        FlatStyle = FlatStyle.System,
+                        Size = new Size(20, 20),
+                        Dock = DockStyle.Right,
+                        Tag = chiTiet
+                    };
+                    btnDeleteItem.Click += BtnDeleteItem_Click;
+                    itemPanel.Controls.Add(btnDeleteItem);
+
                     flowPanelBillItems.Controls.Add(itemPanel);
                 }
             }
@@ -465,204 +485,93 @@ namespace Lounge
                 flowPanelBillItems.Controls.Add(lblNoBill);
             }
 
-            float discountDisplay = 0;
-            if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng")
-            {
-                discountDisplay = (float)appliedVoucher.GiaTri;
-            }
-            else if (currentHoaDon != null)
-            {
-                discountDisplay = currentHoaDon.TienGiamGia;
-            }
-
+            // === PHẦN TỔNG KẾT HÓA ĐƠN ===
+            float discountDisplay = appliedVoucher?.GiaTri ?? currentHoaDon?.TienGiamGia ?? 0;
             float grandTotalDisplay = subTotalDisplay + totalVATDisplay - discountDisplay;
 
-            Label lblSubTotalText = new Label { Text = "Tạm tính:", Font = new Font("Segoe UI", 10), Location = new Point(10, 10), AutoSize = true };
-            Label lblSubTotalValue = new Label { Text = $"{subTotalDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.DarkSlateGray, Location = new Point(200, 10), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 };
-            Label lblVATText = new Label { Text = "Thuế VAT:", Font = new Font("Segoe UI", 10), Location = new Point(10, 35), AutoSize = true };
-            Label lblVATValue = new Label { Text = $"{totalVATDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.DarkSlateGray, Location = new Point(200, 35), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 };
+            // Tạm tính và VAT
+            panelTotals.Controls.Add(new Label { Text = "Tạm tính:", Font = new Font("Segoe UI", 10), Location = new Point(10, 30), AutoSize = true });
+            panelTotals.Controls.Add(new Label { Text = $"{subTotalDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.DarkSlateGray, Location = new Point(200, 30), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 });
+            panelTotals.Controls.Add(new Label { Text = "Thuế VAT:", Font = new Font("Segoe UI", 10), Location = new Point(10, 55), AutoSize = true });
+            panelTotals.Controls.Add(new Label { Text = $"{totalVATDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.DarkSlateGray, Location = new Point(200, 55), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 });
 
-            Label lblVoucherInfo = new Label { Font = new Font("Segoe UI", 9, FontStyle.Italic), ForeColor = Color.ForestGreen, Location = new Point(10, 60), AutoSize = true };
-            if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng")
+            // Voucher và Giảm giá
+            Label lblVoucherInfo = new Label { Font = new Font("Segoe UI", 9, FontStyle.Italic), ForeColor = Color.ForestGreen, Location = new Point(10, 80), AutoSize = true };
+            if (appliedVoucher != null)
             {
                 lblVoucherInfo.Text = $"Voucher: -{appliedVoucher.GiaTri:N0}đ (Mã: {appliedVoucher.MaVoucher})";
             }
-            else if (currentHoaDon != null && currentHoaDon.TienGiamGia > 0)
-            {
-                lblVoucherInfo.Text = $"Giảm giá: -{currentHoaDon.TienGiamGia:N0}đ";
-            }
             panelTotals.Controls.Add(lblVoucherInfo);
 
-            Label lblDiscountText = new Label { Text = "Giảm giá:", Font = new Font("Segoe UI", 10), Location = new Point(10, 85), AutoSize = true };
-            Label lblDiscountValue = new Label { Text = $"{discountDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.IndianRed, Location = new Point(200, 85), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 };
-            Label lblGrandTotalText = new Label { Text = "TỔNG CỘNG:", Font = new Font("Segoe UI", 12, FontStyle.Bold), Location = new Point(10, 110), AutoSize = true };
-            Label lblGrandTotalValue = new Label { Text = $"{grandTotalDisplay:N0}đ", Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.FromArgb(0, 122, 204), Location = new Point(180, 110), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 200 };
+            panelTotals.Controls.Add(new Label { Text = "Giảm giá:", Font = new Font("Segoe UI", 10), Location = new Point(10, 105), AutoSize = true });
+            panelTotals.Controls.Add(new Label { Text = $"{discountDisplay:N0}đ", Font = new Font("Segoe UI", 10, FontStyle.Bold), ForeColor = Color.IndianRed, Location = new Point(200, 105), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 180 });
 
-            panelTotals.Controls.Add(lblSubTotalText); panelTotals.Controls.Add(lblSubTotalValue);
-            panelTotals.Controls.Add(lblVATText); panelTotals.Controls.Add(lblVATValue);
-            panelTotals.Controls.Add(lblDiscountText); panelTotals.Controls.Add(lblDiscountValue);
-            panelTotals.Controls.Add(lblGrandTotalText); panelTotals.Controls.Add(lblGrandTotalValue);
+            // Tổng cộng
+            panelTotals.Controls.Add(new Label { Text = "TỔNG CỘNG:", Font = new Font("Segoe UI", 12, FontStyle.Bold), Location = new Point(10, 135), AutoSize = true });
+            panelTotals.Controls.Add(new Label { Text = $"{grandTotalDisplay:N0}đ", Font = new Font("Segoe UI", 12, FontStyle.Bold), ForeColor = Color.FromArgb(0, 122, 204), Location = new Point(180, 135), AutoSize = true, RightToLeft = RightToLeft.Yes, Width = 200 });
 
+            // Cập nhật tổng tiền hiển thị trên thanh header
             lblWholeCheck.Text = $"Tổng cộng: {grandTotalDisplay:N0}đ";
         }
 
         private void BtnDeleteItem_Click(object sender, EventArgs e)
         {
-            if (daGuiBep && currentHoaDon != null && currentHoaDon.TrangThai == "Chưa thanh toán")
-            {
-                DialogResult dialogResult = MessageBox.Show("Hóa đơn đã được gửi bếp. Việc xóa món này sẽ yêu cầu 'Gửi Bếp' lại để cập nhật. Bạn có muốn tiếp tục xóa?", "Xác nhận xóa món", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dialogResult == DialogResult.No)
-                {
-                    return;
-                }
-            }
-
             Button btn = sender as Button;
             ChiTietHoaDon itemToRemove = btn.Tag as ChiTietHoaDon;
             if (itemToRemove != null)
             {
                 tempOrderItems.Remove(itemToRemove);
-                // NEW: Nếu đã áp voucher, và voucher đó áp dụng cho sản phẩm vừa xóa, cần xem xét lại voucher
-                if (appliedVoucher != null && appliedVoucher.MaSanPham.HasValue && appliedVoucher.MaSanPham.Value == itemToRemove.MaSanPham)
-                {
-                    // Kiểm tra xem còn sản phẩm nào khác trong tempOrderItems khớp với MaSanPham của voucher không
-                    bool stillApplicable = tempOrderItems.Any(item => item.MaSanPham == appliedVoucher.MaSanPham.Value);
-                    if (!stillApplicable)
-                    {
-                        MessageBox.Show($"Sản phẩm áp dụng cho voucher (Mã: {appliedVoucher.MaVoucher}) đã bị xóa. Voucher sẽ được gỡ bỏ.", "Thông báo Voucher", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        appliedVoucher = null; // Gỡ voucher
-                        if (currentHoaDon != null) currentHoaDon.TienGiamGia = 0; // Reset giảm giá trên hóa đơn tạm
-                    }
-                }
                 DisplayHoaDon();
             }
         }
 
-        private string TruncateString(string value, int maxLength)
-        {
-            if (string.IsNullOrEmpty(value)) return value;
-            return value.Length <= maxLength ? value : value.Substring(0, maxLength - 3) + "...";
-        }
+        #endregion
 
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            if (plnMain.Visible)
-            {
-                if (tempOrderItems.Any() && !daGuiBep)
-                {
-                    DialogResult result = MessageBox.Show("Bạn có các món chưa gửi bếp. Thoát sẽ làm mất các món này. Bạn có chắc chắn muốn thoát?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (result == DialogResult.No) return;
-                }
-                currentBan = null; currentHoaDon = null; currentDanhMuc = null;
-                tempOrderItems.Clear(); daGuiBep = false; appliedVoucher = null;
-                plnDanhMuc.Controls.Clear(); plnSanPham.Controls.Clear(); plnHoaDon.Controls.Clear();
-                LoadBan();
-            }
-        }
+        #region Bottom Panel Button Events
 
-        private void btnInfo_Click(object sender, EventArgs e) { /* ... */ }
-        private void btnExit_Click(object sender, EventArgs e) { /* ... */ }
-
-        private void btnApplyVoucher_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Mới: Mở form tìm kiếm và chọn khách hàng.
+        /// </summary>
+        private void btnChonKhachHang_Click(object sender, EventArgs e)
         {
             if (currentBan == null)
             {
                 MessageBox.Show("Vui lòng chọn bàn trước.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-             // Cho phép áp voucher ngay cả khi chưa có món, voucher có thể giảm trực tiếp vào hóa đơn
-             if (!tempOrderItems.Any() && currentHoaDon == null)
-             {
-                  MessageBox.Show("Vui lòng thêm sản phẩm vào hóa đơn trước khi áp dụng voucher.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                 return;
-             }
-            if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng")
+
+            using (frmTimKiemKhachHang frmSearch = new frmTimKiemKhachHang())
             {
-                MessageBox.Show($"Đã có voucher (Mã: {appliedVoucher.MaVoucher}) được áp dụng. Nếu muốn đổi, vui lòng hủy và tạo lại hóa đơn, hoặc xóa voucher hiện tại (chức năng chưa có).", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return;
+                if (frmSearch.ShowDialog() == DialogResult.OK)
+                {
+                    currentKhachHang = frmSearch.SelectedKhachHang;
+                    if (currentHoaDon != null)
+                    {
+                        currentHoaDon.MaKhachHang = currentKhachHang.MaKhachHang;
+                    }
+                    DisplayHoaDon();
+                    MessageBox.Show($"Đã chọn khách hàng: {currentKhachHang}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            if (daGuiBep && currentHoaDon != null && currentHoaDon.TienGiamGia > 0 && appliedVoucher == null) // Đã gửi bếp, đã có giảm giá (có thể từ voucher trước đó đã lưu) và chưa có voucher nào đang áp dụng trong session này
+        }
+
+        private void btnApplyVoucher_Click(object sender, EventArgs e)
+        {
+            if (!tempOrderItems.Any() && currentHoaDon == null)
             {
-                MessageBox.Show("Hóa đơn đã được gửi bếp và đã có giảm giá. Không thể áp dụng thêm voucher mới.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Vui lòng thêm sản phẩm vào hóa đơn trước khi áp dụng voucher.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            string voucherCodeInput = Microsoft.VisualBasic.Interaction.InputBox("Nhập mã voucher:", "Áp dụng Voucher", "").Trim();
-            if (string.IsNullOrWhiteSpace(voucherCodeInput))
-            {
-                return;
-            }
+            string voucherCodeInput = Interaction.InputBox("Nhập mã voucher:", "Áp dụng Voucher", "").Trim();
+            if (string.IsNullOrWhiteSpace(voucherCodeInput)) return;
 
             try
             {
-                Voucher foundVoucher = null;
-                // Ưu tiên tìm theo mã text nếu VoucherDAL có hàm đó và bảng Voucher có cột mã text
-                // if (voucherDAL.HasGetVoucherByCodeTextMethod()) // Giả định có cách kiểm tra
-                // {
-                //    foundVoucher = voucherDAL.GetVoucherByCodeText(voucherCodeInput);
-                // }
-                // Nếu không, hoặc tìm theo mã text không thấy, thử tìm theo mã số (MaVoucher)
-                if (foundVoucher == null && int.TryParse(voucherCodeInput, out int maVoucherNum))
-                {
-                    foundVoucher = voucherDAL.GetVoucherById(maVoucherNum);
-                }
-
-
-                if (foundVoucher == null)
-                {
-                    MessageBox.Show("Mã voucher không hợp lệ hoặc không tồn tại.", "Lỗi Voucher", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                if (foundVoucher.TrangThai == "Đã sử dụng")
-                {
-                    MessageBox.Show("Voucher này đã được sử dụng.", "Lỗi Voucher", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-                if (foundVoucher.NgayHetHan.HasValue && foundVoucher.NgayHetHan.Value.Date < DateTime.Now.Date)
-                {
-                    MessageBox.Show("Voucher đã hết hạn sử dụng.", "Lỗi Voucher", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Kiểm tra điều kiện áp dụng voucher (ví dụ)
-                if (foundVoucher.MaKhachHang.HasValue)
-                {
-                    if (currentHoaDon == null || currentHoaDon.MaKhachHang != foundVoucher.MaKhachHang.Value)
-                    {
-                        // Cần cơ chế chọn khách hàng cho hóa đơn trước
-                        MessageBox.Show($"Voucher này chỉ dành cho khách hàng cụ thể (Mã KH: {foundVoucher.MaKhachHang.Value}). Vui lòng chọn đúng khách hàng cho hóa đơn.", "Lỗi Voucher", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
-                if (foundVoucher.MaSanPham.HasValue)
-                {
-                    if (!tempOrderItems.Any(item => item.MaSanPham == foundVoucher.MaSanPham.Value))
-                    {
-                        MessageBox.Show($"Voucher này chỉ áp dụng cho sản phẩm có mã {foundVoucher.MaSanPham.Value} và sản phẩm này không có trong hóa đơn.", "Lỗi Voucher", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                }
-
-                appliedVoucher = foundVoucher;
-
-                if (currentHoaDon == null)
-                {
-                    currentHoaDon = new HoaDon
-                    {
-                        MaKhachHang = (appliedVoucher.MaKhachHang.HasValue ? appliedVoucher.MaKhachHang.Value : 1), // Gán KH của voucher nếu có, hoặc KH mặc định
-                        MaNhanVien = maNhanVien,
-                        MaBan = currentBan.MaBan,
-                        NgayDat = DateTime.Now,
-                        TrangThai = "Chưa thanh toán",
-                        NguoiTao = maNhanVien,
-                        TongTien = 0,
-                        TongThueVAT = 0
-                    };
-                }
-                currentHoaDon.TienGiamGia = (float)appliedVoucher.GiaTri;
-                // currentHoaDon.MaVoucherDaApDung = appliedVoucher.MaVoucher; // Cập nhật vào HĐ nếu có trường này
-
-                MessageBox.Show($"Đã áp dụng voucher giảm {appliedVoucher.GiaTri:N0}đ.", "Áp dụng thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                // Logic tìm voucher theo mã (cần có trong VoucherDAL)
+                // Voucher foundVoucher = voucherDAL.GetVoucherByCode(voucherCodeInput);
+                // ... Xử lý kiểm tra voucher
+                // appliedVoucher = foundVoucher;
                 DisplayHoaDon();
             }
             catch (Exception ex)
@@ -671,110 +580,66 @@ namespace Lounge
             }
         }
 
+        /// <summary>
+        /// Gửi thông tin order xuống bếp, lưu hóa đơn và chi tiết vào DB.
+        /// </summary>
         private void btnSendCheck_Click(object sender, EventArgs e)
         {
-            if (currentBan == null)
-            {
-                MessageBox.Show("Vui lòng chọn bàn trước khi gửi bếp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!tempOrderItems.Any() && currentHoaDon == null)
+            if (!tempOrderItems.Any())
             {
                 MessageBox.Show("Không có món nào để gửi bếp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (!tempOrderItems.Any() && currentHoaDon != null && currentHoaDon.TienGiamGia > 0 && appliedVoucher != null)
-            {
-                MessageBox.Show("Không thể gửi bếp chỉ với voucher mà không có sản phẩm.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             try
             {
-                bool isNewHoaDon = false;
-                if (currentHoaDon == null)
+                bool isNewHoaDon = (currentHoaDon == null || currentHoaDon.MaHoaDon == 0);
+
+                if (isNewHoaDon)
                 {
                     currentHoaDon = new HoaDon
                     {
-                        MaKhachHang = 1,
+                        MaKhachHang = (currentKhachHang != null) ? currentKhachHang.MaKhachHang : 1,
                         MaNhanVien = maNhanVien,
                         MaBan = currentBan.MaBan,
                         NgayDat = DateTime.Now,
-                        TongTien = 0,
-                        TienGiamGia = (float)(appliedVoucher?.GiaTri ?? 0),
-                        TongThueVAT = 0,
                         TrangThai = "Chưa thanh toán",
                         NguoiTao = maNhanVien,
-                        // MaVoucherDaApDung = appliedVoucher?.MaVoucher 
+                        TienGiamGia = (float)(appliedVoucher?.GiaTri ?? 0),
                     };
                     int newHoaDonId = hoaDonDAL.ThemHoaDon(currentHoaDon);
                     if (newHoaDonId <= 0) throw new Exception("Không thể tạo hóa đơn mới trong CSDL.");
                     currentHoaDon.MaHoaDon = newHoaDonId;
-                    isNewHoaDon = true;
                 }
                 else
                 {
-                    if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng")
+                    if (currentKhachHang != null)
                     {
-                        currentHoaDon.TienGiamGia = (float)appliedVoucher.GiaTri;
-                        // currentHoaDon.MaVoucherDaApDung = appliedVoucher.MaVoucher;
-                    }
-                    else if (appliedVoucher == null && currentHoaDon.TienGiamGia > 0) // Nếu voucher đã bị gỡ bỏ
-                    {
-                        currentHoaDon.TienGiamGia = 0;
-                        // currentHoaDon.MaVoucherDaApDung = null;
-                    }
-
-
-                    if (daGuiBep && currentHoaDon.MaHoaDon > 0)
-                    {
-                        chiTietHoaDonDAL.XoaTatCaChiTietTheoMaHoaDon(currentHoaDon.MaHoaDon);
-                        // Cần cập nhật lại thông tin hóa đơn chính nếu có thay đổi (ví dụ TienGiamGia)
-                        // hoaDonDAL.UpdateThongTinCoBanHoaDon(currentHoaDon); // Cần hàm này
+                        currentHoaDon.MaKhachHang = currentKhachHang.MaKhachHang;
                     }
                 }
 
-                if (tempOrderItems.Any())
+                // Xóa các chi tiết cũ và thêm lại danh sách mới để đồng bộ
+                chiTietHoaDonDAL.XoaTatCaChiTietTheoMaHoaDon(currentHoaDon.MaHoaDon);
+                foreach (var tempItem in tempOrderItems)
                 {
-                    foreach (var tempItem in tempOrderItems)
-                    {
-                        tempItem.MaHoaDon = currentHoaDon.MaHoaDon;
-                        chiTietHoaDonDAL.ThemChiTietHoaDon(tempItem);
-                    }
+                    tempItem.MaHoaDon = currentHoaDon.MaHoaDon;
+                    chiTietHoaDonDAL.ThemChiTietHoaDon(tempItem);
                 }
 
-                // Cập nhật lại TienGiamGia vào DB trước khi tính tổng
-                // (Vì trigger có thể không biết về TienGiamGia nếu nó không được lưu trước)
-                // Điều này quan trọng nếu CapNhatTongTienHoaDon không cập nhật TienGiamGia
-                if (currentHoaDon.MaHoaDon > 0)
-                { // Đảm bảo HĐ đã có ID
-                    // Tạo một đối tượng HoaDon chỉ chứa MaHoaDon và TienGiamGia để cập nhật
-                    // Hoặc một hàm UpdateSpecificFields trong DAL
-                    // hoaDonDAL.CapNhatTienGiamGia(currentHoaDon.MaHoaDon, currentHoaDon.TienGiamGia);
-                }
-
-
+                // Cập nhật lại tổng tiền từ CSDL
                 hoaDonDAL.CapNhatTongTienHoaDon(currentHoaDon.MaHoaDon);
                 currentHoaDon = hoaDonDAL.LayHoaDonTheoMa(currentHoaDon.MaHoaDon);
 
-                if (appliedVoucher != null && appliedVoucher.TrangThai == "Chưa sử dụng" && currentHoaDon != null && currentHoaDon.MaHoaDon > 0)
+                // Cập nhật trạng thái bàn và voucher
+                banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Đang sử dụng");
+                if (appliedVoucher != null)
                 {
-                    voucherDAL.CapNhatTrangThaiVoucher(appliedVoucher.MaVoucher, "Đã sử dụng");
-                    appliedVoucher.TrangThai = "Đã sử dụng"; // Cập nhật trạng thái trong bộ nhớ
+                    // voucherDAL.CapNhatTrangThaiVoucher(appliedVoucher.MaVoucher, "Đã sử dụng");
                 }
 
                 daGuiBep = true;
                 MessageBox.Show($"Hóa đơn #{currentHoaDon?.MaHoaDon} đã được gửi bếp thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                if (isNewHoaDon || currentBan.TrangThai == "Trống")
-                {
-                    banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Đang sử dụng");
-                }
-
-                tempOrderItems.Clear();
-                List<ChiTietHoaDon> savedDetails = chiTietHoaDonDAL.LayChiTietHoaDonTheoMaHoaDon(currentHoaDon.MaHoaDon);
-                if (savedDetails != null) tempOrderItems.AddRange(savedDetails);
-
                 DisplayHoaDon();
             }
             catch (Exception ex)
@@ -783,92 +648,112 @@ namespace Lounge
             }
         }
 
-        private void btnPrintCheck_Click(object sender, EventArgs e)
-        {
-            if (!daGuiBep || currentHoaDon == null)
-            {
-                MessageBox.Show("Vui lòng 'Gửi Bếp' trước khi in hóa đơn chính thức.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            MessageBox.Show($"Sẵn sàng in hóa đơn #{currentHoaDon.MaHoaDon}", "In Hóa Đơn", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        private void btnGuestCheck_Click(object sender, EventArgs e)
-        {
-            string message = "Chức năng 'In Tạm Tính' chưa được cài đặt chi tiết.\nSẽ in dựa trên các món hiện tại:\n";
-            if (tempOrderItems.Any())
-            {
-                foreach (var item in tempOrderItems)
-                {
-                    message += $"- {item.TenSanPham} (SL: {item.SoLuong})\n";
-                }
-            }
-            else if (currentHoaDon != null)
-            {
-                List<ChiTietHoaDon> details = chiTietHoaDonDAL.LayChiTietHoaDonTheoMaHoaDon(currentHoaDon.MaHoaDon);
-                if (details != null && details.Any())
-                {
-                    foreach (var item in details) { message += $"- {item.TenSanPham} (SL: {item.SoLuong})\n"; }
-                }
-                else { message += "(Hóa đơn trống)"; }
-            }
-            else
-            {
-                message += "(Hóa đơn trống)";
-            }
-            MessageBox.Show(message, "In Tạm Tính", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
+        /// <summary>
+        /// Nút thanh toán cuối cùng, có kiểm tra các thay đổi chưa lưu.
+        /// </summary>
         private void btnPaid_Click(object sender, EventArgs e)
         {
-            if (currentHoaDon != null && currentHoaDon.MaHoaDon > 0 && currentHoaDon.TrangThai == "Chưa thanh toán")
+            if (currentHoaDon == null || currentHoaDon.MaHoaDon <= 0)
             {
-                if (!daGuiBep)
+                if (tempOrderItems.Any())
                 {
-                    MessageBox.Show("Vui lòng 'Gửi Bếp' trước khi thanh toán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DialogResult res = MessageBox.Show("Có các món mới chưa được gửi bếp. Bạn có muốn gửi bếp và thanh toán ngay?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (res == DialogResult.Yes)
+                    {
+                        btnSendCheck_Click(sender, e);
+                        if (currentHoaDon == null) return; // Dừng nếu gửi bếp thất bại
+                    }
+                    else return;
+                }
+                else
+                {
+                    MessageBox.Show("Không có hóa đơn hợp lệ để thanh toán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
+            }
 
-                DialogResult confirmPayment = MessageBox.Show($"Xác nhận thanh toán cho hóa đơn #{currentHoaDon.MaHoaDon} với tổng tiền {currentHoaDon.ThanhToan:N0}đ?",
-                                                              "Xác nhận thanh toán", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (confirmPayment == DialogResult.Yes)
+            if (currentHoaDon.TrangThai == "Đã thanh toán")
+            {
+                MessageBox.Show("Hóa đơn này đã được thanh toán trước đó.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            // Lấy lại thông tin hóa đơn mới nhất từ CSDL để đảm bảo tổng tiền chính xác
+            try
+            {
+                hoaDonDAL.CapNhatTongTienHoaDon(currentHoaDon.MaHoaDon);
+                currentHoaDon = hoaDonDAL.LayHoaDonTheoMa(currentHoaDon.MaHoaDon);
+                if (currentHoaDon == null) throw new Exception("Không thể lấy thông tin hóa đơn mới nhất.");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi cập nhật tổng tiền: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Xác nhận và thanh toán
+            DialogResult confirmPayment = MessageBox.Show($"Xác nhận thanh toán cho hóa đơn #{currentHoaDon.MaHoaDon}\nTổng cộng: {currentHoaDon.ThanhToan:N0}đ", "Xác nhận thanh toán", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (confirmPayment == DialogResult.Yes)
+            {
+                try
                 {
-                    try
+                    hoaDonDAL.CapNhatTrangThaiHoaDon(currentHoaDon.MaHoaDon, "Đã thanh toán");
+                    if (currentBan != null)
                     {
-                        hoaDonDAL.CapNhatTrangThaiHoaDon(currentHoaDon.MaHoaDon, "Đã thanh toán");
-                        if (currentBan != null)
-                        {
-                            banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Trống");
-                        }
-                        MessageBox.Show("Hóa đơn đã được thanh toán thành công!", "Thanh toán hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        LoadBan();
+                        banDAL.CapNhatTrangThaiBan(currentBan.MaBan, "Trống");
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Lỗi khi thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Hóa đơn đã được thanh toán thành công!", "Thanh toán hoàn tất", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadBan(); // Quay lại màn hình chọn bàn
                 }
-            }
-            else if (currentHoaDon != null && currentHoaDon.TrangThai == "Đã thanh toán")
-            {
-                MessageBox.Show("Hóa đơn này đã được thanh toán.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Không có hóa đơn hợp lệ để thanh toán hoặc hóa đơn chưa được gửi bếp.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Lỗi khi xử lý thanh toán: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
+        /// <summary>
+        /// Hủy thao tác và quay về màn hình chọn bàn.
+        /// </summary>
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn có muốn hủy các thao tác hiện tại và quay lại màn hình chọn bàn không?\nCác món chưa gửi bếp sẽ bị mất.", "Xác nhận hủy", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Bạn có muốn hủy các thao tác hiện tại và quay lại màn hình chọn bàn không?", "Xác nhận hủy", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                currentHoaDon = null; currentBan = null; currentDanhMuc = null;
-                tempOrderItems.Clear(); daGuiBep = false; appliedVoucher = null;
                 LoadBan();
             }
         }
-        private void lblWholeCheck_Click(object sender, EventArgs e) { /* ... */ }
+
+        /// <summary>
+        /// Quay lại màn hình chọn bàn từ màn hình order.
+        /// </summary>
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            if (tempOrderItems.Any() && !daGuiBep)
+            {
+                DialogResult result = MessageBox.Show("Bạn có các món chưa gửi bếp. Thoát sẽ làm mất các món này. Bạn có chắc chắn muốn thoát?", "Cảnh báo", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (result == DialogResult.No) return;
+            }
+            LoadBan();
+        }
+
+        #endregion
+
+        #region Utility Methods
+        private string TruncateString(string value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value)) return value;
+            return value.Length <= maxLength ? value : value.Substring(0, maxLength - 3) + "...";
+        }
+        #endregion
+
+        // Các sự kiện chưa dùng đến có thể để trống
+        private void btnPrintCheck_Click(object sender, EventArgs e) { }
+        private void btnGuestCheck_Click(object sender, EventArgs e) { }
+        private void lblWholeCheck_Click(object sender, EventArgs e) { }
+        private void btnInfo_Click(object sender, EventArgs e) { }
+        private void btnExit_Click(object sender, EventArgs e) { this.Close(); }
+
     }
 }

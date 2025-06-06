@@ -55,7 +55,6 @@ namespace Lounge.DAL
         FROM NhanVien nv
         INNER JOIN DangNhap dn ON nv.MaNV = dn.MaNV
         WHERE dn.TenDangNhap = @tenDN AND dn.TrangThai = N'Hoạt động'";
-
             using (SqlConnection connection = kn.GetConnect()) // Giả sử kn là đối tượng KetNoi của bạn
             {
                 try

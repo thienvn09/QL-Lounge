@@ -8,7 +8,7 @@ namespace Lounge
     public class KetNoi
     {
         // Chuỗi kết nối đến SQL Server
-        private static readonly string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QL_NHAHANG;Integrated Security=True";
+        private static readonly string connectionString = "Data Source=THIEN\\SQLEXPRESS;Initial Catalog=QLNHAHANG;Integrated Security=True";
 
         /// <summary>
         /// Trả về đối tượng SqlConnection chưa mở
